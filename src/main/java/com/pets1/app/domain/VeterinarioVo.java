@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
-
 @Entity
 @Table(name = "veterinario")
 public class VeterinarioVo {
@@ -33,12 +31,15 @@ public class VeterinarioVo {
 	@Column(name = "password_vt", nullable = false) 
 	private String password ;
 	
+	@Column(name = "foto_veterinario", nullable = false)
+	private String imagenVete;
+	
 	public VeterinarioVo () {
 		
 	}
 
 	public VeterinarioVo(long documento, String nombre, String apellidos, String telefono, String correo,
-			String especialidad, String password) {
+			String especialidad, String password, String imagenVete) {
 		super();
 		this.documento = documento;
 		this.nombre = nombre;
@@ -47,6 +48,7 @@ public class VeterinarioVo {
 		this.correo = correo;
 		this.especialidad = especialidad;
 		this.password = password;
+		this.imagenVete = imagenVete;
 	}
 
 	public Long getDocumento() {
@@ -103,6 +105,14 @@ public class VeterinarioVo {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getImagenVete() {
+		return imagenVete;
+	}
+
+	public void setImagenVete(String imagenVete) {
+		this.imagenVete = imagenVete;
 	}
 
 }

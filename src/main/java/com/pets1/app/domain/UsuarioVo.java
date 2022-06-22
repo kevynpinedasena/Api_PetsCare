@@ -28,6 +28,9 @@ public class UsuarioVo {
 
 	@Column(name = "password_usu", nullable = false)
 	private String passwordUs;
+	
+	@Column(name = "foto_usu", nullable = false)
+	private String imagenUsuario;
 
 	@Column(name = "rol_usu", nullable = false)
 	private int rolUs;
@@ -37,7 +40,7 @@ public class UsuarioVo {
 	}
 
 	public UsuarioVo(Long documentoUs, String nombreUs, String apellidoUs, String telefonoUs, String correoUs,
-			String passwordUs, int rolUs) {
+			String passwordUs, String imagenUsuario, int rolUs) {
 		super();
 		this.documentoUs = documentoUs;
 		this.nombreUs = nombreUs;
@@ -45,6 +48,7 @@ public class UsuarioVo {
 		this.telefonoUs = telefonoUs;
 		this.correoUs = correoUs;
 		this.passwordUs = passwordUs;
+		this.imagenUsuario = imagenUsuario;
 		this.rolUs = rolUs;
 	}
 
@@ -94,6 +98,14 @@ public class UsuarioVo {
 
 	public void setPasswordUs(String passwordUs) {
 		this.passwordUs = passwordUs;
+	}
+
+	public String getImagenUsuario() {
+		return imagenUsuario;
+	}
+
+	public void setImagenUsuario(String imagenUsuario) {
+		this.imagenUsuario = imagenUsuario;
 	}
 
 	public int getRolUs() {

@@ -35,18 +35,24 @@ public class HistoriaClinicaVo {
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private VeterinarioVo veterinarioHisCli;
 	
+	@ManyToOne
+	@JoinColumn( name = "documento_usu", referencedColumnName = "documento_usu")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	private UsuarioVo usuarioDoc;
+	
 	public HistoriaClinicaVo () {
 		
 	}
 
 	public HistoriaClinicaVo(Long codigo, String fecha, String motivoConsulta,
-			MascotaVo mascotaCod, VeterinarioVo veterinarioHisCli) {
+			MascotaVo mascotaCod, VeterinarioVo veterinarioHisCli, UsuarioVo usuarioDoc) {
 		super();
 		this.codigo = codigo;
 		this.fecha = fecha;
 		this.motivoConsulta = motivoConsulta;
 		this.mascotaCod = mascotaCod;
 		this.veterinarioHisCli = veterinarioHisCli;
+		this.usuarioDoc = usuarioDoc;
 	}
 
 	public Long getCodigo() {
@@ -89,4 +95,11 @@ public class HistoriaClinicaVo {
 		this.veterinarioHisCli = veterinarioHisCli;
 	}
 
+	public UsuarioVo getUsuarioDoc() {
+		return usuarioDoc;
+	}
+
+	public void setUsuarioDoc(UsuarioVo usuarioDoc) {
+		this.usuarioDoc = usuarioDoc;
+	}
 }

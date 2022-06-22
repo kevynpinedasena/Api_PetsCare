@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,11 +31,13 @@ public class VeterinarioRest {
 	@Autowired
 	private IVeterinarioService veterinarioService;
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@GetMapping("/veterinarios")
 	public List<VeterinarioVo> listaVeterinario(){
 		return veterinarioService.listaVeterinarios();
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@GetMapping("/veterinarios/{codigo}")
 	public ResponseEntity<Optional<VeterinarioVo>> buscarVeterinarioID(@PathVariable Long codigo){
 		Optional<VeterinarioVo> veterinarioId = veterinarioService.buscarId(codigo);
@@ -42,6 +45,7 @@ public class VeterinarioRest {
 		return ResponseEntity.ok().body(veterinarioId);
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@PostMapping("/veterinarios")
 	public ResponseEntity<?> guardarveterinario(@RequestBody VeterinarioVo veterinarioVo)throws URISyntaxException{	
 		Map<String,Object>response = new HashMap<>();
@@ -55,6 +59,7 @@ public class VeterinarioRest {
 		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@PutMapping("/veterinarios/{codigo}")
 	public ResponseEntity<?> actualizarVeterinario(@PathVariable Long codigo ,@RequestBody VeterinarioVo veterinarioVo)throws URISyntaxException{
 		Optional<VeterinarioVo> veterinario = veterinarioService.buscarId(codigo);
@@ -72,6 +77,7 @@ public class VeterinarioRest {
 		miVeterinarioVo.setCorreo(veterinarioVo.getCorreo());
 		miVeterinarioVo.setEspecialidad(veterinarioVo.getEspecialidad());
 		miVeterinarioVo.setPassword(veterinarioVo.getPassword());
+		miVeterinarioVo.setImagenVete(veterinarioVo.getImagenVete());
 		
 		miVeterinarioVo = veterinarioService.guardar(miVeterinarioVo);
 		response.put("actualizado con exito", miVeterinarioVo);
@@ -79,6 +85,7 @@ public class VeterinarioRest {
 		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@DeleteMapping("/veterinarios/{codigo}")
 	public ResponseEntity<Void> eliminarVeterinario(@PathVariable Long codigo){
 		veterinarioService.eliminarVeterinario(codigo);

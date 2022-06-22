@@ -37,6 +37,9 @@ public class MascotaVo {
 	@Column(name = "tipoAnimal_mc", nullable = false)
 	private String tipoAnimal;
 	
+	@Column(name = "foto_mascota", nullable = false)
+	private String imagenMascota;
+	
 	@ManyToOne
 	@JoinColumn( name = "documento_usu", referencedColumnName = "documento_usu")
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -47,7 +50,7 @@ public class MascotaVo {
 	}
 
 	public MascotaVo(Long codigo, String nombre, String raza, String color, double peso, String discapacidad,
-			String tipoAnimal, UsuarioVo duenioMasCo) {
+			String tipoAnimal, String imagenMascota, UsuarioVo duenioMasCo) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -56,6 +59,7 @@ public class MascotaVo {
 		this.peso = peso;
 		this.discapacidad = discapacidad;
 		this.tipoAnimal = tipoAnimal;
+		this.imagenMascota = imagenMascota;
 		this.duenioMasCo = duenioMasCo;
 	}
 
@@ -113,6 +117,14 @@ public class MascotaVo {
 
 	public void setTipoAnimal(String tipoAnimal) {
 		this.tipoAnimal = tipoAnimal;
+	}
+
+	public String getImagenMascota() {
+		return imagenMascota;
+	}
+
+	public void setImagenMascota(String imagenMascota) {
+		this.imagenMascota = imagenMascota;
 	}
 
 	public UsuarioVo getDuenioMasCo() {

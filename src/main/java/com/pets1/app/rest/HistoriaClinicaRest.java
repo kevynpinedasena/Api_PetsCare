@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,12 +32,13 @@ public class HistoriaClinicaRest {
 	@Autowired
 	private IHistoriaClinicaService historiaService;
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@GetMapping("/historias")
 	public List<HistoriaClinicaVo> listaHistorias(){
 		return historiaService.listaHistoriaCli();
 	}
 	
-	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@GetMapping("/historias/{codigo}")
 	public ResponseEntity<Optional<HistoriaClinicaVo>> buscarHistoriasID(@PathVariable Long codigo){
 		Optional<HistoriaClinicaVo> historiasId = historiaService.buscarId(codigo);
@@ -44,7 +46,7 @@ public class HistoriaClinicaRest {
 		return ResponseEntity.ok().body(historiasId);
 	}
 	
-	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@PostMapping("/historias")
 	public ResponseEntity<?> guardarHistorias(@RequestBody HistoriaClinicaVo historiasVo)throws URISyntaxException{	
 		Map<String,Object>response = new HashMap<>();
@@ -58,7 +60,7 @@ public class HistoriaClinicaRest {
 		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
 	}
 	
-	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@PutMapping("/historias/{codigo}")
 	public ResponseEntity<?> actualizarHistoria(@PathVariable Long codigo ,@RequestBody HistoriaClinicaVo historiaVo)throws URISyntaxException{
 		Optional<HistoriaClinicaVo> historia = historiaService.buscarId(codigo);
@@ -74,6 +76,7 @@ public class HistoriaClinicaRest {
 		miHistoriaVo.setMotivoConsulta(historiaVo.getMotivoConsulta());
 		miHistoriaVo.setMascotaCod(historiaVo.getMascotaCod());
 		miHistoriaVo.setVeterinarioHisCli(historiaVo.getVeterinarioHisCli());
+		miHistoriaVo.setUsuarioDoc(historiaVo.getUsuarioDoc());
 		
 		miHistoriaVo = historiaService.guardar(miHistoriaVo);
 		response.put("actualizado con exito", miHistoriaVo);
@@ -81,6 +84,7 @@ public class HistoriaClinicaRest {
 		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@DeleteMapping("/historias/{codigo}")
 	public ResponseEntity<Void> eliminarHistoria(@PathVariable Long codigo){
 		historiaService.eliminarHistoriaCli(codigo);

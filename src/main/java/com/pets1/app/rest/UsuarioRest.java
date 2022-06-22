@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,11 +31,13 @@ public class UsuarioRest {
 	@Autowired
 	private IUsuarioService usuarioService;
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@GetMapping("/usuarios")
 	public List<UsuarioVo> listaUsuarios(){
 		return usuarioService.listaUsuario();
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@GetMapping("/usuarios/{codigo}")
 	public ResponseEntity<Optional<UsuarioVo>> buscarUsuarioID(@PathVariable Long codigo){
 		Optional<UsuarioVo> usuarioId = usuarioService.buscarId(codigo);
@@ -42,6 +45,7 @@ public class UsuarioRest {
 		return ResponseEntity.ok().body(usuarioId);
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@PostMapping("/usuarios")
 	public ResponseEntity<?> guardarUsuario(@RequestBody UsuarioVo usuarioVo)throws URISyntaxException{	
 		Map<String,Object>response = new HashMap<>();
@@ -55,6 +59,7 @@ public class UsuarioRest {
 		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@PutMapping("/usuarios/{codigo}")
 	public ResponseEntity<?> actualizarUsuario(@PathVariable Long codigo ,@RequestBody UsuarioVo usuarioVo)throws URISyntaxException{
 		Optional<UsuarioVo> usuario = usuarioService.buscarId(codigo);
@@ -71,6 +76,7 @@ public class UsuarioRest {
 		miUsuarioVo.setTelefonoUs(usuarioVo.getTelefonoUs());
 		miUsuarioVo.setCorreoUs(usuarioVo.getCorreoUs());
 		miUsuarioVo.setPasswordUs(usuarioVo.getPasswordUs());
+		miUsuarioVo.setImagenUsuario(usuarioVo.getImagenUsuario());
 		miUsuarioVo.setRolUs(usuarioVo.getRolUs());
 		
 		miUsuarioVo = usuarioService.guardar(miUsuarioVo);
@@ -79,6 +85,7 @@ public class UsuarioRest {
 		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@DeleteMapping("/usuarios/{codigo}")
 	public ResponseEntity<Void> eliminarUsuario(@PathVariable Long codigo){
 		usuarioService.eliminarUsuario(codigo);

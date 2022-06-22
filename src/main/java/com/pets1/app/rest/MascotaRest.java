@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,12 +31,13 @@ public class MascotaRest {
 	@Autowired
 	private IMascotaService mascotaService;
 	
-	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@GetMapping("/mascotas")
 	public List<MascotaVo> listaMascotas(){
 		return mascotaService.listaMascotas();
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@GetMapping("/mascotas/{codigo}")
 	public ResponseEntity<Optional<MascotaVo>> buscarMascotaID(@PathVariable Long codigo){
 		Optional<MascotaVo> mascotaId = mascotaService.buscarId(codigo);
@@ -43,6 +45,7 @@ public class MascotaRest {
 		return ResponseEntity.ok().body(mascotaId);
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@PostMapping("/mascotas")
 	public ResponseEntity<?> guardarMascota(@RequestBody MascotaVo mascotaVo)throws URISyntaxException{	
 		Map<String,Object>response = new HashMap<>();
@@ -56,6 +59,7 @@ public class MascotaRest {
 		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@PutMapping("/mascotas/{codigo}")
 	public ResponseEntity<?> actualizarMascota(@PathVariable Long codigo ,@RequestBody MascotaVo mascotaVo)throws URISyntaxException{
 		Optional<MascotaVo> mascota = mascotaService.buscarId(codigo);
@@ -73,6 +77,7 @@ public class MascotaRest {
 		miMascotaVo.setPeso(mascotaVo.getPeso());
 		miMascotaVo.setDiscapacidad(mascotaVo.getDiscapacidad());
 		miMascotaVo.setTipoAnimal(mascotaVo.getTipoAnimal());
+		miMascotaVo.setImagenMascota(mascotaVo.getImagenMascota());
 		miMascotaVo.setDuenioMasCo(mascotaVo.getDuenioMasCo());
 		
 		miMascotaVo = mascotaService.guardar(miMascotaVo);
@@ -81,6 +86,7 @@ public class MascotaRest {
 		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@DeleteMapping("/mascotas/{codigo}")
 	public ResponseEntity<Void> eliminarMascota(@PathVariable Long codigo){
 		mascotaService.eliminarMascota(codigo);

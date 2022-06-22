@@ -26,8 +26,14 @@ public class ClinicaVo {
 	@Column(name = "horario_atencio_cv", nullable = false)
 	private String horario_atencion;
 	
+	@Column(name = "dias_atencion", nullable = false)
+	private String diasAtencion;
+	
 	@Column(name = "rol_cv", nullable = false)
 	private int rol;
+	
+	@Column(name = "foto_clinica", nullable = false)
+	private String imagenClinica;
 	
 	@ManyToOne
 	@JoinColumn(name = "documento_vt", referencedColumnName = "documento_vt")
@@ -40,14 +46,16 @@ public class ClinicaVo {
 		
 	}
 
-	public ClinicaVo(Long nit, String nombre, String direccion, String horario_atencion, int rol,
+	public ClinicaVo(Long nit, String nombre, String direccion, String horario_atencion, String diasAtencion, int rol, String imagenClinica,
 			VeterinarioVo veterinarioCod) {
 		super();
 		this.nit = nit;
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.horario_atencion = horario_atencion;
+		this.diasAtencion = diasAtencion;
 		this.rol = rol;
+		this.imagenClinica = imagenClinica;
 		this.veterinarioCod = veterinarioCod;
 	}
 
@@ -83,12 +91,28 @@ public class ClinicaVo {
 		this.horario_atencion = horario_atencion;
 	}
 
+	public String getDiasAtencion() {
+		return diasAtencion;
+	}
+
+	public void setDiasAtencion(String diasAtencion) {
+		this.diasAtencion = diasAtencion;
+	}
+
 	public int getRol() {
 		return rol;
 	}
 
 	public void setRol(int rol) {
 		this.rol = rol;
+	}
+
+	public String getImagenClinica() {
+		return imagenClinica;
+	}
+
+	public void setImagenClinica(String imagenClinica) {
+		this.imagenClinica = imagenClinica;
 	}
 
 	public VeterinarioVo getVeterinarioCod() {

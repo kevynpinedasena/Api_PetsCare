@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,11 +31,13 @@ public class AgendaRest {
 	@Autowired
 	private IAgendaService agendaService;
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@GetMapping("/agendas")
 	public List<AgendaVo> listaAgenda(){
 		return agendaService.listaAgenda();
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@GetMapping("/agendas/{codigo}")
 	public ResponseEntity<Optional<AgendaVo>> buscarAgendaID(@PathVariable Long codigo){
 		Optional<AgendaVo> agendaId=agendaService.buscarId(codigo);
@@ -42,6 +45,7 @@ public class AgendaRest {
 		return ResponseEntity.ok().body(agendaId);
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@PostMapping("/agendas")
 	public ResponseEntity<?> guardarAgenda(@RequestBody AgendaVo agendaVo)throws URISyntaxException{	
 		Map<String,Object>response = new HashMap<>();
@@ -55,6 +59,7 @@ public class AgendaRest {
 		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@PutMapping("/agendas/{codigo}")
 	public ResponseEntity<?> actualizarAgenda(@PathVariable Long codigo ,@RequestBody AgendaVo agendaVo)throws URISyntaxException{
 		Optional<AgendaVo> agenda= agendaService.buscarId(codigo);
@@ -77,6 +82,7 @@ public class AgendaRest {
 		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@DeleteMapping("/agendas/{codigo}")
 	public ResponseEntity<Void> eliminarAgenda(@PathVariable Long codigo){
 		agendaService.eliminarAgenda(codigo);
