@@ -30,10 +30,10 @@ public class HistoriaClinicaVo {
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private MascotaVo mascotaCod;
 	
-	@ManyToOne
-	@JoinColumn(name = "documento_vt", referencedColumnName = "documento_vt")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private VeterinarioVo veterinarioHisCli;
+//	@ManyToOne
+//	@JoinColumn(name = "documento_vt", referencedColumnName = "documento_vt")
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//	private VeterinarioVo veterinarioHisCli;
 	
 	@ManyToOne
 	@JoinColumn( name = "documento_usu", referencedColumnName = "documento_usu")
@@ -45,13 +45,13 @@ public class HistoriaClinicaVo {
 	}
 
 	public HistoriaClinicaVo(Long codigo, String fecha, String motivoConsulta,
-			MascotaVo mascotaCod, VeterinarioVo veterinarioHisCli, UsuarioVo usuarioDoc) {
+			MascotaVo mascotaCod/*, VeterinarioVo veterinarioHisCli*/, UsuarioVo usuarioDoc) {
 		super();
 		this.codigo = codigo;
 		this.fecha = fecha;
 		this.motivoConsulta = motivoConsulta;
 		this.mascotaCod = mascotaCod;
-		this.veterinarioHisCli = veterinarioHisCli;
+//		this.veterinarioHisCli = veterinarioHisCli;
 		this.usuarioDoc = usuarioDoc;
 	}
 
@@ -87,13 +87,13 @@ public class HistoriaClinicaVo {
 		this.mascotaCod = mascotaCod;
 	}
 
-	public VeterinarioVo getVeterinarioHisCli() {
-		return veterinarioHisCli;
-	}
-
-	public void setVeterinarioHisCli(VeterinarioVo veterinarioHisCli) {
-		this.veterinarioHisCli = veterinarioHisCli;
-	}
+//	public VeterinarioVo getVeterinarioHisCli() {
+//		return veterinarioHisCli;
+//	}
+//
+//	public void setVeterinarioHisCli(VeterinarioVo veterinarioHisCli) {
+//		this.veterinarioHisCli = veterinarioHisCli;
+//	}
 
 	public UsuarioVo getUsuarioDoc() {
 		return usuarioDoc;
