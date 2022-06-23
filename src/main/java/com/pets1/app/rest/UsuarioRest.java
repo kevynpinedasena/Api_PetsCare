@@ -24,6 +24,7 @@ import com.pets1.app.service.IUsuarioService;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class UsuarioRest {
 
 //	private static final String ENTITY_NAME="UsuarioVo";
@@ -31,13 +32,13 @@ public class UsuarioRest {
 	@Autowired
 	private IUsuarioService usuarioService;
 	
-	@CrossOrigin(origins = {"http://localhost:8080","null"})
+//	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@GetMapping("/usuarios")
 	public List<UsuarioVo> listaUsuarios(){
 		return usuarioService.listaUsuario();
 	}
 	
-	@CrossOrigin(origins = {"http://localhost:8080","null"})
+//	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@GetMapping("/usuarios/{codigo}")
 	public ResponseEntity<Optional<UsuarioVo>> buscarUsuarioID(@PathVariable Long codigo){
 		Optional<UsuarioVo> usuarioId = usuarioService.buscarId(codigo);
@@ -45,10 +46,18 @@ public class UsuarioRest {
 		return ResponseEntity.ok().body(usuarioId);
 	}
 	
-	@CrossOrigin(origins = {"http://localhost:8080","null"})
+//	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@PostMapping("/usuarios")
 	public ResponseEntity<?> guardarUsuario(@RequestBody UsuarioVo usuarioVo)throws URISyntaxException{	
 		Map<String,Object>response = new HashMap<>();
+		
+		for (UsuarioVo datos : usuarioService.listaUsuario()) {
+			if ( usuarioVo.getDocumentoUs() == datos.getDocumentoUs()) {
+				response.put("error", "Este usuario ya esta en la base de datos");
+				return new ResponseEntity<Map<String, Object>> (response, HttpStatus.NOT_FOUND);
+			}
+		}
+		
 		if(usuarioVo.getDocumentoUs() == null) {
 			response.put("error", "Tiene que mandar el documento del usuario");
 			return new ResponseEntity<Map<String, Object>> (response, HttpStatus.NOT_FOUND);
@@ -59,7 +68,7 @@ public class UsuarioRest {
 		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
 	}
 	
-	@CrossOrigin(origins = {"http://localhost:8080","null"})
+//	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@PutMapping("/usuarios/{codigo}")
 	public ResponseEntity<?> actualizarUsuario(@PathVariable Long codigo ,@RequestBody UsuarioVo usuarioVo)throws URISyntaxException{
 		Optional<UsuarioVo> usuario = usuarioService.buscarId(codigo);
@@ -73,10 +82,11 @@ public class UsuarioRest {
 		miUsuarioVo.setDocumentoUs(usuarioVo.getDocumentoUs());
 		miUsuarioVo.setNombreUs(usuarioVo.getNombreUs());
 		miUsuarioVo.setApellidoUs(usuarioVo.getApellidoUs());
+		miUsuarioVo.setSexoUs(usuarioVo.getSexoUs());
 		miUsuarioVo.setTelefonoUs(usuarioVo.getTelefonoUs());
 		miUsuarioVo.setCorreoUs(usuarioVo.getCorreoUs());
 		miUsuarioVo.setPasswordUs(usuarioVo.getPasswordUs());
-		miUsuarioVo.setImagenUsuario(usuarioVo.getImagenUsuario());
+		miUsuarioVo.setImagenUsu(usuarioVo.getImagenUsu());
 		miUsuarioVo.setRolUs(usuarioVo.getRolUs());
 		
 		miUsuarioVo = usuarioService.guardar(miUsuarioVo);
@@ -85,7 +95,7 @@ public class UsuarioRest {
 		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
 	}
 	
-	@CrossOrigin(origins = {"http://localhost:8080","null"})
+//	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@DeleteMapping("/usuarios/{codigo}")
 	public ResponseEntity<Void> eliminarUsuario(@PathVariable Long codigo){
 		usuarioService.eliminarUsuario(codigo);

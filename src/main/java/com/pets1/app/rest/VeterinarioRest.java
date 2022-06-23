@@ -73,6 +73,7 @@ public class VeterinarioRest {
 		miVeterinarioVo.setDocumento(veterinarioVo.getDocumento());
 		miVeterinarioVo.setNombre(veterinarioVo.getNombre());
 		miVeterinarioVo.setApellidos(veterinarioVo.getApellidos());
+		miVeterinarioVo.setSexoVt(veterinarioVo.getSexoVt());
 		miVeterinarioVo.setTelefono(veterinarioVo.getTelefono());
 		miVeterinarioVo.setCorreo(veterinarioVo.getCorreo());
 		miVeterinarioVo.setEspecialidad(veterinarioVo.getEspecialidad());

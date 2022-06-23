@@ -19,6 +19,9 @@ public class UsuarioVo {
 
 	@Column(name = "apellido_usu", nullable = false)
 	private String apellidoUs;
+	
+	@Column(name = "sexo_usu", nullable = false)
+	private String sexoUs;
 
 	@Column(name = "telefono_usu", nullable = false)
 	private String telefonoUs;
@@ -30,7 +33,7 @@ public class UsuarioVo {
 	private String passwordUs;
 	
 	@Column(name = "foto_usu", nullable = false)
-	private String imagenUsuario;
+	private String imagenUsu;
 
 	@Column(name = "rol_usu", nullable = false)
 	private int rolUs;
@@ -39,16 +42,17 @@ public class UsuarioVo {
 		
 	}
 
-	public UsuarioVo(Long documentoUs, String nombreUs, String apellidoUs, String telefonoUs, String correoUs,
-			String passwordUs, String imagenUsuario, int rolUs) {
+	public UsuarioVo(Long documentoUs, String nombreUs, String apellidoUs, String sexoUs, String telefonoUs, String correoUs,
+			String passwordUs, String imagenUsu, int rolUs) {
 		super();
 		this.documentoUs = documentoUs;
 		this.nombreUs = nombreUs;
 		this.apellidoUs = apellidoUs;
 		this.telefonoUs = telefonoUs;
+		this.sexoUs = sexoUs;
 		this.correoUs = correoUs;
 		this.passwordUs = passwordUs;
-		this.imagenUsuario = imagenUsuario;
+		this.imagenUsu = imagenUsu;
 		this.rolUs = rolUs;
 	}
 
@@ -76,6 +80,14 @@ public class UsuarioVo {
 		this.apellidoUs = apellidoUs;
 	}
 
+	public String getSexoUs() {
+		return sexoUs;
+	}
+
+	public void setSexoUs(String sexoUs) {
+		this.sexoUs = sexoUs;
+	}
+
 	public String getTelefonoUs() {
 		return telefonoUs;
 	}
@@ -100,12 +112,12 @@ public class UsuarioVo {
 		this.passwordUs = passwordUs;
 	}
 
-	public String getImagenUsuario() {
-		return imagenUsuario;
+	public String getImagenUsu() {
+		return imagenUsu;
 	}
 
-	public void setImagenUsuario(String imagenUsuario) {
-		this.imagenUsuario = imagenUsuario;
+	public void setImagenUsu(String imagenUsu) {
+		this.imagenUsu = imagenUsu;
 	}
 
 	public int getRolUs() {

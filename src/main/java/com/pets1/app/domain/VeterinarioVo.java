@@ -18,6 +18,9 @@ public class VeterinarioVo {
 
 	@Column(name = "apellido_vt", nullable = false) 
 	private String apellidos ;
+	
+	@Column(name = "sexo_vt", nullable = false)
+	private String sexoVt;
 
 	@Column(name = "telefono_vt", nullable = false) 
 	private String telefono ;
@@ -38,12 +41,13 @@ public class VeterinarioVo {
 		
 	}
 
-	public VeterinarioVo(long documento, String nombre, String apellidos, String telefono, String correo,
+	public VeterinarioVo(long documento, String nombre, String apellidos, String sexoVt, String telefono, String correo,
 			String especialidad, String password, String imagenVete) {
 		super();
 		this.documento = documento;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
+		this.sexoVt = sexoVt;
 		this.telefono = telefono;
 		this.correo = correo;
 		this.especialidad = especialidad;
@@ -73,6 +77,14 @@ public class VeterinarioVo {
 
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
+	}
+
+	public String getSexoVt() {
+		return sexoVt;
+	}
+
+	public void setSexoVt(String sexoVt) {
+		this.sexoVt = sexoVt;
 	}
 
 	public String getTelefono() {
