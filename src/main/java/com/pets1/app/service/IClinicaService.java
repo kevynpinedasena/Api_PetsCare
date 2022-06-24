@@ -14,4 +14,6 @@ public interface IClinicaService {
 	Optional<ClinicaVo> buscarId(Long nit);
 	
 	void eliminarClinica(Long nit);
+	
+	List<ClinicaVo> clinicaNombre(String nombre);
 }

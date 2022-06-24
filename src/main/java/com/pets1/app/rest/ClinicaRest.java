@@ -40,8 +40,7 @@ public class ClinicaRest {
 	@CrossOrigin(origins = {"http://localhost:8080","null"})
 	@GetMapping("/clinicas/{codigo}")
 	public ResponseEntity<Optional<ClinicaVo>> buscarClinicaID(@PathVariable Long codigo){
-		Optional<ClinicaVo> clinicaId = clinicaService.buscarId(codigo);
-		
+		Optional<ClinicaVo> clinicaId = clinicaService.buscarId(codigo);	
 		return ResponseEntity.ok().body(clinicaId);
 	}
 	
@@ -85,10 +84,17 @@ public class ClinicaRest {
 		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
 	}
 	
-	@CrossOrigin(origins = {"http://localhost:8080","null"})
+
 	@DeleteMapping("/clinicas/{codigo}")
 	public ResponseEntity<Void> eliminarClinica(@PathVariable Long codigo){
 		clinicaService.eliminarClinica(codigo);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@GetMapping("clinicas-nombre/{nombre}")
+	public List<ClinicaVo> ConsultarClinicaNombre(@PathVariable String nombre){
+		List<ClinicaVo> datosClinica=clinicaService.clinicaNombre(nombre);
+		return datosClinica;
+	}
+	
 }

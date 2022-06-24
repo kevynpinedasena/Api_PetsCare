@@ -41,6 +41,12 @@ public class ClinicaServiceImpl implements IClinicaService{
 	public void eliminarClinica(Long nit) {
 		clinicaRepository.deleteById(nit);
 	}
+
+	@Override
+	public List<ClinicaVo> clinicaNombre(String nombre) {
+		List<ClinicaVo> clinica=clinicaRepository.clinicaNombre(nombre);
+		return clinica;
+	}
 	
 	
 }
