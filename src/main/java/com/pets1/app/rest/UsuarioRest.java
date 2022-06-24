@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pets1.app.domain.UsuarioVo;
 import com.pets1.app.service.IUsuarioService;
+import com.pets1.app.service.dto.DatosContraseñaCorreoDto;
+import com.pets1.app.service.dto.DatosUsuariosMascotasDto;
 
 @RestController
 @RequestMapping("/api")
@@ -100,5 +102,20 @@ public class UsuarioRest {
 	public ResponseEntity<Void> eliminarUsuario(@PathVariable Long codigo){
 		usuarioService.eliminarUsuario(codigo);
 		return ResponseEntity.noContent().build();
+	}
+	
+	
+	@GetMapping("/usuarios-nombre/{nombre}")
+	public DatosContraseñaCorreoDto buscarPorNombre(@PathVariable String nombre) {
+		
+		DatosContraseñaCorreoDto usu = usuarioService.usuarioPorNombre(nombre);
+		
+		return usu;
+	}
+	
+	@GetMapping("/usuarios-UsuariosMascota/{documento}")
+	public DatosUsuariosMascotasDto datosDeUsuarioMascota(@PathVariable Long documento) {
+		DatosUsuariosMascotasDto datosMascotaUsuario = usuarioService.usuarioMascota(documento);
+		return datosMascotaUsuario;
 	}
 }

@@ -5,11 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "mascotas")
@@ -40,17 +36,20 @@ public class MascotaVo {
 	@Column(name = "foto_mascota", nullable = false)
 	private String imagenMascota;
 	
-	@ManyToOne
-	@JoinColumn( name = "documento_usu", referencedColumnName = "documento_usu")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private UsuarioVo duenioMasCo;
+//	@ManyToOne
+//	@JoinColumn( name = "documento_usu", referencedColumnName = "documento_usu")
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//	private UsuarioVo duenioMasCo;
+	
+	@Column(name = "documento_usuario_mas", nullable = false)
+	private Long documentoUs;
 	
 	public MascotaVo () {
 		
 	}
 
 	public MascotaVo(Long codigo, String nombre, String raza, String color, double peso, String discapacidad,
-			String tipoAnimal, String imagenMascota, UsuarioVo duenioMasCo) {
+			String tipoAnimal, String imagenMascota, UsuarioVo duenioMasCo, Long docomentoUs) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -60,7 +59,8 @@ public class MascotaVo {
 		this.discapacidad = discapacidad;
 		this.tipoAnimal = tipoAnimal;
 		this.imagenMascota = imagenMascota;
-		this.duenioMasCo = duenioMasCo;
+//		this.duenioMasCo = duenioMasCo;
+		this.documentoUs = docomentoUs;
 	}
 
 	public Long getCodigo() {
@@ -126,12 +126,20 @@ public class MascotaVo {
 	public void setImagenMascota(String imagenMascota) {
 		this.imagenMascota = imagenMascota;
 	}
+//
+//	public UsuarioVo getDuenioMasCo() {
+//		return duenioMasCo;
+//	}
+//
+//	public void setDuenioMasCo(UsuarioVo duenioMasCo) {
+//		this.duenioMasCo = duenioMasCo;
+//	}
 
-	public UsuarioVo getDuenioMasCo() {
-		return duenioMasCo;
+	public Long getDocumentoUs() {
+		return documentoUs;
 	}
 
-	public void setDuenioMasCo(UsuarioVo duenioMasCo) {
-		this.duenioMasCo = duenioMasCo;
+	public void setDocumentoUs(Long documentoUs) {
+		this.documentoUs = documentoUs;
 	}
 }

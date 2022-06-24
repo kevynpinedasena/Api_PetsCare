@@ -1,9 +1,12 @@
 package com.pets1.app.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -37,6 +40,9 @@ public class UsuarioVo {
 
 	@Column(name = "rol_usu", nullable = false)
 	private int rolUs;
+	
+	@Transient
+	private List<MascotaVo> listaMascotas;
 	
 	public UsuarioVo() {
 		
@@ -126,5 +132,13 @@ public class UsuarioVo {
 
 	public void setRolUs(int rolUs) {
 		this.rolUs = rolUs;
+	}
+
+	public List<MascotaVo> getListaMascotas() {
+		return listaMascotas;
+	}
+
+	public void setListaMascotas(List<MascotaVo> listaMascotas) {
+		this.listaMascotas = listaMascotas;
 	}
 }
