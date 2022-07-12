@@ -1,16 +1,20 @@
 package com.pets1.app.domain;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuarios" ,uniqueConstraints = {@UniqueConstraint(columnNames = {"documento_usu"})})
 public class UsuarioVo {
 	
 	@Id
@@ -39,28 +43,15 @@ public class UsuarioVo {
 	private String imagenUsu;
 
 	@Column(name = "rol_usu", nullable = false)
-	private int rolUs;
+	private Long rolUs;
 	
-	@Transient
-	private List<MascotaVo> listaMascotas;
+	@JsonIgnoreProperties
+	@OneToMany(mappedBy = "dueniomascota", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<MascotaVo> mascotas= new HashSet<>();
 	
-	public UsuarioVo() {
-		
-	}
-
-	public UsuarioVo(Long documentoUs, String nombreUs, String apellidoUs, String sexoUs, String telefonoUs, String correoUs,
-			String passwordUs, String imagenUsu, int rolUs) {
-		super();
-		this.documentoUs = documentoUs;
-		this.nombreUs = nombreUs;
-		this.apellidoUs = apellidoUs;
-		this.telefonoUs = telefonoUs;
-		this.sexoUs = sexoUs;
-		this.correoUs = correoUs;
-		this.passwordUs = passwordUs;
-		this.imagenUsu = imagenUsu;
-		this.rolUs = rolUs;
-	}
+	@JsonIgnoreProperties
+	@OneToMany(mappedBy = "documentous", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<AgendaVo> agendas= new HashSet<>();
 
 	public Long getDocumentoUs() {
 		return documentoUs;
@@ -126,19 +117,49 @@ public class UsuarioVo {
 		this.imagenUsu = imagenUsu;
 	}
 
-	public int getRolUs() {
+	public Long getRolUs() {
 		return rolUs;
 	}
 
-	public void setRolUs(int rolUs) {
+	public void setRolUs(Long rolUs) {
 		this.rolUs = rolUs;
 	}
 
-	public List<MascotaVo> getListaMascotas() {
-		return listaMascotas;
+	public Set<MascotaVo> getMascotas() {
+		return mascotas;
 	}
 
-	public void setListaMascotas(List<MascotaVo> listaMascotas) {
-		this.listaMascotas = listaMascotas;
+	public void setMascotas(Set<MascotaVo> mascotas) {
+		this.mascotas = mascotas;
 	}
+
+	public Set<AgendaVo> getAgendas() {
+		return agendas;
+	}
+
+	public void setAgendas(Set<AgendaVo> agendas) {
+		this.agendas = agendas;
+	}
+
+	public UsuarioVo() {
+		super();
+	}
+
+	public UsuarioVo(Long documentoUs, String nombreUs, String apellidoUs, String sexoUs, String telefonoUs,
+			String correoUs, String passwordUs, String imagenUsu, Long rolUs, Set<MascotaVo> mascotas,
+			Set<AgendaVo> agendas) {
+		super();
+		this.documentoUs = documentoUs;
+		this.nombreUs = nombreUs;
+		this.apellidoUs = apellidoUs;
+		this.sexoUs = sexoUs;
+		this.telefonoUs = telefonoUs;
+		this.correoUs = correoUs;
+		this.passwordUs = passwordUs;
+		this.imagenUsu = imagenUsu;
+		this.rolUs = rolUs;
+		this.mascotas = mascotas;
+		this.agendas = agendas;
+	}
+	
 }

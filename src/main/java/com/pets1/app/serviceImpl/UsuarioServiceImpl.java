@@ -1,115 +1,83 @@
 package com.pets1.app.serviceImpl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pets1.app.domain.MascotaVo;
 import com.pets1.app.domain.UsuarioVo;
-import com.pets1.app.repository.IMascotaRepository;
+import com.pets1.app.exeptions.ResourseNotFoudExeption;
 import com.pets1.app.repository.IUsuarioRepository;
 import com.pets1.app.service.IUsuarioService;
-import com.pets1.app.service.dto.DatosContraseñaCorreoDto;
-import com.pets1.app.service.dto.DatosUsuariosMascotasDto;
+import com.pets1.app.service.dto.entityData.UsuarioDto;
 
 @Service
 @Transactional
 public class UsuarioServiceImpl implements IUsuarioService{
 	
-	@PersistenceContext
-	private EntityManager entityManager;
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Autowired
-	private IMascotaRepository mascotaRepository;
-
-	@Autowired
 	private IUsuarioRepository usuarioRepository;
-
-	@Override
-	public UsuarioVo guardar(UsuarioVo usuarioVo) {
-		
-		return usuarioRepository.save(usuarioVo);
+	
+	public UsuarioDto guardarUsuario(UsuarioDto usuarioDto) {
+		System.out.println("***********\n*******************\n**************\n**************");
+		UsuarioVo usuario = mapearEntidad(usuarioDto);
+		UsuarioVo nuevoUsuario = usuarioRepository.save(usuario);
+		UsuarioDto usuarioRespuesta = mapearDto(nuevoUsuario);
+ 		return usuarioRespuesta;
 	}
 
 	@Override
-	public List<UsuarioVo> listaUsuario() {
-		List<UsuarioVo> listaUsuario = usuarioRepository.findAll();
-		return listaUsuario;
+	public List<UsuarioDto> obtenerTodosLosUsuarios() {
+		List<UsuarioVo> usuarios = usuarioRepository.findAll();
+		return usuarios.stream().map(usuario -> mapearDto(usuario)).collect(Collectors.toList());
 	}
 
 	@Override
-	public Optional<UsuarioVo> buscarId(Long documento) {
-		Optional<UsuarioVo> buscarUsuarioId = usuarioRepository.findById(documento);
+	public UsuarioDto buscarUsuarioPorDocumento(Long documento) {
+		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourseNotFoudExeption("usuario", "documento", documento));
+		return mapearDto(usuario);
+	}
+
+	@Override
+	public UsuarioDto actualizarUsuario(UsuarioDto usuarioDto, Long documento) {
+		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourseNotFoudExeption("usuario", "documento", documento));
 		
-		buscarUsuarioId.get().setListaMascotas(listaMascotas(documento));
+//		usuario.setDocumentoUs(usuarioDto.getDocumentoUs());
+		usuario.setNombreUs(usuarioDto.getNombreUs());
+		usuario.setApellidoUs(usuarioDto.getApellidoUs());
+		usuario.setSexoUs(usuarioDto.getSexoUs());
+		usuario.setTelefonoUs(usuarioDto.getTelefonoUs());
+		usuario.setCorreoUs(usuarioDto.getCorreoUs());
+		usuario.setPasswordUs(usuarioDto.getPasswordUs());
+		usuario.setImagenUsu(usuarioDto.getImagenUsu());
+		usuario.setRolUs(usuarioDto.getRolUs());
 		
-		return buscarUsuarioId;
+		UsuarioVo usuarioActualizado = usuarioRepository.save(usuario);
+		
+		return mapearDto(usuarioActualizado);
 	}
 
 	@Override
 	public void eliminarUsuario(Long documento) {
-		
-		Query q = entityManager.createQuery("SELECT m.codigo FROM MascotaVo m WHERE m.documentoUs =:documento")
-				.setParameter("documento", documento);
-		
-		List<Long> mascotas = q.getResultList();
-		
-		for (Long datos : mascotas) {
-			Query m = entityManager.createQuery("DELETE FROM MascotaVo m WHERE m.codigo =:codigo")
-					.setParameter("codigo", datos);
-			m.executeUpdate();
-		}
-		
-		usuarioRepository.deleteById(documento);
+		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourseNotFoudExeption("usuario", "documento", documento));
+		usuarioRepository.delete(usuario);
 	}
 
-	@Override
-	@Transactional
-	public DatosContraseñaCorreoDto usuarioPorNombre(String nombre) {
-		
-		DatosContraseñaCorreoDto miUsuarioDto = new DatosContraseñaCorreoDto();
-		
-		List<String[]> usuario = usuarioRepository.usuarioPorNombre(nombre);
-		
-		for (String[] datos : usuario) {
-			miUsuarioDto.setCorreoUs(datos[0].toString());
-			miUsuarioDto.setPasswordUs(datos[1].toString());
-		}
-		return miUsuarioDto;
-	}
-
-	@Override
-	public DatosUsuariosMascotasDto usuarioMascota(Long documento) {
-		
-		DatosUsuariosMascotasDto mascotaUsuarioDto = new DatosUsuariosMascotasDto();
-		
-		List<String[]> masUsu = usuarioRepository.usuarioMascota(documento);
-		
-		for (String[] datos : masUsu) {
-			mascotaUsuarioDto.setNombreUs(datos[0].toString());
-			mascotaUsuarioDto.setCorreoUs(datos[1].toString());
-			mascotaUsuarioDto.setTelefonoUs(datos[2].toString());
-			mascotaUsuarioDto.setNombreMasc(datos[3].toString());
-			mascotaUsuarioDto.setRazaMasc(datos[4].toString());
-			mascotaUsuarioDto.setTipoMasc(datos[5].toString());
-		}
-		
-		return mascotaUsuarioDto;
+	private UsuarioDto mapearDto(UsuarioVo usuario) {
+		UsuarioDto usuarioDTO = modelMapper.map(usuario, UsuarioDto.class);
+		return usuarioDTO;
 	}
 	
-	
-	private List<MascotaVo> listaMascotas(Long documento){
-		
-		List<MascotaVo> listaMas = usuarioRepository.listaMascotas(documento);
-				
-		return listaMas;
+	private UsuarioVo mapearEntidad(UsuarioDto usuarioDto) {
+		UsuarioVo usuario = modelMapper.map(usuarioDto, UsuarioVo.class);
+		return usuario;
 	}
+	
 }

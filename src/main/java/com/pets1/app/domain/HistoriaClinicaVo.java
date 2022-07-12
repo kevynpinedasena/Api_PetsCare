@@ -6,10 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "historia_clinica")
@@ -25,34 +23,25 @@ public class HistoriaClinicaVo {
 	@Column(name = "motivoConsulta_hc", nullable = false, length = 200)
 	private String motivoConsulta;
 		
-	@ManyToOne
-	@JoinColumn(name = "codigo_mc", referencedColumnName = "codigo_mc")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@OneToOne
+	@JoinColumn(name = "codigo_mc", nullable = false)
 	private MascotaVo mascotaCod;
-	
+
 //	@ManyToOne
-//	@JoinColumn(name = "documento_vt", referencedColumnName = "documento_vt")
+//	@JoinColumn( name = "documento_usu", referencedColumnName = "documento_usu")
 //	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-//	private VeterinarioVo veterinarioHisCli;
-	
-	@ManyToOne
-	@JoinColumn( name = "documento_usu", referencedColumnName = "documento_usu")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private UsuarioVo usuarioDoc;
+//	private UsuarioVo usuarioDoc;
 	
 	public HistoriaClinicaVo () {
 		
 	}
 
-	public HistoriaClinicaVo(Long codigo, String fecha, String motivoConsulta,
-			MascotaVo mascotaCod/*, VeterinarioVo veterinarioHisCli*/, UsuarioVo usuarioDoc) {
+	public HistoriaClinicaVo(Long codigo, String fecha, String motivoConsulta, MascotaVo mascotaCod) {
 		super();
 		this.codigo = codigo;
 		this.fecha = fecha;
 		this.motivoConsulta = motivoConsulta;
 		this.mascotaCod = mascotaCod;
-//		this.veterinarioHisCli = veterinarioHisCli;
-		this.usuarioDoc = usuarioDoc;
 	}
 
 	public Long getCodigo() {
@@ -78,7 +67,7 @@ public class HistoriaClinicaVo {
 	public void setMotivoConsulta(String motivoConsulta) {
 		this.motivoConsulta = motivoConsulta;
 	}
-	
+
 	public MascotaVo getMascotaCod() {
 		return mascotaCod;
 	}
@@ -87,19 +76,4 @@ public class HistoriaClinicaVo {
 		this.mascotaCod = mascotaCod;
 	}
 
-//	public VeterinarioVo getVeterinarioHisCli() {
-//		return veterinarioHisCli;
-//	}
-//
-//	public void setVeterinarioHisCli(VeterinarioVo veterinarioHisCli) {
-//		this.veterinarioHisCli = veterinarioHisCli;
-//	}
-
-	public UsuarioVo getUsuarioDoc() {
-		return usuarioDoc;
-	}
-
-	public void setUsuarioDoc(UsuarioVo usuarioDoc) {
-		this.usuarioDoc = usuarioDoc;
-	}
 }

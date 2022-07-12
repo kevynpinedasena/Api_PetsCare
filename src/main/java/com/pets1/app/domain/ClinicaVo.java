@@ -1,13 +1,16 @@
 package com.pets1.app.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "clinica_veterinaria")
@@ -27,36 +30,33 @@ public class ClinicaVo {
 	private String horario_atencion;
 	
 	@Column(name = "dias_atencion", nullable = false)
-	private String diasAtencion;
+	private String dias_atencion;
 	
 	@Column(name = "rol_cv", nullable = false)
-	private int rol;
+	private long rol;
 	
 	@Column(name = "foto_clinica", nullable = false)
-	private String imagenClinica;
+	private String imagenclinica;
 	
-	@ManyToOne
-	@JoinColumn(name = "documento_vt", referencedColumnName = "documento_vt")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private VeterinarioVo veterinarioCod;
-	
-	
+	@JsonBackReference
+	@OneToMany(mappedBy = "clinica_nit", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<VeterinarioVo> veterinarios = new HashSet<>();
 	
 	public ClinicaVo () {
 		
 	}
 
-	public ClinicaVo(Long nit, String nombre, String direccion, String horario_atencion, String diasAtencion, int rol, String imagenClinica,
-			VeterinarioVo veterinarioCod) {
+	public ClinicaVo(Long nit, String nombre, String direccion, String horario_atencion, String dias_atencion, long rol,
+			String imagenclinica, Set<VeterinarioVo> veterinarios) {
 		super();
 		this.nit = nit;
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.horario_atencion = horario_atencion;
-		this.diasAtencion = diasAtencion;
+		this.dias_atencion = dias_atencion;
 		this.rol = rol;
-		this.imagenClinica = imagenClinica;
-		this.veterinarioCod = veterinarioCod;
+		this.imagenclinica = imagenclinica;
+		this.veterinarios = veterinarios;
 	}
 
 	public Long getNit() {
@@ -91,36 +91,36 @@ public class ClinicaVo {
 		this.horario_atencion = horario_atencion;
 	}
 
-	public String getDiasAtencion() {
-		return diasAtencion;
+	public String getDias_atencion() {
+		return dias_atencion;
 	}
 
-	public void setDiasAtencion(String diasAtencion) {
-		this.diasAtencion = diasAtencion;
+	public void setDias_atencion(String dias_atencion) {
+		this.dias_atencion = dias_atencion;
 	}
 
-	public int getRol() {
+	public long getRol() {
 		return rol;
 	}
 
-	public void setRol(int rol) {
+	public void setRol(long rol) {
 		this.rol = rol;
 	}
 
-	public String getImagenClinica() {
-		return imagenClinica;
+	public String getImagenclinica() {
+		return imagenclinica;
 	}
 
-	public void setImagenClinica(String imagenClinica) {
-		this.imagenClinica = imagenClinica;
+	public void setImagenclinica(String imagenclinica) {
+		this.imagenclinica = imagenclinica;
 	}
 
-	public VeterinarioVo getVeterinarioCod() {
-		return veterinarioCod;
+	public Set<VeterinarioVo> getVeterinarios() {
+		return veterinarios;
 	}
 
-	public void setVeterinarioCod(VeterinarioVo veterinarioCod) {
-		this.veterinarioCod = veterinarioCod;
+	public void setVeterinarios(Set<VeterinarioVo> veterinarios) {
+		this.veterinarios = veterinarios;
 	}
 
 }

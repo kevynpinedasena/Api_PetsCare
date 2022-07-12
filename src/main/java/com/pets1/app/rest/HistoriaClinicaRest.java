@@ -76,7 +76,7 @@ public class HistoriaClinicaRest {
 		miHistoriaVo.setMotivoConsulta(historiaVo.getMotivoConsulta());
 		miHistoriaVo.setMascotaCod(historiaVo.getMascotaCod());
 //		miHistoriaVo.setVeterinarioHisCli(historiaVo.getVeterinarioHisCli());
-		miHistoriaVo.setUsuarioDoc(historiaVo.getUsuarioDoc());
+//		miHistoriaVo.setUsuarioDoc(historiaVo.getUsuarioDoc());
 		
 		miHistoriaVo = historiaService.guardar(miHistoriaVo);
 		response.put("actualizado con exito", miHistoriaVo);

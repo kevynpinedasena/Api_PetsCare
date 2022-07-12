@@ -1,11 +1,20 @@
 package com.pets1.app.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "mascotas")
@@ -36,20 +45,20 @@ public class MascotaVo {
 	@Column(name = "foto_mascota", nullable = false)
 	private String imagenMascota;
 	
-//	@ManyToOne
-//	@JoinColumn( name = "documento_usu", referencedColumnName = "documento_usu")
-//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-//	private UsuarioVo duenioMasCo;
-	
-	@Column(name = "documento_usuario_mas", nullable = false)
-	private Long documentoUs;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn( name = "documento_usu", nullable = false)
+	private UsuarioVo dueniomascota;
+
+	@JsonBackReference
+	@OneToOne(mappedBy = "mascotaCod")
+	private HistoriaClinicaVo historiaMascota;
 	
 	public MascotaVo () {
 		
 	}
 
 	public MascotaVo(Long codigo, String nombre, String raza, String color, double peso, String discapacidad,
-			String tipoAnimal, String imagenMascota, UsuarioVo duenioMasCo, Long docomentoUs) {
+			String tipoAnimal, String imagenMascota, UsuarioVo dueniomascota, HistoriaClinicaVo historiaMascota) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -59,8 +68,8 @@ public class MascotaVo {
 		this.discapacidad = discapacidad;
 		this.tipoAnimal = tipoAnimal;
 		this.imagenMascota = imagenMascota;
-//		this.duenioMasCo = duenioMasCo;
-		this.documentoUs = docomentoUs;
+		this.dueniomascota = dueniomascota;
+		this.historiaMascota = historiaMascota;
 	}
 
 	public Long getCodigo() {
@@ -126,20 +135,21 @@ public class MascotaVo {
 	public void setImagenMascota(String imagenMascota) {
 		this.imagenMascota = imagenMascota;
 	}
-//
-//	public UsuarioVo getDuenioMasCo() {
-//		return duenioMasCo;
-//	}
-//
-//	public void setDuenioMasCo(UsuarioVo duenioMasCo) {
-//		this.duenioMasCo = duenioMasCo;
-//	}
 
-	public Long getDocumentoUs() {
-		return documentoUs;
+	public UsuarioVo getDueniomascota() {
+		return dueniomascota;
 	}
 
-	public void setDocumentoUs(Long documentoUs) {
-		this.documentoUs = documentoUs;
+	public void setDueniomascota(UsuarioVo dueniomascota) {
+		this.dueniomascota = dueniomascota;
 	}
+
+	public HistoriaClinicaVo getHistoriaMascota() {
+		return historiaMascota;
+	}
+
+	public void setHistoriaMascota(HistoriaClinicaVo historiaMascota) {
+		this.historiaMascota = historiaMascota;
+	}
+	
 }

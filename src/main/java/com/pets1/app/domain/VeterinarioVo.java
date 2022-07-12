@@ -1,14 +1,24 @@
 package com.pets1.app.domain;
 
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "veterinario")
 public class VeterinarioVo {
+	
 	@Id
 	@Column(name = "documento_vt", nullable=false)
 	private Long documento ;
@@ -20,7 +30,7 @@ public class VeterinarioVo {
 	private String apellidos ;
 	
 	@Column(name = "sexo_vt", nullable = false)
-	private String sexoVt;
+	private String sexovt;
 
 	@Column(name = "telefono_vt", nullable = false) 
 	private String telefono ;
@@ -37,22 +47,31 @@ public class VeterinarioVo {
 	@Column(name = "foto_veterinario", nullable = false)
 	private String imagenVete;
 	
+	@JsonBackReference
+	@OneToMany(mappedBy = "documentovt", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<AgendaVo> agendas= new HashSet<>();
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "clinica_nit", nullable = false)
+	private ClinicaVo clinica_nit;
+	
 	public VeterinarioVo () {
 		
 	}
 
-	public VeterinarioVo(long documento, String nombre, String apellidos, String sexoVt, String telefono, String correo,
-			String especialidad, String password, String imagenVete) {
+	public VeterinarioVo(Long documento, String nombre, String apellidos, String sexovt, String telefono, String correo,
+			String especialidad, String password, String imagenVete, ClinicaVo clinica_nit) {
 		super();
 		this.documento = documento;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
-		this.sexoVt = sexoVt;
+		this.sexovt = sexovt;
 		this.telefono = telefono;
 		this.correo = correo;
 		this.especialidad = especialidad;
 		this.password = password;
 		this.imagenVete = imagenVete;
+		this.clinica_nit = clinica_nit;
 	}
 
 	public Long getDocumento() {
@@ -79,12 +98,12 @@ public class VeterinarioVo {
 		this.apellidos = apellidos;
 	}
 
-	public String getSexoVt() {
-		return sexoVt;
+	public String getSexovt() {
+		return sexovt;
 	}
 
-	public void setSexoVt(String sexoVt) {
-		this.sexoVt = sexoVt;
+	public void setSexovt(String sexoVt) {
+		this.sexovt = sexoVt;
 	}
 
 	public String getTelefono() {
@@ -127,4 +146,12 @@ public class VeterinarioVo {
 		this.imagenVete = imagenVete;
 	}
 
+	public ClinicaVo getClinica_nit() {
+		return clinica_nit;
+	}
+
+	public void setClinica_nit(ClinicaVo clinica_nit) {
+		this.clinica_nit = clinica_nit;
+	}
+	
 }

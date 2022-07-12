@@ -73,12 +73,13 @@ public class VeterinarioRest {
 		miVeterinarioVo.setDocumento(veterinarioVo.getDocumento());
 		miVeterinarioVo.setNombre(veterinarioVo.getNombre());
 		miVeterinarioVo.setApellidos(veterinarioVo.getApellidos());
-		miVeterinarioVo.setSexoVt(veterinarioVo.getSexoVt());
+		miVeterinarioVo.setSexovt(veterinarioVo.getSexovt());
 		miVeterinarioVo.setTelefono(veterinarioVo.getTelefono());
 		miVeterinarioVo.setCorreo(veterinarioVo.getCorreo());
 		miVeterinarioVo.setEspecialidad(veterinarioVo.getEspecialidad());
 		miVeterinarioVo.setPassword(veterinarioVo.getPassword());
 		miVeterinarioVo.setImagenVete(veterinarioVo.getImagenVete());
+		miVeterinarioVo.setClinica_nit(veterinarioVo.getClinica_nit());
 		
 		miVeterinarioVo = veterinarioService.guardar(miVeterinarioVo);
 		response.put("actualizado con exito", miVeterinarioVo);

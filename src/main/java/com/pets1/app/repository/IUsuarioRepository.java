@@ -1,24 +1,20 @@
 package com.pets1.app.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Repository;
 
-import com.pets1.app.domain.MascotaVo;
 import com.pets1.app.domain.UsuarioVo;
 
 @Repository
 public interface IUsuarioRepository extends JpaRepository<UsuarioVo, Long>{
 
-	@Query("SELECT u.correoUs,u.passwordUs FROM UsuarioVo u WHERE u.nombreUs =:nombre")
-	List<String[]> usuarioPorNombre(@Param("nombre") String nombre);
+//	@Query("SELECT u.correoUs,u.passwordUs FROM UsuarioVo u WHERE u.nombreUs =:nombre")
+//	List<String[]> usuarioPorNombre(@Param("nombre") String nombre);
+//	
+//	@Query(value = "SELECT u.nombre_usu,u.correo_usu,u.telefono_usu,m.nombre_mc,m.raza_mc,m.tipo_animal_mc FROM usuarios AS u INNER JOIN mascotas AS m ON u.documento_usu = m.documento_usu WHERE u.documento_usu =:documento", nativeQuery = true)
+//	List<String[]> usuarioMascota(@Param("documento") Long documento);
 	
-	@Query(value = "SELECT u.nombre_usu,u.correo_usu,u.telefono_usu,m.nombre_mc,m.raza_mc,m.tipo_animal_mc FROM usuarios AS u INNER JOIN mascotas AS m ON u.documento_usu = m.documento_usu WHERE u.documento_usu =:documento", nativeQuery = true)
-	List<String[]> usuarioMascota(@Param("documento") Long documento);
-	
-	@Query("SELECT m FROM MascotaVo m WHERE m.documentoUs =:documento")
-	List<MascotaVo> listaMascotas(@Param("documento") Long documento);
+//	@Query("SELECT m FROM MascotaVo m WHERE m.documentoUs =:documento")
+//	List<MascotaVo> listaMascotas(@Param("documento") Long documento);
 }

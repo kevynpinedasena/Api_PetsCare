@@ -79,7 +79,7 @@ public class MascotaRest {
 		miMascotaVo.setTipoAnimal(mascotaVo.getTipoAnimal());
 		miMascotaVo.setImagenMascota(mascotaVo.getImagenMascota());
 //		miMascotaVo.setDuenioMasCo(mascotaVo.getDuenioMasCo());
-		miMascotaVo.setDocumentoUs(mascotaVo.getDocumentoUs());
+		miMascotaVo.setDueniomascota(mascotaVo.getDueniomascota());
 		
 		miMascotaVo = mascotaService.guardar(miMascotaVo);
 		response.put("actualizado con exito", miMascotaVo);

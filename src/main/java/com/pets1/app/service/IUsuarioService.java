@@ -1,23 +1,20 @@
 package com.pets1.app.service;
 
-import java.util.List;
-import java.util.Optional;
 
-import com.pets1.app.domain.UsuarioVo;
-import com.pets1.app.service.dto.DatosContraseñaCorreoDto;
-import com.pets1.app.service.dto.DatosUsuariosMascotasDto;
+import java.util.List;
+
+import com.pets1.app.service.dto.entityData.UsuarioDto;
 
 public interface IUsuarioService {
 
-	UsuarioVo guardar(UsuarioVo usuarioVo);
+	UsuarioDto guardarUsuario(UsuarioDto usuarioDto);
 	
-	List<UsuarioVo> listaUsuario();
+	List<UsuarioDto> obtenerTodosLosUsuarios();
 	
-	Optional<UsuarioVo> buscarId(Long documento);
+	UsuarioDto buscarUsuarioPorDocumento(Long documento);
+	
+	UsuarioDto actualizarUsuario(UsuarioDto usuarioDto, Long documento);
 	
 	void eliminarUsuario(Long documento);
-	
-	DatosContraseñaCorreoDto usuarioPorNombre(String nombre);
-	
-	DatosUsuariosMascotasDto usuarioMascota(Long documento);
+
 }
