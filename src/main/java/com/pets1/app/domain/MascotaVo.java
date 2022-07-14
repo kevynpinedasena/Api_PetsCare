@@ -1,5 +1,6 @@
 package com.pets1.app.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,7 +48,7 @@ public class MascotaVo {
 	private UsuarioVo dueniomascota;
 
 	@JsonIgnoreProperties
-	@OneToOne(mappedBy = "mascotaCod")
+	@OneToOne(mappedBy = "mascotaCod", cascade = CascadeType.ALL, orphanRemoval = true)
 	private HistoriaClinicaVo historiaMascota;
 	
 	public MascotaVo () {
