@@ -1,19 +1,18 @@
 package com.pets1.app.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.pets1.app.domain.ClinicaVo;
+import com.pets1.app.dto.entityData.clinicaDto;
 
 public interface IClinicaService {
 
-	ClinicaVo guardar(ClinicaVo clinicaVo);
+	clinicaDto crearClinica(clinicaDto clinicaDto);
 	
-	List<ClinicaVo> listaClinica();
+	List<clinicaDto> consultarListaDeClinicas();
 	
-	Optional<ClinicaVo> buscarId(Long nit);
+	clinicaDto consultarClinicaPorId(Long nitClinica);
 	
-	void eliminarClinica(Long nit);
+	clinicaDto actualizarClinica(Long nitClinica, clinicaDto clinicaDto);
 	
-	List<ClinicaVo> clinicaNombre(String nombre);
+	void eliminarClinica(Long nitClinica);
 }
