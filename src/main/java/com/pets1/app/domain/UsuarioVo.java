@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -45,7 +46,7 @@ public class UsuarioVo {
 	@Column(name = "rol_usu", nullable = false)
 	private Long rolUs;
 	
-	@JsonIgnoreProperties
+	@JsonBackReference
 	@OneToMany(mappedBy = "dueniomascota", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<MascotaVo> mascotas= new HashSet<>();
 	

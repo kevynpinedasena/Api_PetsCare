@@ -1,15 +1,22 @@
 package com.pets1.app.serviceImpl;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.MascotaVo;
+import com.pets1.app.domain.UsuarioVo;
+import com.pets1.app.dto.entityData.MascotaDto;
+import com.pets1.app.exeptions.AppPetsCareExeption;
+import com.pets1.app.exeptions.ResourseNotFoudExeption;
 import com.pets1.app.repository.IMascotaRepository;
+import com.pets1.app.repository.IUsuarioRepository;
 import com.pets1.app.service.IMascotaService;
 
 @Service
@@ -19,27 +26,88 @@ public class MascotaServiceImpl implements IMascotaService{
 	@Autowired
 	private IMascotaRepository mascotaRepository;
 	
+	@Autowired
+	private IUsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+
 	@Override
-	public MascotaVo guardar(MascotaVo mascotaVo) {
+	public MascotaDto guardarMascota(Long documentoUsuario, MascotaDto mascotaDto) {
+		MascotaVo mascota = mapearEntidad(mascotaDto);
+		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("Usuario", "documento", documentoUsuario));
 		
-		return mascotaRepository.save(mascotaVo);
+		mascota.setDueniomascota(usuario);
+		MascotaVo nuevaMascota = mascotaRepository.save(mascota);	
+		
+		return mapearDto(nuevaMascota);
 	}
 
 	@Override
-	public List<MascotaVo> listaMascotas() {
-		List<MascotaVo> listaMascotas = mascotaRepository.findAll();
-		return listaMascotas;
+	public List<MascotaDto> obtenerMascotasDeUsuario(Long documentoUsuario) {
+		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("Usuario", "documento", documentoUsuario));
+		List<MascotaVo> mascotas=mascotaRepository.findByDueniomascotaDocumentoUs(documentoUsuario);
+		return mascotas.stream().map(mascota -> mapearDto(mascota)).collect(Collectors.toList());
+		
 	}
 
 	@Override
-	public Optional<MascotaVo> buscarId(Long codigo) {
-		Optional<MascotaVo> buscarMascotaId = mascotaRepository.findById(codigo);
-		return buscarMascotaId;
+	public MascotaDto obtenerMascotaId(Long documentoUsuario, Long codigoMascota) {
+		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("Usuario", "documento", documentoUsuario));
+		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourseNotFoudExeption("Mascota", "codigo", codigoMascota));
+		
+		if(!mascota.getDueniomascota().getDocumentoUs().equals(usuario.getDocumentoUs())) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "la mascota no pertenese a este usuario");
+			
+		}
+		
+		return mapearDto(mascota);
 	}
 
 	@Override
-	public void eliminarMascota(Long codigo) {
-		mascotaRepository.deleteById(codigo);
+	public MascotaDto actualizarMascota(Long documentoUsuario, Long codigoMascota, MascotaDto mascotaDto) {
+		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("Usuario", "documento", documentoUsuario));
+		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourseNotFoudExeption("Mascota", "codigo", codigoMascota));
+		
+		if(!mascota.getDueniomascota().getDocumentoUs().equals(usuario.getDocumentoUs())) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "la mascota no pertenese a este usuario");
+		}
+		
+		mascota.setNombre(mascotaDto.getNombre());
+		mascota.setRaza(mascotaDto.getRaza());
+		mascota.setColor(mascotaDto.getColor());
+		mascota.setPeso(mascotaDto.getPeso());
+		mascota.setDiscapacidad(mascotaDto.getDiscapacidad());
+		mascota.setTipoAnimal(mascotaDto.getTipoAnimal());
+		mascota.setImagenMascota(mascotaDto.getImagenMascota());
+		
+		MascotaVo mascotaActualizada = mascotaRepository.save(mascota);
+		
+		return mapearDto(mascotaActualizada);
 	}
+
+	@Override
+	public void eliminarMascota(Long documentoUsuario, Long codigoMascota) {
+		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("Usuario", "documento", documentoUsuario));
+		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourseNotFoudExeption("Mascota", "codigo", codigoMascota));
+		
+		if(!mascota.getDueniomascota().getDocumentoUs().equals(usuario.getDocumentoUs())) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "la mascota no pertenese a este usuario");
+		}
+		
+		mascotaRepository.delete(mascota);
+		
+	}
+	
+	private MascotaDto mapearDto(MascotaVo mascota) {
+		MascotaDto mascotaDTO = modelMapper.map(mascota, MascotaDto.class);
+		return mascotaDTO;
+	}
+	
+	private MascotaVo mapearEntidad(MascotaDto mascotaDto) {
+		MascotaVo mascota = modelMapper.map(mascotaDto, MascotaVo.class);
+		return mascota;
+	}
+	
 
 }

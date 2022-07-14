@@ -1,8 +1,5 @@
 package com.pets1.app.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "mascotas")
@@ -49,7 +46,7 @@ public class MascotaVo {
 	@JoinColumn( name = "documento_usu", nullable = false)
 	private UsuarioVo dueniomascota;
 
-	@JsonBackReference
+	@JsonIgnoreProperties
 	@OneToOne(mappedBy = "mascotaCod")
 	private HistoriaClinicaVo historiaMascota;
 	

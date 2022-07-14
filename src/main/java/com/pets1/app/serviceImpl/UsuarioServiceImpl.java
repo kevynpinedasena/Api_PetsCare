@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.UsuarioVo;
+import com.pets1.app.dto.entityData.UsuarioDto;
 import com.pets1.app.exeptions.ResourseNotFoudExeption;
 import com.pets1.app.repository.IUsuarioRepository;
 import com.pets1.app.service.IUsuarioService;
-import com.pets1.app.service.dto.entityData.UsuarioDto;
 
 @Service
 @Transactional
@@ -26,7 +26,6 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	private IUsuarioRepository usuarioRepository;
 	
 	public UsuarioDto guardarUsuario(UsuarioDto usuarioDto) {
-		System.out.println("***********\n*******************\n**************\n**************");
 		UsuarioVo usuario = mapearEntidad(usuarioDto);
 		UsuarioVo nuevoUsuario = usuarioRepository.save(usuario);
 		UsuarioDto usuarioRespuesta = mapearDto(nuevoUsuario);

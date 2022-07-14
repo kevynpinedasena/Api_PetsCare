@@ -3,7 +3,7 @@ package com.pets1.app.service;
 
 import java.util.List;
 
-import com.pets1.app.service.dto.entityData.UsuarioDto;
+import com.pets1.app.dto.entityData.UsuarioDto;
 
 public interface IUsuarioService {
 

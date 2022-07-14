@@ -1,4 +1,4 @@
-package com.pets1.app.service.dto.entityData;
+package com.pets1.app.dto.entityData;
 
 import java.util.Set;
 
