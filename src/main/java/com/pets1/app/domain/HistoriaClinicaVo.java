@@ -14,13 +14,13 @@ import javax.persistence.Table;
 public class HistoriaClinicaVo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "codigo_hc", nullable = false, unique = true)
+	@Column(name = "codigo_hc", nullable = false)
 	private Long codigo;
 	
 	@Column(name = "fecha_hc", nullable = false)
 	private String fecha;
 	
-	@Column(name = "motivoConsulta_hc", nullable = false, length = 200)
+	@Column(name = "motivoConsulta_hc", nullable = false)
 	private String motivoConsulta;
 		
 	@OneToOne

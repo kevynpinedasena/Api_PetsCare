@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -47,7 +48,7 @@ public class MascotaVo {
 	@JoinColumn( name = "documento_usu", nullable = false)
 	private UsuarioVo dueniomascota;
 
-	@JsonIgnoreProperties
+	@JsonBackReference
 	@OneToOne(mappedBy = "mascotaCod", cascade = CascadeType.ALL, orphanRemoval = true)
 	private HistoriaClinicaVo historiaMascota;
 	

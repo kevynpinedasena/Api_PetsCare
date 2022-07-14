@@ -24,7 +24,7 @@ public class MascotaRest {
 	@Autowired
 	private IMascotaService mascotaService;
 	
-	@GetMapping("/usuario/{documento}/mascotas")
+	@GetMapping("/usuario/{documento}/mascota")
 	public List<MascotaDto> listaDeMascotasUsuario(@PathVariable Long documento){
 		return mascotaService.obtenerMascotasDeUsuario(documento);
 	}
@@ -35,7 +35,7 @@ public class MascotaRest {
 		return new ResponseEntity<>(mascotaDto, HttpStatus.OK);
 	}	
 	
-	@PostMapping("/usuario/{documento}/mascotas")
+	@PostMapping("/usuario/{documento}/mascota")
 	public ResponseEntity<MascotaDto> guardarMascota(@PathVariable Long documento ,@RequestBody MascotaDto mascotaDto){			
 		return new ResponseEntity<>(mascotaService.guardarMascota(documento, mascotaDto), HttpStatus.CREATED);
 	}
