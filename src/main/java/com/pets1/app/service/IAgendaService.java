@@ -1,17 +1,20 @@
 package com.pets1.app.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.pets1.app.domain.AgendaVo;
+import com.pets1.app.dto.entityData.AgendaDto;
 
 public interface IAgendaService {
 	
-	AgendaVo guardar(AgendaVo agendaVo);
+	AgendaDto CrearAgenda(Long documentoUsuario, Long documentoVeterinario, AgendaDto agendaDto);
 	
-	List<AgendaVo> listaAgenda();
+	List<AgendaDto> listaAgendaUsuario(Long documentoUsuario);
 	
-	Optional<AgendaVo> buscarId(Long codigo);
+	List<AgendaDto> listaAgendaVeterinario(Long documentoVeterinario);
+	
+	AgendaDto buscarAgendaId(Long codigo);
+	
+	AgendaDto actualizarAgenda(Long codigo, AgendaDto agendaDto);
 	
 	void eliminarAgenda(Long codigo);
 
