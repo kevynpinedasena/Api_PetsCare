@@ -12,11 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "veterinario")
+@Table(name = "veterinario", uniqueConstraints = {@UniqueConstraint(columnNames = {"documento_vt"})})
 public class VeterinarioVo {
 	
 	@Id
@@ -47,20 +48,20 @@ public class VeterinarioVo {
 	@Column(name = "foto_veterinario", nullable = false)
 	private String imagenVete;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "clinica_nit", nullable = false)
+	private ClinicaVo clinica;
+	
 	@JsonBackReference
 	@OneToMany(mappedBy = "documentovt", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<AgendaVo> agendas= new HashSet<>();
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "clinica_nit", nullable = false)
-	private ClinicaVo clinica_nit;
 	
 	public VeterinarioVo () {
 		
 	}
 
 	public VeterinarioVo(Long documento, String nombre, String apellidos, String sexovt, String telefono, String correo,
-			String especialidad, String password, String imagenVete, ClinicaVo clinica_nit) {
+			String especialidad, String password, String imagenVete, ClinicaVo clinica, Set<AgendaVo> agendas) {
 		super();
 		this.documento = documento;
 		this.nombre = nombre;
@@ -71,7 +72,8 @@ public class VeterinarioVo {
 		this.especialidad = especialidad;
 		this.password = password;
 		this.imagenVete = imagenVete;
-		this.clinica_nit = clinica_nit;
+		this.clinica = clinica;
+		this.agendas = agendas;
 	}
 
 	public Long getDocumento() {
@@ -102,8 +104,8 @@ public class VeterinarioVo {
 		return sexovt;
 	}
 
-	public void setSexovt(String sexoVt) {
-		this.sexovt = sexoVt;
+	public void setSexovt(String sexovt) {
+		this.sexovt = sexovt;
 	}
 
 	public String getTelefono() {
@@ -146,12 +148,20 @@ public class VeterinarioVo {
 		this.imagenVete = imagenVete;
 	}
 
-	public ClinicaVo getClinica_nit() {
-		return clinica_nit;
+	public ClinicaVo getClinica() {
+		return clinica;
 	}
 
-	public void setClinica_nit(ClinicaVo clinica_nit) {
-		this.clinica_nit = clinica_nit;
+	public void setClinica(ClinicaVo clinica) {
+		this.clinica = clinica;
+	}
+
+	public Set<AgendaVo> getAgendas() {
+		return agendas;
+	}
+
+	public void setAgendas(Set<AgendaVo> agendas) {
+		this.agendas = agendas;
 	}
 	
 }

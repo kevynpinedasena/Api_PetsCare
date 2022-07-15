@@ -39,7 +39,7 @@ public class ClinicaVo {
 	private String imagenclinica;
 	
 	@JsonBackReference
-	@OneToMany(mappedBy = "clinica_nit", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "clinica", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<VeterinarioVo> veterinarios = new HashSet<>();
 	
 	public ClinicaVo () {
