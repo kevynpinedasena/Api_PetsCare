@@ -1,26 +1,25 @@
-package com.pets1.app.dto.entityData;
+package com.pets1.app.dto.answers;
 
-import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
+import java.util.Set;
 
-public class clinicaDto {
+public class ClinicaAnswerDto {
 	
 	private Long nit;
 	
-	@NotEmpty
 	private String nombre;
 	
-	@NotEmpty
-	private String direccion;
+	private String direccion; 
 	
-	@NotEmpty
 	private String horario_atencion;
 	
-	@NotEmpty
 	private String dias_atencion;
 	
 	private long rol;
 	
 	private String imagenclinica;
+	
+	private Set<VeterinarioAnswerDto> veterinarios = new HashSet<>();
 
 	public Long getNit() {
 		return nit;
@@ -76,6 +75,14 @@ public class clinicaDto {
 
 	public void setImagenclinica(String imagenclinica) {
 		this.imagenclinica = imagenclinica;
+	}
+
+	public Set<VeterinarioAnswerDto> getVeterinarios() {
+		return veterinarios;
+	}
+
+	public void setVeterinarios(Set<VeterinarioAnswerDto> veterinarios) {
+		this.veterinarios = veterinarios;
 	}
 	
 }

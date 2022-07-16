@@ -1,33 +1,31 @@
-package com.pets1.app.dto.entityData;
+package com.pets1.app.dto.answers;
 
-import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
+import java.util.Set;
 
-public class UsuarioDto {
+public class UsuarioAnswerDto {
 	
 	private Long documentoUs;
 	
-	@NotEmpty
 	private String nombreUs;
 	
-	@NotEmpty
 	private String apellidoUs;
 	
-	@NotEmpty
 	private String sexoUs;
 	
-	@NotEmpty
 	private String telefonoUs;
 	
-	@NotEmpty
 	private String correoUs;
 	
-	@NotEmpty
 	private String passwordUs;
 	
-	@NotEmpty
 	private String imagenUsu;
 	
 	private Long rolUs;
+	
+	private Set<MascotaAswerDto> mascotas= new HashSet<>();
+	
+	private Set<AgendaAnswerDto> agendas= new HashSet<>();
 
 	public Long getDocumentoUs() {
 		return documentoUs;
@@ -101,4 +99,20 @@ public class UsuarioDto {
 		this.rolUs = rolUs;
 	}
 
+	public Set<MascotaAswerDto> getMascotas() {
+		return mascotas;
+	}
+
+	public void setMascotas(Set<MascotaAswerDto> mascotas) {
+		this.mascotas = mascotas;
+	}
+
+	public Set<AgendaAnswerDto> getAgendas() {
+		return agendas;
+	}
+
+	public void setAgendas(Set<AgendaAnswerDto> agendas) {
+		this.agendas = agendas;
+	}
+	
 }

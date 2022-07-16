@@ -1,36 +1,31 @@
-package com.pets1.app.dto.entityData;
+package com.pets1.app.dto.answers;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
+import java.util.Set;
 
-public class VeterinarioDto {
+public class VeterinarioAnswerDto {
 	
-	private Long documento ;
+	private Long documento;
 	
-	@NotEmpty
-	private String nombre ;
+	private String nombre;
 	
-	@NotEmpty
 	private String apellidos ;
 	
-	@NotEmpty
 	private String sexovt;
 	
-	@NotEmpty
 	private String telefono ;
 	
-	@NotEmpty
-	@Email
 	private String correo ;
 	
-	@NotEmpty
 	private String especialidad ;
 	
-	@NotEmpty
 	private String password ;
 	
 	private String imagenVete;
 	
+	private ClinicaAnswerDto clinica;
+	
+	private Set<AgendaAnswerDto> agendas= new HashSet<>();
 
 	public Long getDocumento() {
 		return documento;
@@ -102,6 +97,22 @@ public class VeterinarioDto {
 
 	public void setImagenVete(String imagenVete) {
 		this.imagenVete = imagenVete;
+	}
+
+	public ClinicaAnswerDto getClinica() {
+		return clinica;
+	}
+
+	public void setClinica(ClinicaAnswerDto clinica) {
+		this.clinica = clinica;
+	}
+
+	public Set<AgendaAnswerDto> getAgendas() {
+		return agendas;
+	}
+
+	public void setAgendas(Set<AgendaAnswerDto> agendas) {
+		this.agendas = agendas;
 	}
 	
 }

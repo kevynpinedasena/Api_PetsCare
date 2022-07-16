@@ -1,7 +1,6 @@
-package com.pets1.app.dto.entityData;
+package com.pets1.app.dto.answers;
 
-
-public class MascotaDto {
+public class MascotaAswerDto {
 	
 	private Long codigo;
 	
@@ -18,6 +17,10 @@ public class MascotaDto {
 	private String tipoAnimal;
 	
 	private String imagenMascota;
+	
+	private UsuarioAnswerDto dueniomascota;
+	
+	private HistoriaClinicaAnswerDto historiaMascota;
 
 	public Long getCodigo() {
 		return codigo;
@@ -81,6 +84,22 @@ public class MascotaDto {
 
 	public void setImagenMascota(String imagenMascota) {
 		this.imagenMascota = imagenMascota;
+	}
+
+	public UsuarioAnswerDto getDueniomascota() {
+		return dueniomascota;
+	}
+
+	public void setDueniomascota(UsuarioAnswerDto dueniomascota) {
+		this.dueniomascota = dueniomascota;
+	}
+
+	public HistoriaClinicaAnswerDto getHistoriaMascota() {
+		return historiaMascota;
+	}
+
+	public void setHistoriaMascota(HistoriaClinicaAnswerDto historiaMascota) {
+		this.historiaMascota = historiaMascota;
 	}
 	
 }
