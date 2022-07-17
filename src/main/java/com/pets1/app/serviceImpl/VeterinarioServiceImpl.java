@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.ClinicaVo;
 import com.pets1.app.domain.VeterinarioVo;
+import com.pets1.app.dto.answers.VeterinarioAnswerDto;
 import com.pets1.app.dto.entityData.VeterinarioDto;
 import com.pets1.app.exeptions.ResourseNotFoudExeption;
 import com.pets1.app.repository.IClinicaRepository;
@@ -41,10 +42,10 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 	}
 
 	@Override
-	public List<VeterinarioDto> listaDeVeterinariosPorClinica(Long nitClinica) {
+	public List<VeterinarioAnswerDto> listaDeVeterinariosPorClinica(Long nitClinica) {
 		clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourseNotFoudExeption("clinica", "nit", nitClinica));
 		List<VeterinarioVo> veterinarios = veterinarioRepository.findByclinicaNit(nitClinica);
-		return veterinarios.stream().map(vaterinario -> mapearDto(vaterinario)).collect(Collectors.toList());
+		return veterinarios.stream().map(vaterinario -> mapearAnswerDto(vaterinario)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -80,6 +81,11 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 	private VeterinarioDto mapearDto(VeterinarioVo veterinarioVo) {
 		VeterinarioDto veterinarioDto = modelMapper.map(veterinarioVo, VeterinarioDto.class);
 		return veterinarioDto;
+	}
+	
+	private VeterinarioAnswerDto mapearAnswerDto(VeterinarioVo veterinarioVo) {
+		VeterinarioAnswerDto veterinarioAnswerDto = modelMapper.map(veterinarioVo, VeterinarioAnswerDto.class);
+		return veterinarioAnswerDto;
 	}
 	
 	private VeterinarioVo mapearEntidad(VeterinarioDto veterinarioDto) {

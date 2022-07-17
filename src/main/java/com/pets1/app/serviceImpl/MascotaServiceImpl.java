@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.MascotaVo;
 import com.pets1.app.domain.UsuarioVo;
+import com.pets1.app.dto.answers.MascotaAswerDto;
 import com.pets1.app.dto.entityData.MascotaDto;
 import com.pets1.app.exeptions.AppPetsCareExeption;
 import com.pets1.app.exeptions.ResourseNotFoudExeption;
@@ -44,10 +45,10 @@ public class MascotaServiceImpl implements IMascotaService{
 	}
 
 	@Override
-	public List<MascotaDto> obtenerMascotasDeUsuario(Long documentoUsuario) {
-		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("Usuario", "documento", documentoUsuario));
+	public List<MascotaAswerDto> obtenerMascotasDeUsuario(Long documentoUsuario) {
+		usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("Usuario", "documento", documentoUsuario));
 		List<MascotaVo> mascotas=mascotaRepository.findByDueniomascotaDocumentoUs(documentoUsuario);
-		return mascotas.stream().map(mascota -> mapearDto(mascota)).collect(Collectors.toList());
+		return mascotas.stream().map(mascota -> mapearAnswerDto(mascota)).collect(Collectors.toList());
 		
 	}
 
@@ -102,6 +103,11 @@ public class MascotaServiceImpl implements IMascotaService{
 	private MascotaDto mapearDto(MascotaVo mascota) {
 		MascotaDto mascotaDTO = modelMapper.map(mascota, MascotaDto.class);
 		return mascotaDTO;
+	}
+	
+	private MascotaAswerDto mapearAnswerDto(MascotaVo mascota) {
+		MascotaAswerDto mascotaAswerDto = modelMapper.map(mascota, MascotaAswerDto.class);
+		return mascotaAswerDto;
 	}
 	
 	private MascotaVo mapearEntidad(MascotaDto mascotaDto) {

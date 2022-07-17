@@ -1,17 +1,14 @@
 package com.pets1.app.dto.answers;
 
-import com.pets1.app.dto.entityData.UsuarioDto;
 import com.pets1.app.dto.entityData.VeterinarioDto;
 
-public class AgendaAnswerDto {
+public class AgendaUsuarioAnswerDto {
 	
-	private Long codigoA;
+private Long codigoA;
 	
 	private String fecha;
 	
 	private String hora;
-	
-	private UsuarioDto documentous;
 	
 	private VeterinarioDto documentovt;
 
@@ -37,14 +34,6 @@ public class AgendaAnswerDto {
 
 	public void setHora(String hora) {
 		this.hora = hora;
-	}
-
-	public UsuarioDto getDocumentous() {
-		return documentous;
-	}
-
-	public void setDocumentous(UsuarioDto documentous) {
-		this.documentous = documentous;
 	}
 
 	public VeterinarioDto getDocumentovt() {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pets1.app.dto.answers.MascotaAswerDto;
 import com.pets1.app.dto.entityData.MascotaDto;
 import com.pets1.app.service.IMascotaService;
 
@@ -25,7 +26,7 @@ public class MascotaRest {
 	private IMascotaService mascotaService;
 	
 	@GetMapping("/usuario/{documento}/mascota")
-	public List<MascotaDto> listaDeMascotasUsuario(@PathVariable Long documento){
+	public List<MascotaAswerDto> listaDeMascotasUsuario(@PathVariable Long documento){
 		return mascotaService.obtenerMascotasDeUsuario(documento);
 	}
 	

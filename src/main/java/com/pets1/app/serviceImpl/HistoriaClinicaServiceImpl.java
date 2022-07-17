@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.HistoriaClinicaVo;
 import com.pets1.app.domain.MascotaVo;
+import com.pets1.app.dto.answers.HistoriaClinicaAnswerDto;
 import com.pets1.app.dto.entityData.HistoriaClinicaDto;
 import com.pets1.app.exeptions.AppPetsCareExeption;
 import com.pets1.app.exeptions.ResourseNotFoudExeption;
@@ -44,10 +45,10 @@ public class HistoriaClinicaServiceImpl implements IHistoriaClinicaService{
 	}
 
 	@Override
-	public List<HistoriaClinicaDto> historiaClinicaDeMascota(Long codigoMascota) {
+	public List<HistoriaClinicaAnswerDto> historiaClinicaDeMascota(Long codigoMascota) {
 		mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourseNotFoudExeption("Mascota", "codigo", codigoMascota));
 		List<HistoriaClinicaVo> historiaClinicaMascota = historiaClinicaRepository.findByMascotaCodCodigo(codigoMascota);
-		return historiaClinicaMascota.stream().map(historiaClinica -> mapearDto(historiaClinica)).collect(Collectors.toList());
+		return historiaClinicaMascota.stream().map(historiaClinica -> mapearAswersDto(historiaClinica)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -92,6 +93,11 @@ public class HistoriaClinicaServiceImpl implements IHistoriaClinicaService{
 	private HistoriaClinicaDto mapearDto(HistoriaClinicaVo historiaClinicaVo) {
 		HistoriaClinicaDto historiaDto = modelMapper.map(historiaClinicaVo, HistoriaClinicaDto.class);
 		return historiaDto;
+	}
+	
+	private HistoriaClinicaAnswerDto mapearAswersDto(HistoriaClinicaVo historiaClinicaVo) {
+		HistoriaClinicaAnswerDto historiaAnwerDto = modelMapper.map(historiaClinicaVo, HistoriaClinicaAnswerDto.class);
+		return historiaAnwerDto;
 	}
 	
 	private HistoriaClinicaVo mapearEntidad(HistoriaClinicaDto historiaClinicaDto) {

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.ClinicaVo;
+import com.pets1.app.dto.answers.ClinicaAnswerDto;
 import com.pets1.app.dto.entityData.clinicaDto;
 import com.pets1.app.exeptions.ResourseNotFoudExeption;
 import com.pets1.app.repository.IClinicaRepository;
@@ -33,15 +34,15 @@ public class ClinicaServiceImpl implements IClinicaService{
 	}
 
 	@Override
-	public List<clinicaDto> consultarListaDeClinicas() {
+	public List<ClinicaAnswerDto> consultarListaDeClinicas() {
 		List<ClinicaVo> clinicas = clinicaRepository.findAll();
-		return clinicas.stream().map(clinica -> mapearDto(clinica)).collect(Collectors.toList());
+		return clinicas.stream().map(clinica -> mapearAnswerDto(clinica)).collect(Collectors.toList());
 	}
 
 	@Override
-	public clinicaDto consultarClinicaPorId(Long nitClinica) {
+	public ClinicaAnswerDto consultarClinicaPorId(Long nitClinica) {
 		ClinicaVo clinica = clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourseNotFoudExeption("clinica", "nit", nitClinica));
-		return mapearDto(clinica);
+		return mapearAnswerDto(clinica);
 	}
 
 	@Override
@@ -68,6 +69,11 @@ public class ClinicaServiceImpl implements IClinicaService{
 	private clinicaDto mapearDto(ClinicaVo clinica) {
 		clinicaDto clinicaDTO = modelMapper.map(clinica, clinicaDto.class);
 		return clinicaDTO;
+	}
+	
+	private ClinicaAnswerDto mapearAnswerDto(ClinicaVo clinica) {
+		ClinicaAnswerDto clinicaAnswerDTO = modelMapper.map(clinica, ClinicaAnswerDto.class);
+		return clinicaAnswerDTO;
 	}
 	
 	private ClinicaVo mapearEntidad(clinicaDto clinicaDto) {

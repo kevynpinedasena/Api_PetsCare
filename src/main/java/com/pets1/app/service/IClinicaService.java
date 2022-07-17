@@ -2,15 +2,16 @@ package com.pets1.app.service;
 
 import java.util.List;
 
+import com.pets1.app.dto.answers.ClinicaAnswerDto;
 import com.pets1.app.dto.entityData.clinicaDto;
 
 public interface IClinicaService {
 
 	clinicaDto crearClinica(clinicaDto clinicaDto);
 	
-	List<clinicaDto> consultarListaDeClinicas();
+	List<ClinicaAnswerDto> consultarListaDeClinicas();
 	
-	clinicaDto consultarClinicaPorId(Long nitClinica);
+	ClinicaAnswerDto consultarClinicaPorId(Long nitClinica);
 	
 	clinicaDto actualizarClinica(Long nitClinica, clinicaDto clinicaDto);
 	

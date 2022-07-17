@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import com.pets1.app.domain.AgendaVo;
 import com.pets1.app.domain.UsuarioVo;
 import com.pets1.app.domain.VeterinarioVo;
+import com.pets1.app.dto.answers.AgendaAnswerDto;
+import com.pets1.app.dto.answers.AgendaUsuarioAnswerDto;
+import com.pets1.app.dto.answers.AgendaVeterinarioAnswerDto;
 import com.pets1.app.dto.entityData.AgendaDto;
 import com.pets1.app.exeptions.ResourseNotFoudExeption;
 import com.pets1.app.repository.IAgendaRepository;
@@ -50,23 +53,23 @@ public class AgendaServiceImpl implements IAgendaService{
 	}
 
 	@Override
-	public List<AgendaDto> listaAgendaUsuario(Long documentoUsuario) {
+	public List<AgendaUsuarioAnswerDto> listaAgendaUsuario(Long documentoUsuario) {
 		usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("usuario", "documento", documentoUsuario));
 		List<AgendaVo> agendaDeUsuario = agendaRepository.findByDocumentousDocumentoUs(documentoUsuario);
-		return agendaDeUsuario.stream().map(agenda -> mapearDto(agenda)).collect(Collectors.toList());
+		return agendaDeUsuario.stream().map(agenda -> mapearusuarioaswerDto(agenda)).collect(Collectors.toList());
 	}
 
 	@Override
-	public List<AgendaDto> listaAgendaVeterinario(Long documentoVeterinario) {
+	public List<AgendaVeterinarioAnswerDto> listaAgendaVeterinario(Long documentoVeterinario) {
 		veterinarioRepository.findById(documentoVeterinario).orElseThrow(() -> new ResourseNotFoudExeption("Veterinario", "documento", documentoVeterinario));
 		List<AgendaVo> agendaDeVeterinario = agendaRepository.findByDocumentovtDocumento(documentoVeterinario);
-		return agendaDeVeterinario.stream().map(agenda -> mapearDto(agenda)).collect(Collectors.toList());
+		return agendaDeVeterinario.stream().map(agenda -> mapearVeteririnarioDto(agenda)).collect(Collectors.toList());
 	}
 
 	@Override
-	public AgendaDto buscarAgendaId(Long codigo) {
+	public AgendaAnswerDto buscarAgendaId(Long codigo) {
 		AgendaVo agenda = agendaRepository.findById(codigo).orElseThrow(() -> new ResourseNotFoudExeption("agenda", "codigo", codigo));
-		return mapearDto(agenda);
+		return mapearAgendaDto(agenda);
 	}
 
 	@Override
@@ -86,9 +89,25 @@ public class AgendaServiceImpl implements IAgendaService{
 		agendaRepository.delete(agenda);
 	}
 	
+	
 	private AgendaDto mapearDto(AgendaVo agendaVo) {
 		AgendaDto agendaDto = modelMapper.map(agendaVo, AgendaDto.class);
 		return agendaDto;
+	}
+	
+	private AgendaAnswerDto mapearAgendaDto(AgendaVo agendaVo) {
+		AgendaAnswerDto agendaAnswerDto = modelMapper.map(agendaVo, AgendaAnswerDto.class);
+		return agendaAnswerDto;
+	}
+	
+	private AgendaUsuarioAnswerDto mapearusuarioaswerDto(AgendaVo agendaVo) {
+		AgendaUsuarioAnswerDto agendaUsuarioDto = modelMapper.map(agendaVo, AgendaUsuarioAnswerDto.class);
+		return agendaUsuarioDto;
+	}
+	
+	private AgendaVeterinarioAnswerDto mapearVeteririnarioDto(AgendaVo agendaVo) {
+		AgendaVeterinarioAnswerDto agendaVeterinarioDto = modelMapper.map(agendaVo, AgendaVeterinarioAnswerDto.class);
+		return agendaVeterinarioDto;
 	}
 	
 	private AgendaVo mapearEntidad(AgendaDto agendaDto) {

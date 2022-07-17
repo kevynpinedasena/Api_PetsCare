@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pets1.app.dto.answers.ClinicaAnswerDto;
 import com.pets1.app.dto.entityData.clinicaDto;
 import com.pets1.app.service.IClinicaService;
 
@@ -25,12 +26,12 @@ public class ClinicaRest {
 	private IClinicaService clinicaService;
 	
 	@GetMapping("/clinicas")
-	public List<clinicaDto> listaClinica(){
+	public List<ClinicaAnswerDto> listaClinica(){
 		return clinicaService.consultarListaDeClinicas();
 	}
 	
 	@GetMapping("/clinicas/{nit}")
-	public ResponseEntity<clinicaDto> buscarClinicaID(@PathVariable Long nit){
+	public ResponseEntity<ClinicaAnswerDto> buscarClinicaID(@PathVariable Long nit){
 		return ResponseEntity.ok(clinicaService.consultarClinicaPorId(nit));
 	}
 	

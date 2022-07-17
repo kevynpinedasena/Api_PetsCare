@@ -3,6 +3,8 @@ package com.pets1.app.dto.answers;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.pets1.app.dto.entityData.clinicaDto;
+
 public class VeterinarioAnswerDto {
 	
 	private Long documento;
@@ -23,9 +25,9 @@ public class VeterinarioAnswerDto {
 	
 	private String imagenVete;
 	
-	private ClinicaAnswerDto clinica;
+	private clinicaDto clinica;
 	
-	private Set<AgendaAnswerDto> agendas= new HashSet<>();
+	private Set<AgendaVeterinarioAnswerDto> agendas= new HashSet<>();
 
 	public Long getDocumento() {
 		return documento;
@@ -99,19 +101,19 @@ public class VeterinarioAnswerDto {
 		this.imagenVete = imagenVete;
 	}
 
-	public ClinicaAnswerDto getClinica() {
+	public clinicaDto getClinica() {
 		return clinica;
 	}
 
-	public void setClinica(ClinicaAnswerDto clinica) {
+	public void setClinica(clinicaDto clinica) {
 		this.clinica = clinica;
 	}
 
-	public Set<AgendaAnswerDto> getAgendas() {
+	public Set<AgendaVeterinarioAnswerDto> getAgendas() {
 		return agendas;
 	}
 
-	public void setAgendas(Set<AgendaAnswerDto> agendas) {
+	public void setAgendas(Set<AgendaVeterinarioAnswerDto> agendas) {
 		this.agendas = agendas;
 	}
 	

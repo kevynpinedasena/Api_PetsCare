@@ -3,6 +3,8 @@ package com.pets1.app.dto.answers;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.pets1.app.dto.entityData.VeterinarioDto;
+
 public class ClinicaAnswerDto {
 	
 	private Long nit;
@@ -19,7 +21,7 @@ public class ClinicaAnswerDto {
 	
 	private String imagenclinica;
 	
-	private Set<VeterinarioAnswerDto> veterinarios = new HashSet<>();
+	private Set<VeterinarioDto> veterinarios = new HashSet<>();
 
 	public Long getNit() {
 		return nit;
@@ -77,11 +79,11 @@ public class ClinicaAnswerDto {
 		this.imagenclinica = imagenclinica;
 	}
 
-	public Set<VeterinarioAnswerDto> getVeterinarios() {
+	public Set<VeterinarioDto> getVeterinarios() {
 		return veterinarios;
 	}
 
-	public void setVeterinarios(Set<VeterinarioAnswerDto> veterinarios) {
+	public void setVeterinarios(Set<VeterinarioDto> veterinarios) {
 		this.veterinarios = veterinarios;
 	}
 	

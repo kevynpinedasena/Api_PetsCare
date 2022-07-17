@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.UsuarioVo;
+import com.pets1.app.dto.answers.UsuarioAnswerDto;
 import com.pets1.app.dto.entityData.UsuarioDto;
 import com.pets1.app.exeptions.ResourseNotFoudExeption;
 import com.pets1.app.repository.IUsuarioRepository;
@@ -33,15 +34,21 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	}
 
 	@Override
-	public List<UsuarioDto> obtenerTodosLosUsuarios() {
+	public List<UsuarioAnswerDto> obtenerTodosLosUsuarios() {
 		List<UsuarioVo> usuarios = usuarioRepository.findAll();
-		return usuarios.stream().map(usuario -> mapearDto(usuario)).collect(Collectors.toList());
+		return usuarios.stream().map(usuario -> mapearAnswerDto(usuario)).collect(Collectors.toList());
 	}
 
 	@Override
 	public UsuarioDto buscarUsuarioPorDocumento(Long documento) {
 		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourseNotFoudExeption("usuario", "documento", documento));
 		return mapearDto(usuario);
+	}
+	
+	@Override
+	public UsuarioAnswerDto buscarUsuarioConMascotas(Long documento) {
+		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourseNotFoudExeption("usuario", "documento", documento));
+		return mapearAnswerDto(usuario);
 	}
 
 	@Override
@@ -72,6 +79,11 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	private UsuarioDto mapearDto(UsuarioVo usuario) {
 		UsuarioDto usuarioDTO = modelMapper.map(usuario, UsuarioDto.class);
 		return usuarioDTO;
+	}
+	
+	private UsuarioAnswerDto mapearAnswerDto(UsuarioVo usuario) {
+		UsuarioAnswerDto usuarioAnswerDto = modelMapper.map(usuario, UsuarioAnswerDto.class);
+		return usuarioAnswerDto;
 	}
 	
 	private UsuarioVo mapearEntidad(UsuarioDto usuarioDto) {

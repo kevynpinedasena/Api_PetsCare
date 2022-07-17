@@ -1,5 +1,6 @@
 package com.pets1.app.dto.answers;
 
+import com.pets1.app.dto.entityData.MascotaDto;
 
 public class HistoriaClinicaAnswerDto {
 	
@@ -9,7 +10,7 @@ public class HistoriaClinicaAnswerDto {
 	
 	private String motivoConsulta;
 	
-	private MascotaAswerDto mascotaCod;
+	private MascotaDto mascotaCod;
 
 	public Long getCodigo() {
 		return codigo;
@@ -35,11 +36,11 @@ public class HistoriaClinicaAnswerDto {
 		this.motivoConsulta = motivoConsulta;
 	}
 
-	public MascotaAswerDto getMascotaCod() {
+	public MascotaDto getMascotaCod() {
 		return mascotaCod;
 	}
 
-	public void setMascotaCod(MascotaAswerDto mascotaCod) {
+	public void setMascotaCod(MascotaDto mascotaCod) {
 		this.mascotaCod = mascotaCod;
 	}
 	

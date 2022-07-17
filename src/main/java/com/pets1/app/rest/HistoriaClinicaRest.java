@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pets1.app.dto.answers.HistoriaClinicaAnswerDto;
 import com.pets1.app.dto.entityData.HistoriaClinicaDto;
 import com.pets1.app.service.IHistoriaClinicaService;
 
@@ -25,7 +26,7 @@ public class HistoriaClinicaRest {
 	private IHistoriaClinicaService historiaClinicaService;
 	
 	@GetMapping("/mascota/{codigom}/historia")
-	public List<HistoriaClinicaDto> buscarHistoriaClinicaMascota(@PathVariable Long codigom){
+	public List<HistoriaClinicaAnswerDto> buscarHistoriaClinicaMascota(@PathVariable Long codigom){
 		return historiaClinicaService.historiaClinicaDeMascota(codigom);
 	}
 	

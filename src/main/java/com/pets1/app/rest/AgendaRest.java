@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pets1.app.dto.answers.AgendaAnswerDto;
+import com.pets1.app.dto.answers.AgendaUsuarioAnswerDto;
+import com.pets1.app.dto.answers.AgendaVeterinarioAnswerDto;
 import com.pets1.app.dto.entityData.AgendaDto;
 import com.pets1.app.service.IAgendaService;
 
@@ -25,18 +28,18 @@ public class AgendaRest {
 	private IAgendaService agendaService;
 	
 	@GetMapping("/usuario/{documentoUsuario}/agendas")
-	public List<AgendaDto> buscarAgendaDeUsuario(@PathVariable Long documentoUsuario){
+	public List<AgendaUsuarioAnswerDto> buscarAgendaDeUsuario(@PathVariable Long documentoUsuario){
 		return agendaService.listaAgendaUsuario(documentoUsuario);
 	}
 	
 	@GetMapping("veterinario/{documentoVeterinario}/agendas")
-	public List<AgendaDto> buscarAgendaDeVeterinario(@PathVariable Long documentoVeterinario){
+	public List<AgendaVeterinarioAnswerDto> buscarAgendaDeVeterinario(@PathVariable Long documentoVeterinario){
 		return agendaService.listaAgendaVeterinario(documentoVeterinario);
 	}
 	
 	@GetMapping("/agendas/{codigo}")
-	public ResponseEntity<AgendaDto> buscarAgendaId(@PathVariable Long codigo){
-		AgendaDto agenda = agendaService.buscarAgendaId(codigo);
+	public ResponseEntity<AgendaAnswerDto> buscarAgendaId(@PathVariable Long codigo){
+		AgendaAnswerDto agenda = agendaService.buscarAgendaId(codigo);
 		return new ResponseEntity<>(agenda, HttpStatus.OK);
 	}
 	

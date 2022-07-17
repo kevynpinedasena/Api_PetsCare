@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pets1.app.dto.answers.VeterinarioAnswerDto;
 import com.pets1.app.dto.entityData.VeterinarioDto;
 import com.pets1.app.service.IVeterinarioService;
 
@@ -25,7 +26,7 @@ public class VeterinarioRest {
 	private IVeterinarioService veterinarioService;
 	
 	@GetMapping("/clinica/{nitclinica}/veterinarios")
-	public List<VeterinarioDto> listaVeterinario(@PathVariable Long nitclinica){
+	public List<VeterinarioAnswerDto> listaVeterinario(@PathVariable Long nitclinica){
 		return veterinarioService.listaDeVeterinariosPorClinica(nitclinica);
 	}
 	

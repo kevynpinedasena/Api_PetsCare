@@ -2,13 +2,16 @@ package com.pets1.app.service;
 
 import java.util.List;
 
+import com.pets1.app.dto.answers.MascotaAswerDto;
 import com.pets1.app.dto.entityData.MascotaDto;
 
 public interface IMascotaService {
 
 	MascotaDto guardarMascota(Long documento, MascotaDto mascotaDto);
 	
-	List<MascotaDto> obtenerMascotasDeUsuario(Long documentoUsuario);
+//	List<MascotaDto> obtenerMascotasDeUsuario(Long documentoUsuario);
+	
+	List<MascotaAswerDto> obtenerMascotasDeUsuario(Long documentoUsuario);
 	
 	MascotaDto obtenerMascotaId(Long documentoUsuario, Long codigoMascota);
 	

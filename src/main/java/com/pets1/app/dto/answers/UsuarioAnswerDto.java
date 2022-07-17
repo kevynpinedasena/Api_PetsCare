@@ -3,6 +3,8 @@ package com.pets1.app.dto.answers;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.pets1.app.dto.entityData.MascotaDto;
+
 public class UsuarioAnswerDto {
 	
 	private Long documentoUs;
@@ -23,9 +25,9 @@ public class UsuarioAnswerDto {
 	
 	private Long rolUs;
 	
-	private Set<MascotaAswerDto> mascotas= new HashSet<>();
+	private Set<MascotaDto> mascotas= new HashSet<>();
 	
-	private Set<AgendaAnswerDto> agendas= new HashSet<>();
+	private Set<AgendaUsuarioAnswerDto> agendas= new HashSet<>();
 
 	public Long getDocumentoUs() {
 		return documentoUs;
@@ -99,20 +101,21 @@ public class UsuarioAnswerDto {
 		this.rolUs = rolUs;
 	}
 
-	public Set<MascotaAswerDto> getMascotas() {
+	public Set<MascotaDto> getMascotas() {
 		return mascotas;
 	}
 
-	public void setMascotas(Set<MascotaAswerDto> mascotas) {
+	public void setMascotas(Set<MascotaDto> mascotas) {
 		this.mascotas = mascotas;
 	}
 
-	public Set<AgendaAnswerDto> getAgendas() {
+	public Set<AgendaUsuarioAnswerDto> getAgendas() {
 		return agendas;
 	}
 
-	public void setAgendas(Set<AgendaAnswerDto> agendas) {
+	public void setAgendas(Set<AgendaUsuarioAnswerDto> agendas) {
 		this.agendas = agendas;
 	}
+
 	
 }
