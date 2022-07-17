@@ -15,7 +15,7 @@ import com.pets1.app.domain.UsuarioVo;
 import com.pets1.app.dto.answers.MascotaAswerDto;
 import com.pets1.app.dto.entityData.MascotaDto;
 import com.pets1.app.exeptions.AppPetsCareExeption;
-import com.pets1.app.exeptions.ResourseNotFoudExeption;
+import com.pets1.app.exeptions.ResourceNotFoudExeption;
 import com.pets1.app.repository.IMascotaRepository;
 import com.pets1.app.repository.IUsuarioRepository;
 import com.pets1.app.service.IMascotaService;
@@ -36,7 +36,7 @@ public class MascotaServiceImpl implements IMascotaService{
 	@Override
 	public MascotaDto guardarMascota(Long documentoUsuario, MascotaDto mascotaDto) {
 		MascotaVo mascota = mapearEntidad(mascotaDto);
-		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("Usuario", "documento", documentoUsuario));
+		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourceNotFoudExeption("Usuario", "documento", documentoUsuario));
 		
 		mascota.setDueniomascota(usuario);
 		MascotaVo nuevaMascota = mascotaRepository.save(mascota);	
@@ -46,7 +46,7 @@ public class MascotaServiceImpl implements IMascotaService{
 
 	@Override
 	public List<MascotaAswerDto> obtenerMascotasDeUsuario(Long documentoUsuario) {
-		usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("Usuario", "documento", documentoUsuario));
+		usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourceNotFoudExeption("Usuario", "documento", documentoUsuario));
 		List<MascotaVo> mascotas=mascotaRepository.findByDueniomascotaDocumentoUs(documentoUsuario);
 		return mascotas.stream().map(mascota -> mapearAnswerDto(mascota)).collect(Collectors.toList());
 		
@@ -54,8 +54,8 @@ public class MascotaServiceImpl implements IMascotaService{
 
 	@Override
 	public MascotaDto obtenerMascotaId(Long documentoUsuario, Long codigoMascota) {
-		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("Usuario", "documento", documentoUsuario));
-		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourseNotFoudExeption("Mascota", "codigo", codigoMascota));
+		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourceNotFoudExeption("Usuario", "documento", documentoUsuario));
+		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourceNotFoudExeption("Mascota", "codigo", codigoMascota));
 		
 		if(!mascota.getDueniomascota().getDocumentoUs().equals(usuario.getDocumentoUs())) {
 			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "la mascota no pertenese a este usuario");
@@ -67,8 +67,8 @@ public class MascotaServiceImpl implements IMascotaService{
 
 	@Override
 	public MascotaDto actualizarMascota(Long documentoUsuario, Long codigoMascota, MascotaDto mascotaDto) {
-		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("Usuario", "documento", documentoUsuario));
-		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourseNotFoudExeption("Mascota", "codigo", codigoMascota));
+		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourceNotFoudExeption("Usuario", "documento", documentoUsuario));
+		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourceNotFoudExeption("Mascota", "codigo", codigoMascota));
 		
 		if(!mascota.getDueniomascota().getDocumentoUs().equals(usuario.getDocumentoUs())) {
 			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "la mascota no pertenese a este usuario");
@@ -89,8 +89,8 @@ public class MascotaServiceImpl implements IMascotaService{
 
 	@Override
 	public void eliminarMascota(Long documentoUsuario, Long codigoMascota) {
-		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("Usuario", "documento", documentoUsuario));
-		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourseNotFoudExeption("Mascota", "codigo", codigoMascota));
+		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourceNotFoudExeption("Usuario", "documento", documentoUsuario));
+		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourceNotFoudExeption("Mascota", "codigo", codigoMascota));
 		
 		if(!mascota.getDueniomascota().getDocumentoUs().equals(usuario.getDocumentoUs())) {
 			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "la mascota no pertenese a este usuario");

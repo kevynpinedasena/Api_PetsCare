@@ -1,12 +1,15 @@
 package com.pets1.app.dto.entityData;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 public class UsuarioDto {
 	
+	
+	
 	private Long documentoUs;
 	
-	@NotEmpty
+	@NotEmpty(message = "el nombre no puede estar vacio o nulo")
 	private String nombreUs;
 	
 	@NotEmpty
@@ -18,13 +21,13 @@ public class UsuarioDto {
 	@NotEmpty
 	private String telefonoUs;
 	
-	@NotEmpty
+	@NotEmpty(message = "el correo no puede estar vacio o nulo")
+	@Email
 	private String correoUs;
 	
-	@NotEmpty
+	@NotEmpty(message = "la contraseña no puede estar vacia o nula")
 	private String passwordUs;
 	
-	@NotEmpty
 	private String imagenUsu;
 	
 	private Long rolUs;

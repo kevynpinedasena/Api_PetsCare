@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourseNotFoudExeption extends RuntimeException{
+public class ResourceNotFoudExeption extends RuntimeException{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -12,7 +12,7 @@ public class ResourseNotFoudExeption extends RuntimeException{
 	private String nombreDelCampo;
 	private Long valorDelCampo;
 	
-	public ResourseNotFoudExeption(String nombreDelRecurso, String nombreDelCampo, Long valorDelCampo) {
+	public ResourceNotFoudExeption(String nombreDelRecurso, String nombreDelCampo, Long valorDelCampo) {
 		super(String.format("%s no encontrada con : %s : %s", nombreDelRecurso, nombreDelCampo, valorDelCampo));
 		this.nombreDelRecurso = nombreDelRecurso;
 		this.nombreDelCampo = nombreDelCampo;

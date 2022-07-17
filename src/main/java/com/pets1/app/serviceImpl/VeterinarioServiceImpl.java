@@ -13,7 +13,7 @@ import com.pets1.app.domain.ClinicaVo;
 import com.pets1.app.domain.VeterinarioVo;
 import com.pets1.app.dto.answers.VeterinarioAnswerDto;
 import com.pets1.app.dto.entityData.VeterinarioDto;
-import com.pets1.app.exeptions.ResourseNotFoudExeption;
+import com.pets1.app.exeptions.ResourceNotFoudExeption;
 import com.pets1.app.repository.IClinicaRepository;
 import com.pets1.app.repository.IVeterinarioRepository;
 import com.pets1.app.service.IVeterinarioService;
@@ -33,7 +33,7 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 
 	@Override
 	public VeterinarioDto guardarVeterinarios(Long nitClinica, VeterinarioDto veterinarioDto) {
-		ClinicaVo clinica = clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourseNotFoudExeption("clinica", "nit", nitClinica));
+		ClinicaVo clinica = clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourceNotFoudExeption("clinica", "nit", nitClinica));
 		VeterinarioVo veterinario = mapearEntidad(veterinarioDto);
 		veterinario.setClinica(clinica);
 		
@@ -43,20 +43,20 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 
 	@Override
 	public List<VeterinarioAnswerDto> listaDeVeterinariosPorClinica(Long nitClinica) {
-		clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourseNotFoudExeption("clinica", "nit", nitClinica));
+		clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourceNotFoudExeption("clinica", "nit", nitClinica));
 		List<VeterinarioVo> veterinarios = veterinarioRepository.findByclinicaNit(nitClinica);
 		return veterinarios.stream().map(vaterinario -> mapearAnswerDto(vaterinario)).collect(Collectors.toList());
 	}
 
 	@Override
 	public VeterinarioDto buscarVeterinarioId(Long documentoVeterinario) {
-		VeterinarioVo veterinario = veterinarioRepository.findById(documentoVeterinario).orElseThrow(() -> new ResourseNotFoudExeption("Veterinario", "documento", documentoVeterinario));
+		VeterinarioVo veterinario = veterinarioRepository.findById(documentoVeterinario).orElseThrow(() -> new ResourceNotFoudExeption("Veterinario", "documento", documentoVeterinario));
 		return mapearDto(veterinario);
 	}
 	
 	@Override
 	public VeterinarioDto actualizarVeterinario(Long documentoVeterinario, VeterinarioDto veterinarioDto) {
-		VeterinarioVo veterinario = veterinarioRepository.findById(documentoVeterinario).orElseThrow(() -> new ResourseNotFoudExeption("Veterinario", "documento", documentoVeterinario));
+		VeterinarioVo veterinario = veterinarioRepository.findById(documentoVeterinario).orElseThrow(() -> new ResourceNotFoudExeption("Veterinario", "documento", documentoVeterinario));
 		
 		veterinario.setNombre(veterinarioDto.getNombre());
 		veterinario.setApellidos(veterinarioDto.getApellidos());
@@ -74,7 +74,7 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 
 	@Override
 	public void eliminarVeterinario(Long documentoVeterinario) {
-		VeterinarioVo veterinario = veterinarioRepository.findById(documentoVeterinario).orElseThrow(() -> new ResourseNotFoudExeption("Veterinario", "documento", documentoVeterinario));
+		VeterinarioVo veterinario = veterinarioRepository.findById(documentoVeterinario).orElseThrow(() -> new ResourceNotFoudExeption("Veterinario", "documento", documentoVeterinario));
 		veterinarioRepository.delete(veterinario);
 	}
 	

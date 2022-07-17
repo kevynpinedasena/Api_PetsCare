@@ -1,18 +1,21 @@
 package com.pets1.app.serviceImpl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.UsuarioVo;
 import com.pets1.app.dto.answers.UsuarioAnswerDto;
 import com.pets1.app.dto.entityData.UsuarioDto;
-import com.pets1.app.exeptions.ResourseNotFoudExeption;
+import com.pets1.app.exeptions.AppPetsCareExeption;
+import com.pets1.app.exeptions.ResourceNotFoudExeption;
 import com.pets1.app.repository.IUsuarioRepository;
 import com.pets1.app.service.IUsuarioService;
 
@@ -27,6 +30,13 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	private IUsuarioRepository usuarioRepository;
 	
 	public UsuarioDto guardarUsuario(UsuarioDto usuarioDto) {
+		boolean usuarios = usuarioRepository.findById(usuarioDto.getDocumentoUs()).isPresent();
+		
+		System.out.println(usuarios);
+		if(usuarios == true) {
+			System.out.println("");
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "el usuario ya existe");
+		}
 		UsuarioVo usuario = mapearEntidad(usuarioDto);
 		UsuarioVo nuevoUsuario = usuarioRepository.save(usuario);
 		UsuarioDto usuarioRespuesta = mapearDto(nuevoUsuario);
@@ -41,19 +51,19 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
 	@Override
 	public UsuarioDto buscarUsuarioPorDocumento(Long documento) {
-		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourseNotFoudExeption("usuario", "documento", documento));
+		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourceNotFoudExeption("usuario", "documento", documento));
 		return mapearDto(usuario);
 	}
 	
 	@Override
 	public UsuarioAnswerDto buscarUsuarioConMascotas(Long documento) {
-		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourseNotFoudExeption("usuario", "documento", documento));
+		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourceNotFoudExeption("usuario", "documento", documento));
 		return mapearAnswerDto(usuario);
 	}
 
 	@Override
 	public UsuarioDto actualizarUsuario(UsuarioDto usuarioDto, Long documento) {
-		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourseNotFoudExeption("usuario", "documento", documento));
+		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourceNotFoudExeption("usuario", "documento", documento));
 		
 //		usuario.setDocumentoUs(usuarioDto.getDocumentoUs());
 		usuario.setNombreUs(usuarioDto.getNombreUs());
@@ -72,7 +82,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
 	@Override
 	public void eliminarUsuario(Long documento) {
-		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourseNotFoudExeption("usuario", "documento", documento));
+		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourceNotFoudExeption("usuario", "documento", documento));
 		usuarioRepository.delete(usuario);
 	}
 

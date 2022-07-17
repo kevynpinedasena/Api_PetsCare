@@ -10,11 +10,11 @@ public class AppPetsCareExeption extends RuntimeException{
 	private String mensaje;
 	
 	public AppPetsCareExeption(HttpStatus estados, String mensaje) {
-		super();
+		super(String.format(mensaje, estados));
 		this.estados = estados;
 		this.mensaje = mensaje;
 	}
-
+	
 	public AppPetsCareExeption(HttpStatus estados, String mensaje, String mensaje1) {
 		super();
 		this.estados = estados;

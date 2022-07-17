@@ -15,7 +15,7 @@ import com.pets1.app.domain.MascotaVo;
 import com.pets1.app.dto.answers.HistoriaClinicaAnswerDto;
 import com.pets1.app.dto.entityData.HistoriaClinicaDto;
 import com.pets1.app.exeptions.AppPetsCareExeption;
-import com.pets1.app.exeptions.ResourseNotFoudExeption;
+import com.pets1.app.exeptions.ResourceNotFoudExeption;
 import com.pets1.app.repository.IHistoriaClinicaRepository;
 import com.pets1.app.repository.IMascotaRepository;
 import com.pets1.app.service.IHistoriaClinicaService;
@@ -35,7 +35,7 @@ public class HistoriaClinicaServiceImpl implements IHistoriaClinicaService{
 	
 	@Override
 	public HistoriaClinicaDto guardarHistoria(Long codigoMascota, HistoriaClinicaDto historiaClinica) {
-		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourseNotFoudExeption("Mascota", "codigo", codigoMascota));
+		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourceNotFoudExeption("Mascota", "codigo", codigoMascota));
 		HistoriaClinicaVo historiaClinicaMascota = mapearEntidad(historiaClinica);
 		
 		historiaClinicaMascota.setMascotaCod(mascota);
@@ -46,15 +46,15 @@ public class HistoriaClinicaServiceImpl implements IHistoriaClinicaService{
 
 	@Override
 	public List<HistoriaClinicaAnswerDto> historiaClinicaDeMascota(Long codigoMascota) {
-		mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourseNotFoudExeption("Mascota", "codigo", codigoMascota));
+		mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourceNotFoudExeption("Mascota", "codigo", codigoMascota));
 		List<HistoriaClinicaVo> historiaClinicaMascota = historiaClinicaRepository.findByMascotaCodCodigo(codigoMascota);
 		return historiaClinicaMascota.stream().map(historiaClinica -> mapearAswersDto(historiaClinica)).collect(Collectors.toList());
 	}
 
 	@Override
 	public HistoriaClinicaDto buscarHistoriaClnicaMascotaId(Long codigoMascota, Long codigoHistoria) {
-		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourseNotFoudExeption("Mascota", "codigo", codigoMascota));
-		HistoriaClinicaVo historiaClinca = historiaClinicaRepository.findById(codigoHistoria).orElseThrow(() -> new ResourseNotFoudExeption("Historia clinica", "codigo", codigoMascota));
+		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourceNotFoudExeption("Mascota", "codigo", codigoMascota));
+		HistoriaClinicaVo historiaClinca = historiaClinicaRepository.findById(codigoHistoria).orElseThrow(() -> new ResourceNotFoudExeption("Historia clinica", "codigo", codigoMascota));
 		if(!historiaClinca.getMascotaCod().getCodigo().equals(mascota.getCodigo())) {
 			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "la historia no pertenese a esta mascota");
 		}
@@ -64,8 +64,8 @@ public class HistoriaClinicaServiceImpl implements IHistoriaClinicaService{
 
 	@Override
 	public HistoriaClinicaDto actualizarHistoriaClinica(Long codigoMascota, Long codigoHistoria, HistoriaClinicaDto historiaClinica) {
-		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourseNotFoudExeption("Mascota", "codigo", codigoMascota));
-		HistoriaClinicaVo historiaClinca = historiaClinicaRepository.findById(codigoHistoria).orElseThrow(() -> new ResourseNotFoudExeption("Historia clinica", "codigo", codigoHistoria));
+		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourceNotFoudExeption("Mascota", "codigo", codigoMascota));
+		HistoriaClinicaVo historiaClinca = historiaClinicaRepository.findById(codigoHistoria).orElseThrow(() -> new ResourceNotFoudExeption("Historia clinica", "codigo", codigoHistoria));
 		if(!historiaClinca.getMascotaCod().getCodigo().equals(mascota.getCodigo())) {
 			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "la historia no pertenese a esta mascota");
 		}
@@ -80,8 +80,8 @@ public class HistoriaClinicaServiceImpl implements IHistoriaClinicaService{
 
 	@Override
 	public void eliminarHistoriaClinica(Long codigoMascota, Long codigoHistoria) {
-		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourseNotFoudExeption("Mascota", "codigo", codigoMascota));
-		HistoriaClinicaVo historiaClinca = historiaClinicaRepository.findById(codigoHistoria).orElseThrow(() -> new ResourseNotFoudExeption("Historia clinica", "codigo", codigoMascota));
+		MascotaVo mascota = mascotaRepository.findById(codigoMascota).orElseThrow(() -> new ResourceNotFoudExeption("Mascota", "codigo", codigoMascota));
+		HistoriaClinicaVo historiaClinca = historiaClinicaRepository.findById(codigoHistoria).orElseThrow(() -> new ResourceNotFoudExeption("Historia clinica", "codigo", codigoMascota));
 		if(!historiaClinca.getMascotaCod().getCodigo().equals(mascota.getCodigo())) {
 			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "la historia no pertenese a esta mascota");
 		}

@@ -16,7 +16,7 @@ import com.pets1.app.dto.answers.AgendaAnswerDto;
 import com.pets1.app.dto.answers.AgendaUsuarioAnswerDto;
 import com.pets1.app.dto.answers.AgendaVeterinarioAnswerDto;
 import com.pets1.app.dto.entityData.AgendaDto;
-import com.pets1.app.exeptions.ResourseNotFoudExeption;
+import com.pets1.app.exeptions.ResourceNotFoudExeption;
 import com.pets1.app.repository.IAgendaRepository;
 import com.pets1.app.repository.IUsuarioRepository;
 import com.pets1.app.repository.IVeterinarioRepository;
@@ -40,8 +40,8 @@ public class AgendaServiceImpl implements IAgendaService{
 	
 	@Override
 	public AgendaDto CrearAgenda(Long documentoUsuario, Long documentoVeterinario, AgendaDto agendaDto) {
-		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("usuario", "documento", documentoUsuario));
-		VeterinarioVo veterinario = veterinarioRepository.findById(documentoVeterinario).orElseThrow(() -> new ResourseNotFoudExeption("Veterinario", "documento", documentoVeterinario));
+		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourceNotFoudExeption("usuario", "documento", documentoUsuario));
+		VeterinarioVo veterinario = veterinarioRepository.findById(documentoVeterinario).orElseThrow(() -> new ResourceNotFoudExeption("Veterinario", "documento", documentoVeterinario));
 		
 		AgendaVo datosCita = mapearEntidad(agendaDto);
 		
@@ -54,27 +54,27 @@ public class AgendaServiceImpl implements IAgendaService{
 
 	@Override
 	public List<AgendaUsuarioAnswerDto> listaAgendaUsuario(Long documentoUsuario) {
-		usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourseNotFoudExeption("usuario", "documento", documentoUsuario));
+		usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourceNotFoudExeption("usuario", "documento", documentoUsuario));
 		List<AgendaVo> agendaDeUsuario = agendaRepository.findByDocumentousDocumentoUs(documentoUsuario);
 		return agendaDeUsuario.stream().map(agenda -> mapearusuarioaswerDto(agenda)).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<AgendaVeterinarioAnswerDto> listaAgendaVeterinario(Long documentoVeterinario) {
-		veterinarioRepository.findById(documentoVeterinario).orElseThrow(() -> new ResourseNotFoudExeption("Veterinario", "documento", documentoVeterinario));
+		veterinarioRepository.findById(documentoVeterinario).orElseThrow(() -> new ResourceNotFoudExeption("Veterinario", "documento", documentoVeterinario));
 		List<AgendaVo> agendaDeVeterinario = agendaRepository.findByDocumentovtDocumento(documentoVeterinario);
 		return agendaDeVeterinario.stream().map(agenda -> mapearVeteririnarioDto(agenda)).collect(Collectors.toList());
 	}
 
 	@Override
 	public AgendaAnswerDto buscarAgendaId(Long codigo) {
-		AgendaVo agenda = agendaRepository.findById(codigo).orElseThrow(() -> new ResourseNotFoudExeption("agenda", "codigo", codigo));
+		AgendaVo agenda = agendaRepository.findById(codigo).orElseThrow(() -> new ResourceNotFoudExeption("agenda", "codigo", codigo));
 		return mapearAgendaDto(agenda);
 	}
 
 	@Override
 	public AgendaDto actualizarAgenda(Long codigo, AgendaDto agendaDto) {
-		AgendaVo agenda = agendaRepository.findById(codigo).orElseThrow(() -> new ResourseNotFoudExeption("agenda", "codigo", codigo));
+		AgendaVo agenda = agendaRepository.findById(codigo).orElseThrow(() -> new ResourceNotFoudExeption("agenda", "codigo", codigo));
 		
 		agenda.setFecha(agendaDto.getFecha());
 		agenda.setHora(agendaDto.getHora());
@@ -85,7 +85,7 @@ public class AgendaServiceImpl implements IAgendaService{
 
 	@Override
 	public void eliminarAgenda(Long codigo) {
-		AgendaVo agenda = agendaRepository.findById(codigo).orElseThrow(() -> new ResourseNotFoudExeption("agenda", "codigo", codigo));
+		AgendaVo agenda = agendaRepository.findById(codigo).orElseThrow(() -> new ResourceNotFoudExeption("agenda", "codigo", codigo));
 		agendaRepository.delete(agenda);
 	}
 	

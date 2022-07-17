@@ -2,6 +2,8 @@ package com.pets1.app.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,12 +43,12 @@ public class UsuarioRest {
 	}
 
 	@PostMapping("/usuarios")	
-	public ResponseEntity<UsuarioDto> guardarUsuario(@RequestBody UsuarioDto usuarioDto){	
+	public ResponseEntity<UsuarioDto> guardarUsuario(@Valid @RequestBody UsuarioDto usuarioDto){	
 		return new ResponseEntity<>(usuarioService.guardarUsuario(usuarioDto), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/usuarios/{documento}")
-	public ResponseEntity<UsuarioDto> actualizarUsuario(@PathVariable Long documento ,@RequestBody UsuarioDto usuarioDto){
+	public ResponseEntity<UsuarioDto> actualizarUsuario(@PathVariable Long documento ,@Valid @RequestBody UsuarioDto usuarioDto){
 		UsuarioDto respuestaActualizacion = usuarioService.actualizarUsuario(usuarioDto, documento);
 		return new ResponseEntity<>(respuestaActualizacion, HttpStatus.OK);
 	}

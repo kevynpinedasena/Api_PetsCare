@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.pets1.app.domain.ClinicaVo;
 import com.pets1.app.dto.answers.ClinicaAnswerDto;
 import com.pets1.app.dto.entityData.clinicaDto;
-import com.pets1.app.exeptions.ResourseNotFoudExeption;
+import com.pets1.app.exeptions.ResourceNotFoudExeption;
 import com.pets1.app.repository.IClinicaRepository;
 import com.pets1.app.service.IClinicaService;
 
@@ -41,13 +41,13 @@ public class ClinicaServiceImpl implements IClinicaService{
 
 	@Override
 	public ClinicaAnswerDto consultarClinicaPorId(Long nitClinica) {
-		ClinicaVo clinica = clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourseNotFoudExeption("clinica", "nit", nitClinica));
+		ClinicaVo clinica = clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourceNotFoudExeption("clinica", "nit", nitClinica));
 		return mapearAnswerDto(clinica);
 	}
 
 	@Override
 	public clinicaDto actualizarClinica(Long nitClinica, clinicaDto clinicaDto) {
-		ClinicaVo clinica = clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourseNotFoudExeption("clinica", "nit", nitClinica));
+		ClinicaVo clinica = clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourceNotFoudExeption("clinica", "nit", nitClinica));
 		
 		clinica.setNombre(clinicaDto.getNombre());
 		clinica.setDireccion(clinicaDto.getDireccion());
@@ -62,7 +62,7 @@ public class ClinicaServiceImpl implements IClinicaService{
 
 	@Override
 	public void eliminarClinica(Long nitClinica) {
-		ClinicaVo clinica = clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourseNotFoudExeption("clinica", "nit", nitClinica));
+		ClinicaVo clinica = clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourceNotFoudExeption("clinica", "nit", nitClinica));
 		clinicaRepository.delete(clinica);
 	}
 	
