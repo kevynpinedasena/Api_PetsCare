@@ -30,7 +30,7 @@ public class UsuarioDto {
 	
 	private String imagenUsu;
 	
-	private Long rolUs;
+	//private Long rolUs;
 
 	public Long getDocumentoUs() {
 		return documentoUs;
@@ -96,12 +96,12 @@ public class UsuarioDto {
 		this.imagenUsu = imagenUsu;
 	}
 
-	public Long getRolUs() {
-		return rolUs;
-	}
-
-	public void setRolUs(Long rolUs) {
-		this.rolUs = rolUs;
-	}
+//	public Long getRolUs() {
+//		return rolUs;
+//	}
+//
+//	public void setRolUs(Long rolUs) {
+//		this.rolUs = rolUs;
+//	}
 
 }

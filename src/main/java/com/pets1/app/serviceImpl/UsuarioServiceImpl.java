@@ -73,7 +73,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		usuario.setCorreoUs(usuarioDto.getCorreoUs());
 		usuario.setPasswordUs(usuarioDto.getPasswordUs());
 		usuario.setImagenUsu(usuarioDto.getImagenUsu());
-		usuario.setRolUs(usuarioDto.getRolUs());
+//		usuario.setRolUs(usuarioDto.getRolUs());
 		
 		UsuarioVo usuarioActualizado = usuarioRepository.save(usuario);
 		

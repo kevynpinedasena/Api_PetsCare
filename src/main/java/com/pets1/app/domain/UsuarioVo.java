@@ -6,7 +6,11 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -15,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "usuarios" ,uniqueConstraints = {@UniqueConstraint(columnNames = {"documento_usu"})})
+@Table(name = "usuarios" ,uniqueConstraints = {@UniqueConstraint(columnNames = {"nombre_usu"}),@UniqueConstraint(columnNames = {"correo_usu"})})
 public class UsuarioVo {
 	
 	@Id
@@ -43,8 +47,12 @@ public class UsuarioVo {
 	@Column(name = "foto_usu", nullable = false)
 	private String imagenUsu;
 
-	@Column(name = "rol_usu", nullable = false)
-	private Long rolUs;
+//	@Column(name = "rol_usu", nullable = false)
+//	private Long rolUs;
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_doc", referencedColumnName = "documento_usu"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
+	private Set<RolVo> roles = new HashSet<>();
 	
 	@JsonBackReference
 	@OneToMany(mappedBy = "dueniomascota", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -53,6 +61,27 @@ public class UsuarioVo {
 	@JsonIgnoreProperties
 	@OneToMany(mappedBy = "documentous", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<AgendaVo> agendas= new HashSet<>();
+	
+	public UsuarioVo(Long documentoUs, String nombreUs, String apellidoUs, String sexoUs, String telefonoUs,
+			String correoUs, String passwordUs, String imagenUsu, Set<RolVo> roles, Set<MascotaVo> mascotas,
+			Set<AgendaVo> agendas) {
+		super();
+		this.documentoUs = documentoUs;
+		this.nombreUs = nombreUs;
+		this.apellidoUs = apellidoUs;
+		this.sexoUs = sexoUs;
+		this.telefonoUs = telefonoUs;
+		this.correoUs = correoUs;
+		this.passwordUs = passwordUs;
+		this.imagenUsu = imagenUsu;
+		this.roles = roles;
+		this.mascotas = mascotas;
+		this.agendas = agendas;
+	}
+
+	public UsuarioVo() {
+		super();
+	}
 
 	public Long getDocumentoUs() {
 		return documentoUs;
@@ -118,12 +147,12 @@ public class UsuarioVo {
 		this.imagenUsu = imagenUsu;
 	}
 
-	public Long getRolUs() {
-		return rolUs;
+	public Set<RolVo> getRoles() {
+		return roles;
 	}
 
-	public void setRolUs(Long rolUs) {
-		this.rolUs = rolUs;
+	public void setRoles(Set<RolVo> roles) {
+		this.roles = roles;
 	}
 
 	public Set<MascotaVo> getMascotas() {
@@ -139,27 +168,6 @@ public class UsuarioVo {
 	}
 
 	public void setAgendas(Set<AgendaVo> agendas) {
-		this.agendas = agendas;
-	}
-
-	public UsuarioVo() {
-		super();
-	}
-
-	public UsuarioVo(Long documentoUs, String nombreUs, String apellidoUs, String sexoUs, String telefonoUs,
-			String correoUs, String passwordUs, String imagenUsu, Long rolUs, Set<MascotaVo> mascotas,
-			Set<AgendaVo> agendas) {
-		super();
-		this.documentoUs = documentoUs;
-		this.nombreUs = nombreUs;
-		this.apellidoUs = apellidoUs;
-		this.sexoUs = sexoUs;
-		this.telefonoUs = telefonoUs;
-		this.correoUs = correoUs;
-		this.passwordUs = passwordUs;
-		this.imagenUsu = imagenUsu;
-		this.rolUs = rolUs;
-		this.mascotas = mascotas;
 		this.agendas = agendas;
 	}
 	
