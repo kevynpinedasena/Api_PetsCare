@@ -22,9 +22,7 @@ public class UsuarioAnswerDto {
 	private String passwordUs;
 	
 	private String imagenUsu;
-	
-	private Long rolUs;
-	
+		
 	private Set<MascotaDto> mascotas= new HashSet<>();
 	
 	private Set<AgendaUsuarioAnswerDto> agendas= new HashSet<>();
@@ -91,14 +89,6 @@ public class UsuarioAnswerDto {
 
 	public void setImagenUsu(String imagenUsu) {
 		this.imagenUsu = imagenUsu;
-	}
-
-	public Long getRolUs() {
-		return rolUs;
-	}
-
-	public void setRolUs(Long rolUs) {
-		this.rolUs = rolUs;
 	}
 
 	public Set<MascotaDto> getMascotas() {

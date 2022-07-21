@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,16 +44,19 @@ public class UsuarioRest {
 	}
 
 	@PostMapping("/usuarios")	
-	public ResponseEntity<UsuarioDto> guardarUsuario(@Valid @RequestBody UsuarioDto usuarioDto){	
-		return new ResponseEntity<>(usuarioService.guardarUsuario(usuarioDto), HttpStatus.CREATED);
+	public ResponseEntity<String> guardarUsuario(@Valid @RequestBody UsuarioDto usuarioDto){	
+		usuarioService.guardarUsuario(usuarioDto);
+		return new ResponseEntity<>("usuario registrado con exito", HttpStatus.CREATED);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@PutMapping("/usuarios/{documento}")
 	public ResponseEntity<UsuarioDto> actualizarUsuario(@PathVariable Long documento ,@Valid @RequestBody UsuarioDto usuarioDto){
 		UsuarioDto respuestaActualizacion = usuarioService.actualizarUsuario(usuarioDto, documento);
 		return new ResponseEntity<>(respuestaActualizacion, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/usuarios/{documento}")
 	public ResponseEntity<String> eliminarUsuario(@PathVariable Long documento){
 		usuarioService.eliminarUsuario(documento);
