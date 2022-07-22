@@ -17,7 +17,7 @@ import com.pets1.app.seguridad.JwtTokenProvider;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthControlador {
+public class AuthRest {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -29,6 +29,8 @@ public class AuthControlador {
 	@PostMapping("/iniciarSecion")
 	public ResponseEntity<JwtAuthResponceDto> authenticateUser(@RequestBody LoginDto loginDto){
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getNombreoCorreo(), loginDto.getPassword()));
+		//Authentication authentication2 = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getNombreoCorreo(), loginDto.getPassword()));
+		
 		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		

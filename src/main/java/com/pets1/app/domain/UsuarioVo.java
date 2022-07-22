@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "usuarios" ,uniqueConstraints = {@UniqueConstraint(columnNames = {"nombre_usu"}),@UniqueConstraint(columnNames = {"correo_usu"})})
+@Table(name = "usuarios" ,uniqueConstraints = {@UniqueConstraint(columnNames = {"correo_usu"})})
 public class UsuarioVo {
 	
 	@Id

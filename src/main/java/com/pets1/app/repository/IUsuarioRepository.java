@@ -30,4 +30,11 @@ public interface IUsuarioRepository extends JpaRepository<UsuarioVo, Long>{
 	
 	public Boolean existsByCorreoUs(String correoUs);
 	
+	
+	public Optional<UsuarioVo> findByDocumentoUsOrCorreoUs(Long documentoUs, String correoUs);
+	
+	public Optional<UsuarioVo> findByDocumentoUs(Long documentoUs);
+	
+	public Boolean existsByDocumentoUs(Long documentoUs);
+	
 }

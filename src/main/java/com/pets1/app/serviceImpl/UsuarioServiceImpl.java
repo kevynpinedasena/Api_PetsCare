@@ -48,9 +48,9 @@ public class UsuarioServiceImpl implements IUsuarioService{
 			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "el usuario ya existe con este documento");
 		}
 		
-		else if(usuarioRepository.existsByNombreUs(usuarioDto.getNombreUs())) {
-			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "El usuario ya existe");
-		}
+//		else if(usuarioRepository.existsByNombreUs(usuarioDto.getNombreUs())) {
+//			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "El usuario ya existe");
+//		}
 		else if(usuarioRepository.existsByCorreoUs(usuarioDto.getCorreoUs())) {
 			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "Ya existe un usuario con este email" );
 		}
