@@ -13,11 +13,13 @@ public class ClinicaAnswerDto {
 	
 	private String direccion; 
 	
+	private String correo_cv;
+	
 	private String horario_atencion;
 	
 	private String dias_atencion;
 	
-	private long rol;
+	private String contrasena;
 	
 	private String imagenclinica;
 	
@@ -47,6 +49,14 @@ public class ClinicaAnswerDto {
 		this.direccion = direccion;
 	}
 
+	public String getCorreo_cv() {
+		return correo_cv;
+	}
+
+	public void setCorreo_cv(String correo_cv) {
+		this.correo_cv = correo_cv;
+	}
+
 	public String getHorario_atencion() {
 		return horario_atencion;
 	}
@@ -63,12 +73,12 @@ public class ClinicaAnswerDto {
 		this.dias_atencion = dias_atencion;
 	}
 
-	public long getRol() {
-		return rol;
+	public String getContrasena() {
+		return contrasena;
 	}
 
-	public void setRol(long rol) {
-		this.rol = rol;
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
 	}
 
 	public String getImagenclinica() {

@@ -6,11 +6,14 @@ public class clinicaDto {
 	
 	private Long nit;
 	
-	@NotEmpty
+	@NotEmpty(message = "el nombre no puede ser nulo ni vacio")
 	private String nombre;
 	
-	@NotEmpty
+	@NotEmpty(message = "la direccion no puede ser nula ni vacia")
 	private String direccion;
+	
+	@NotEmpty(message = "el correo no puede ser nulo ni vacio")
+	private String correo_cv;
 	
 	@NotEmpty
 	private String horario_atencion;
@@ -18,9 +21,11 @@ public class clinicaDto {
 	@NotEmpty
 	private String dias_atencion;
 	
-	private long rol;
+	@NotEmpty(message = "la contraseña no puede ser nula ni vacia")
+	private String contrasena;
 	
 	private String imagenclinica;
+	
 
 	public Long getNit() {
 		return nit;
@@ -46,6 +51,14 @@ public class clinicaDto {
 		this.direccion = direccion;
 	}
 
+	public String getCorreo_cv() {
+		return correo_cv;
+	}
+
+	public void setCorreo_cv(String correo_cv) {
+		this.correo_cv = correo_cv;
+	}
+
 	public String getHorario_atencion() {
 		return horario_atencion;
 	}
@@ -62,12 +75,12 @@ public class clinicaDto {
 		this.dias_atencion = dias_atencion;
 	}
 
-	public long getRol() {
-		return rol;
+	public String getContrasena() {
+		return contrasena;
 	}
 
-	public void setRol(long rol) {
-		this.rol = rol;
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
 	}
 
 	public String getImagenclinica() {
@@ -77,5 +90,5 @@ public class clinicaDto {
 	public void setImagenclinica(String imagenclinica) {
 		this.imagenclinica = imagenclinica;
 	}
-	
+		
 }
