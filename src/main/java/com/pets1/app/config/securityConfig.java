@@ -1,7 +1,5 @@
 package com.pets1.app.config;
 
-import javax.servlet.Filter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,6 +51,7 @@ public class securityConfig  extends WebSecurityConfigurerAdapter{
 		.and()
 		.authorizeRequests().antMatchers(HttpMethod.GET, "/api/**").permitAll()
 		.antMatchers("/api/auth/**").permitAll()
+		.antMatchers(HttpMethod.POST ,"/api/usuarios/**").permitAll()
 		.anyRequest()
 		.authenticated();
 		http.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -62,16 +61,6 @@ public class securityConfig  extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
-	
-//	@Override
-//	@Bean
-//	protected UserDetailsService userDetailsService() {
-//		UserDetails juan = User.builder().username("juan").password(passwordEncoder().encode("juan1234")).roles("USER").build();
-//		
-//		UserDetails admin = User.builder().username("admin").password(passwordEncoder().encode("admin")).roles("ADMIN").build();
-//		
-//		return new InMemoryUserDetailsManager(juan, admin);
-//	}
 
 	@Override
 	@Bean
