@@ -2,9 +2,12 @@ package com.pets1.app.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,17 +38,21 @@ public class ClinicaRest {
 		return ResponseEntity.ok(clinicaService.consultarClinicaPorId(nit));
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/clinicas")
-	public ResponseEntity<clinicaDto> guardarClinica(@RequestBody clinicaDto clinicaDto){	
-		return new ResponseEntity<>(clinicaService.crearClinica(clinicaDto), HttpStatus.CREATED);
+	public ResponseEntity<String> guardarClinica(@Valid @RequestBody clinicaDto clinicaDto){	
+		clinicaService.crearClinica(clinicaDto);
+		return new ResponseEntity<>("clinica registrada con exito", HttpStatus.CREATED);
 	}
 	
+	@PreAuthorize("hasRole('CLINICA')")
 	@PutMapping("/clinicas/{nit}")
-	public ResponseEntity<clinicaDto> actualizarClinica(@PathVariable Long nit ,@RequestBody clinicaDto clinicaDto){
+	public ResponseEntity<clinicaDto> actualizarClinica(@PathVariable Long nit ,@Valid @RequestBody clinicaDto clinicaDto){
 		clinicaDto clinica = clinicaService.actualizarClinica(nit, clinicaDto);
 		return new ResponseEntity<>(clinica, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/clinicas/{nit}")
 	public ResponseEntity<String> eliminarClinica(@PathVariable Long nit){
 		clinicaService.eliminarClinica(nit);

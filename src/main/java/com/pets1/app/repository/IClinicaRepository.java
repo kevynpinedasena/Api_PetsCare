@@ -14,11 +14,11 @@ public interface IClinicaRepository extends JpaRepository<ClinicaVo, Long>{
 	
 	public Optional<ClinicaVo> findByCorreoCv(String correo_cv);
 	
-	public Optional<ClinicaVo> findByNitOrCorreoCv(Long nit, String correo);
+	public Optional<ClinicaVo> findByNombreOrCorreoCv(String nombre, String correo);
 	
-	public Optional<ClinicaVo> findByNit(Long nit);
+	public Optional<ClinicaVo> findByNombre(String nombre);
 	
-	public Boolean existsByNit(Long nit);
+	public Boolean existsByNombre(String nombre);
 	
 	public Boolean existsByCorreoCv(String correo);
 	

@@ -28,12 +28,14 @@ public class AuthRest {
 		
 	@PostMapping("/iniciarSecion")
 	public ResponseEntity<JwtAuthResponceDto> authenticateUser(@RequestBody LoginDto loginDto){
+		System.out.println("**********");
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getNombreoCorreo(), loginDto.getPassword()));
 		//Authentication authentication2 = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getNombreoCorreo(), loginDto.getPassword()));
 		
 		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
+		System.out.println(authentication);
 		//obtener el token de jwtProvider
 		String token = tokenProvider.generarToken(authentication);
 		

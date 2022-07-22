@@ -41,8 +41,8 @@ public class ClinicaVo {
 	@Column(name = "dias_atencion", nullable = false)
 	private String dias_atencion;
 	
-	@Column(name = "contraseña_cv", nullable = false)
-	private String contrasena;
+	@Column(name = "password_cv", nullable = false)
+	private String passwordCv;
 	
 	@Column(name = "foto_clinica", nullable = false)
 	private String imagenclinica;
@@ -61,7 +61,7 @@ public class ClinicaVo {
 	}
 
 	public ClinicaVo(Long nit, String nombre, String direccion, String correoCv, String horario_atencion,
-			String dias_atencion, String contrasena, String imagenclinica, Set<VeterinarioVo> veterinarios, RolVo rol) {
+			String dias_atencion, String passwordCv, String imagenclinica, Set<VeterinarioVo> veterinarios, RolVo rol) {
 		super();
 		this.nit = nit;
 		this.nombre = nombre;
@@ -69,7 +69,7 @@ public class ClinicaVo {
 		this.correoCv = correoCv;
 		this.horario_atencion = horario_atencion;
 		this.dias_atencion = dias_atencion;
-		this.contrasena = contrasena;
+		this.passwordCv = passwordCv;
 		this.imagenclinica = imagenclinica;
 		this.veterinarios = veterinarios;
 		this.rol = rol;
@@ -123,12 +123,12 @@ public class ClinicaVo {
 		this.dias_atencion = dias_atencion;
 	}
 
-	public String getContrasena() {
-		return contrasena;
+	public String getPasswordCv() {
+		return passwordCv;
 	}
 
-	public void setContrasena(String contrasena) {
-		this.contrasena = contrasena;
+	public void setPasswordCv(String passwordCv) {
+		this.passwordCv = passwordCv;
 	}
 
 	public String getImagenclinica() {
