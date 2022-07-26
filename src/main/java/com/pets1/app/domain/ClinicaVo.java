@@ -12,11 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "clinica_veterinaria")
@@ -51,17 +49,17 @@ public class ClinicaVo {
 	@OneToMany(mappedBy = "clinica", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<VeterinarioVo> veterinarios = new HashSet<>();
 	
-	@OneToOne
-	@JoinColumn(name = "rol_clinica", referencedColumnName = "id")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private RolVo rol;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "clinica_roles", joinColumns = @JoinColumn(name = "clinica_nit", referencedColumnName = "nit_cv"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
+	private Set<RolVo> roles = new HashSet<>();
 	
 	public ClinicaVo () {
 		
 	}
 
 	public ClinicaVo(Long nit, String nombre, String direccion, String correoCv, String horario_atencion,
-			String dias_atencion, String passwordCv, String imagenclinica, Set<VeterinarioVo> veterinarios, RolVo rol) {
+			String dias_atencion, String passwordCv, String imagenclinica, Set<VeterinarioVo> veterinarios,
+			Set<RolVo> roles) {
 		super();
 		this.nit = nit;
 		this.nombre = nombre;
@@ -72,7 +70,7 @@ public class ClinicaVo {
 		this.passwordCv = passwordCv;
 		this.imagenclinica = imagenclinica;
 		this.veterinarios = veterinarios;
-		this.rol = rol;
+		this.roles = roles;
 	}
 
 	public Long getNit() {
@@ -147,12 +145,12 @@ public class ClinicaVo {
 		this.veterinarios = veterinarios;
 	}
 
-	public RolVo getRol() {
-		return rol;
+	public Set<RolVo> getRoles() {
+		return roles;
 	}
 
-	public void setRol(RolVo rol) {
-		this.rol = rol;
+	public void setRoles(Set<RolVo> roles) {
+		this.roles = roles;
 	}
 	
 }

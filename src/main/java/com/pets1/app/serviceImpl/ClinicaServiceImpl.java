@@ -55,7 +55,7 @@ public class ClinicaServiceImpl implements IClinicaService{
 		clinicaDatos.setPasswordCv(passwordEncoder.encode(clinicaDto.getPassword()));
 		
 		RolVo rol = rolRepository.findByNombre("ROLE_CLINICA").get();
-		clinicaDatos.setRol(rol);
+		clinicaDatos.setRoles(Collections.singleton(rol));
 		
 		ClinicaVo nuevaClinica = clinicaRepository.save(clinicaDatos);
 		return mapearDto(nuevaClinica);
