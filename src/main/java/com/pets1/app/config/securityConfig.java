@@ -15,8 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.pets1.app.seguridad.CustomClinicaDetailsService;
 import com.pets1.app.seguridad.CustomUserDetailsService;
 import com.pets1.app.seguridad.JwtAutenticationEntryPoint;
+import com.pets1.app.seguridad.JwtAuthenticationClinicaFilter;
 import com.pets1.app.seguridad.JwtAuthenticationFilter;
 
 @Configuration
@@ -27,6 +29,9 @@ public class securityConfig  extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
 	
+//	@Autowired 
+//	private CustomClinicaDetailsService clinicaDetailsService;
+	
 	@Autowired
 	private JwtAutenticationEntryPoint autenticationEntryPoint;
 	
@@ -34,6 +39,11 @@ public class securityConfig  extends WebSecurityConfigurerAdapter{
 	public JwtAuthenticationFilter authenticationFilter() {
 		return new JwtAuthenticationFilter();
 	}
+	
+//	@Bean
+//	public JwtAuthenticationClinicaFilter authenticationClinicaFilter() {
+//		return new JwtAuthenticationClinicaFilter();
+//	}
 	
 	@Bean
 	PasswordEncoder passwordEncoder() {
@@ -60,6 +70,7 @@ public class securityConfig  extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//		auth.userDetailsService(clinicaDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Override

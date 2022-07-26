@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.pets1.app.domain.RolVo;
 import com.pets1.app.domain.ClinicaVo;
+import com.pets1.app.domain.RolVo;
 import com.pets1.app.repository.IClinicaRepository;
 
 @Service
@@ -24,9 +24,11 @@ public class CustomClinicaDetailsService implements UserDetailsService{
 	private IClinicaRepository clinicaRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDetails loadUserByUsername(String nombreOrCorreoCv) throws UsernameNotFoundException {
+		ClinicaVo clinica = clinicaRepository.findByNombreOrCorreoCv(nombreOrCorreoCv, nombreOrCorreoCv)
+				.orElseThrow(() -> new UsernameNotFoundException("Clinica no encontrada con este nombre o correo:"+ nombreOrCorreoCv));
+		
+		return new User(clinica.getCorreoCv(), clinica.getPasswordCv(), mapearRoles(clinica.getRoles()));
 	}
 	
 	private Collection<? extends GrantedAuthority> mapearRoles(Set<RolVo> roles){		

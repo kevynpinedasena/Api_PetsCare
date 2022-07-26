@@ -13,11 +13,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "clinica_veterinaria")
+@Table(name = "clinica_veterinaria",uniqueConstraints = {@UniqueConstraint(columnNames = {"correo_cv"})})
 public class ClinicaVo {
 	
 	@Id
@@ -29,6 +30,9 @@ public class ClinicaVo {
 	
 	@Column(name = "direccion_cv", nullable = false)
 	private String direccion; 
+	
+	@Column(name = "telefono_cv", nullable = false)
+	private String telefono; 
 	
 	@Column(name = "correo_cv", nullable = false)
 	private String correoCv;
@@ -57,13 +61,14 @@ public class ClinicaVo {
 		
 	}
 
-	public ClinicaVo(Long nit, String nombre, String direccion, String correoCv, String horario_atencion,
-			String dias_atencion, String passwordCv, String imagenclinica, Set<VeterinarioVo> veterinarios,
-			Set<RolVo> roles) {
+	public ClinicaVo(Long nit, String nombre, String direccion, String telefono, String correoCv,
+			String horario_atencion, String dias_atencion, String passwordCv, String imagenclinica,
+			Set<VeterinarioVo> veterinarios, Set<RolVo> roles) {
 		super();
 		this.nit = nit;
 		this.nombre = nombre;
 		this.direccion = direccion;
+		this.telefono = telefono;
 		this.correoCv = correoCv;
 		this.horario_atencion = horario_atencion;
 		this.dias_atencion = dias_atencion;
@@ -95,6 +100,14 @@ public class ClinicaVo {
 
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
 	public String getCorreoCv() {

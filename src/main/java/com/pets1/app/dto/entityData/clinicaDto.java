@@ -12,6 +12,9 @@ public class clinicaDto {
 	@NotEmpty(message = "la direccion no puede ser nula ni vacia")
 	private String direccion;
 	
+	@NotEmpty
+	private String telefono;
+	
 	@NotEmpty(message = "el correo no puede ser nulo ni vacio")
 	private String correoCv;
 	
@@ -49,6 +52,14 @@ public class clinicaDto {
 
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
 	public String getCorreoCv() {

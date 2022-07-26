@@ -42,4 +42,18 @@ public class AuthRest {
 		return ResponseEntity.ok(new JwtAuthResponceDto(token));
 	}
 	
+	
+//	@PostMapping("/iniciarSecion/clinica")
+//	public ResponseEntity<JwtAuthResponceDto> authenticateClinica(@RequestBody LoginDto loginDto){
+//		System.out.println("1");
+//		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getNombreoCorreo(), loginDto.getPassword()));
+//		//Authentication authentication2 = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getNombreoCorreo(), loginDto.getPassword()));
+//		
+//		System.out.println("2");
+//		SecurityContextHolder.getContext().setAuthentication(authentication);
+//		System.out.println("3");
+//		String token = tokenProvider.generarToken(authentication);
+//		System.out.println("4");
+//		return ResponseEntity.ok(new JwtAuthResponceDto(token));
+//	}
 }

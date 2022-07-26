@@ -79,6 +79,7 @@ public class ClinicaServiceImpl implements IClinicaService{
 		
 		clinica.setNombre(clinicaDto.getNombre());
 		clinica.setDireccion(clinicaDto.getDireccion());
+		clinica.setTelefono(clinicaDto.getTelefono());
 		clinica.setHorario_atencion(clinicaDto.getHorario_atencion());
 		clinica.setDias_atencion(clinicaDto.getDias_atencion());
 		clinica.setImagenclinica(clinicaDto.getImagenclinica());
