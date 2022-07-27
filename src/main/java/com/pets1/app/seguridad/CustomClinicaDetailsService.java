@@ -34,6 +34,4 @@ public class CustomClinicaDetailsService implements UserDetailsService{
 	private Collection<? extends GrantedAuthority> mapearRoles(Set<RolVo> roles){		
 		return roles.stream().map(rol -> new SimpleGrantedAuthority(rol.getNombre())).collect(Collectors.toList());
 	}
-
-
 }

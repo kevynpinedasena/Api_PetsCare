@@ -17,7 +17,7 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "veterinario", uniqueConstraints = {@UniqueConstraint(columnNames = {"documento_vt"})})
+@Table(name = "veterinario", uniqueConstraints = {@UniqueConstraint(columnNames = {"correo_vt"})})
 public class VeterinarioVo {
 	
 	@Id

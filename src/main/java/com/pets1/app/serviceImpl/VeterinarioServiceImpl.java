@@ -7,12 +7,14 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.ClinicaVo;
 import com.pets1.app.domain.VeterinarioVo;
 import com.pets1.app.dto.answers.VeterinarioAnswerDto;
 import com.pets1.app.dto.entityData.VeterinarioDto;
+import com.pets1.app.exeptions.AppPetsCareExeption;
 import com.pets1.app.exeptions.ResourceNotFoudExeption;
 import com.pets1.app.repository.IClinicaRepository;
 import com.pets1.app.repository.IVeterinarioRepository;
@@ -34,6 +36,13 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 	@Override
 	public VeterinarioDto guardarVeterinarios(Long nitClinica, VeterinarioDto veterinarioDto) {
 		ClinicaVo clinica = clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourceNotFoudExeption("clinica", "nit", nitClinica));
+		
+		boolean vete = veterinarioRepository.findById(veterinarioDto.getDocumento()).isPresent();
+		
+		if (vete == true) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "el veterinario ya existe con este documento");
+		}
+		
 		VeterinarioVo veterinario = mapearEntidad(veterinarioDto);
 		veterinario.setClinica(clinica);
 		
