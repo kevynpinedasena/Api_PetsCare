@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.ClinicaVo;
@@ -29,6 +30,9 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 	
 	@Autowired
 	private IClinicaRepository clinicaRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -45,6 +49,7 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 		
 		VeterinarioVo veterinario = mapearEntidad(veterinarioDto);
 		veterinario.setClinica(clinica);
+		veterinario.setPassword(passwordEncoder.encode(veterinarioDto.getPassword()));
 		
 		VeterinarioVo nuevoVeterinario = veterinarioRepository.save(veterinario);
 		return mapearDto(nuevoVeterinario);
@@ -73,7 +78,7 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 		veterinario.setTelefono(veterinarioDto.getTelefono());
 		veterinario.setCorreo(veterinarioDto.getCorreo());
 		veterinario.setEspecialidad(veterinarioDto.getEspecialidad());
-		veterinario.setPassword(veterinarioDto.getPassword());
+		veterinario.setPassword(passwordEncoder.encode(veterinarioDto.getPassword()));
 		veterinario.setImagenVete(veterinarioDto.getImagenVete());
 		
 		VeterinarioVo asctualizarVeterinario = veterinarioRepository.save(veterinario);

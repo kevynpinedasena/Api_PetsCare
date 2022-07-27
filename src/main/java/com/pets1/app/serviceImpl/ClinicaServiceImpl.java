@@ -80,8 +80,10 @@ public class ClinicaServiceImpl implements IClinicaService{
 		clinica.setNombre(clinicaDto.getNombre());
 		clinica.setDireccion(clinicaDto.getDireccion());
 		clinica.setTelefono(clinicaDto.getTelefono());
+		clinica.setCorreoCv(clinicaDto.getCorreoCv());
 		clinica.setHorario_atencion(clinicaDto.getHorario_atencion());
 		clinica.setDias_atencion(clinicaDto.getDias_atencion());
+		clinica.setPasswordCv(passwordEncoder.encode(clinicaDto.getPassword()));
 		clinica.setImagenclinica(clinicaDto.getImagenclinica());
 		
 		ClinicaVo clinicaActualizada = clinicaRepository.save(clinica);

@@ -102,7 +102,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		usuario.setSexoUs(usuarioDto.getSexoUs());
 		usuario.setTelefonoUs(usuarioDto.getTelefonoUs());
 		usuario.setCorreoUs(usuarioDto.getCorreoUs());
-		usuario.setPasswordUs(usuarioDto.getPasswordUs());
+		usuario.setPasswordUs(passwordEncoder.encode(usuarioDto.getPasswordUs()));
 		usuario.setImagenUsu(usuarioDto.getImagenUsu());
 //		usuario.setRolUs(usuarioDto.getRolUs());
 		
