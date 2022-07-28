@@ -1,5 +1,7 @@
 package com.pets1.app.serviceImpl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,13 +9,18 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.ClinicaVo;
+import com.pets1.app.domain.RolVo;
 import com.pets1.app.dto.answers.ClinicaAnswerDto;
 import com.pets1.app.dto.entityData.clinicaDto;
+import com.pets1.app.exeptions.AppPetsCareExeption;
 import com.pets1.app.exeptions.ResourceNotFoudExeption;
 import com.pets1.app.repository.IClinicaRepository;
+import com.pets1.app.repository.IRolRepository;
 import com.pets1.app.service.IClinicaService;
 
 @Service
@@ -26,10 +33,31 @@ public class ClinicaServiceImpl implements IClinicaService{
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private IRolRepository rolRepository;
+	
 	@Override
 	public clinicaDto crearClinica(clinicaDto clinicaDto) {
-		ClinicaVo clinica = mapearEntidad(clinicaDto);
-		ClinicaVo nuevaClinica = clinicaRepository.save(clinica);
+		boolean clinica = clinicaRepository.findById(clinicaDto.getNit()).isPresent();
+		
+		if(clinica == true) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "ya existe una clinica con este nit");
+		}
+		
+		else if(clinicaRepository.existsByCorreoCv(clinicaDto.getCorreoCv())) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "Ya existe un clinica con este email" );
+		}
+		
+		ClinicaVo clinicaDatos = mapearEntidad(clinicaDto);
+		clinicaDatos.setPasswordCv(passwordEncoder.encode(clinicaDto.getPassword()));
+		
+		RolVo rol = rolRepository.findByNombre("ROLE_CLINICA").get();
+		clinicaDatos.setRol(rol);
+		
+		ClinicaVo nuevaClinica = clinicaRepository.save(clinicaDatos);
 		return mapearDto(nuevaClinica);
 	}
 

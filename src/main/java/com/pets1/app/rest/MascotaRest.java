@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,17 +37,20 @@ public class MascotaRest {
 		return new ResponseEntity<>(mascotaDto, HttpStatus.OK);
 	}	
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping("/usuario/{documento}/mascota")
 	public ResponseEntity<MascotaDto> guardarMascota(@PathVariable Long documento ,@RequestBody MascotaDto mascotaDto){			
 		return new ResponseEntity<>(mascotaService.guardarMascota(documento, mascotaDto), HttpStatus.CREATED);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@PutMapping("/usuario/{documento}/mascota/{codigo}")
 	public ResponseEntity<MascotaDto> actualizarMascota(@PathVariable Long documento , @PathVariable Long codigo, @RequestBody MascotaDto mascotaDto){
 		MascotaDto mascotaActualizada=mascotaService.actualizarMascota(documento, codigo, mascotaDto);
 		return new ResponseEntity<>(mascotaActualizada , HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@DeleteMapping("/usuario/{documento}/mascota/{codigo}")
 	public ResponseEntity<String> eliminarMascota(@PathVariable Long documento, @PathVariable Long codigo){
 		mascotaService.eliminarMascota(documento, codigo);
