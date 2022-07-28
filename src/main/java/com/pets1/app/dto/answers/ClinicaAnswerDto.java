@@ -13,11 +13,13 @@ public class ClinicaAnswerDto {
 	
 	private String direccion; 
 	
+	private String correoCv;
+	
 	private String horario_atencion;
 	
 	private String dias_atencion;
 	
-	private long rol;
+	private String password;
 	
 	private String imagenclinica;
 	
@@ -47,6 +49,14 @@ public class ClinicaAnswerDto {
 		this.direccion = direccion;
 	}
 
+	public String getCorreoCv() {
+		return correoCv;
+	}
+
+	public void setCorreoCv(String correoCv) {
+		this.correoCv = correoCv;
+	}
+
 	public String getHorario_atencion() {
 		return horario_atencion;
 	}
@@ -63,12 +73,12 @@ public class ClinicaAnswerDto {
 		this.dias_atencion = dias_atencion;
 	}
 
-	public long getRol() {
-		return rol;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setRol(long rol) {
-		this.rol = rol;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getImagenclinica() {

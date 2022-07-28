@@ -40,6 +40,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	@Autowired
 	private IRolRepository rolRepository;
 	
+	@Override
 	public UsuarioDto guardarUsuario(UsuarioDto usuarioDto) {	
 		boolean usuarios = usuarioRepository.findById(usuarioDto.getDocumentoUs()).isPresent();
 		

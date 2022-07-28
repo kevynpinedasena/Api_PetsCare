@@ -6,11 +6,17 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "clinica_veterinaria")
@@ -26,14 +32,17 @@ public class ClinicaVo {
 	@Column(name = "direccion_cv", nullable = false)
 	private String direccion; 
 	
+	@Column(name = "correo_cv", nullable = false)
+	private String correoCv;
+	
 	@Column(name = "horario_atencio_cv", nullable = false)
 	private String horario_atencion;
 	
 	@Column(name = "dias_atencion", nullable = false)
 	private String dias_atencion;
 	
-	@Column(name = "rol_cv", nullable = false)
-	private long rol;
+	@Column(name = "password_cv", nullable = false)
+	private String passwordCv;
 	
 	@Column(name = "foto_clinica", nullable = false)
 	private String imagenclinica;
@@ -42,21 +51,28 @@ public class ClinicaVo {
 	@OneToMany(mappedBy = "clinica", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<VeterinarioVo> veterinarios = new HashSet<>();
 	
+	@OneToOne
+	@JoinColumn(name = "rol_clinica", referencedColumnName = "id")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	private RolVo rol;
+	
 	public ClinicaVo () {
 		
 	}
 
-	public ClinicaVo(Long nit, String nombre, String direccion, String horario_atencion, String dias_atencion, long rol,
-			String imagenclinica, Set<VeterinarioVo> veterinarios) {
+	public ClinicaVo(Long nit, String nombre, String direccion, String correoCv, String horario_atencion,
+			String dias_atencion, String passwordCv, String imagenclinica, Set<VeterinarioVo> veterinarios, RolVo rol) {
 		super();
 		this.nit = nit;
 		this.nombre = nombre;
 		this.direccion = direccion;
+		this.correoCv = correoCv;
 		this.horario_atencion = horario_atencion;
 		this.dias_atencion = dias_atencion;
-		this.rol = rol;
+		this.passwordCv = passwordCv;
 		this.imagenclinica = imagenclinica;
 		this.veterinarios = veterinarios;
+		this.rol = rol;
 	}
 
 	public Long getNit() {
@@ -83,6 +99,14 @@ public class ClinicaVo {
 		this.direccion = direccion;
 	}
 
+	public String getCorreoCv() {
+		return correoCv;
+	}
+
+	public void setCorreoCv(String correoCv) {
+		this.correoCv = correoCv;
+	}
+
 	public String getHorario_atencion() {
 		return horario_atencion;
 	}
@@ -99,12 +123,12 @@ public class ClinicaVo {
 		this.dias_atencion = dias_atencion;
 	}
 
-	public long getRol() {
-		return rol;
+	public String getPasswordCv() {
+		return passwordCv;
 	}
 
-	public void setRol(long rol) {
-		this.rol = rol;
+	public void setPasswordCv(String passwordCv) {
+		this.passwordCv = passwordCv;
 	}
 
 	public String getImagenclinica() {
@@ -123,4 +147,12 @@ public class ClinicaVo {
 		this.veterinarios = veterinarios;
 	}
 
+	public RolVo getRol() {
+		return rol;
+	}
+
+	public void setRol(RolVo rol) {
+		this.rol = rol;
+	}
+	
 }
