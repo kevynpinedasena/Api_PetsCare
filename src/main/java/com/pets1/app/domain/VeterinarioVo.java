@@ -58,7 +58,7 @@ public class VeterinarioVo {
 	@OneToMany(mappedBy = "documentovt", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<AgendaVo> agendas= new HashSet<>();
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "veterinarios_roles", joinColumns = @JoinColumn(name = "veterinario_doc", referencedColumnName = "documento_vt"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
 	private Set<RolVo> roles = new HashSet<>();
 	

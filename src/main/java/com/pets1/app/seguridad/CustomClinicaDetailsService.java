@@ -25,6 +25,7 @@ public class CustomClinicaDetailsService implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String nombreOrCorreoCv) throws UsernameNotFoundException {
+		System.out.println("entra al cus clinica");
 		ClinicaVo clinica = clinicaRepository.findByNombreOrCorreoCv(nombreOrCorreoCv, nombreOrCorreoCv)
 				.orElseThrow(() -> new UsernameNotFoundException("Clinica no encontrada con este nombre o correo:"+ nombreOrCorreoCv));
 		
