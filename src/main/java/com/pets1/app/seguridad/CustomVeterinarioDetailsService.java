@@ -14,25 +14,27 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.RolVo;
-import com.pets1.app.domain.UsuarioVo;
-import com.pets1.app.repository.IUsuarioRepository;
+import com.pets1.app.domain.VeterinarioVo;
+import com.pets1.app.repository.IVeterinarioRepository;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService{
+public class CustomVeterinarioDetailsService implements UserDetailsService{
 
 	@Autowired
-	private IUsuarioRepository usuarioRepository;
-	
+	private IVeterinarioRepository veterinarioRepository;
+
 	@Override
-	public UserDetails loadUserByUsername(String nombreUsOrCorreoUs) throws UsernameNotFoundException {
-		System.out.println("entra al cus usuario");
-		UsuarioVo usuario=usuarioRepository.findByNombreUsOrCorreoUs(nombreUsOrCorreoUs, nombreUsOrCorreoUs)
-				.orElseThrow(() -> new UsernameNotFoundException("usuario no encontrado con este nombre o correo:"+ nombreUsOrCorreoUs));
+	public UserDetails loadUserByUsername(String nombreOrCorreo) throws UsernameNotFoundException {
+		System.out.println("entra al cus veterinario");
 		
-		return new User(usuario.getCorreoUs(), usuario.getPasswordUs(), mapearRoles(usuario.getRoles()));
+		VeterinarioVo veterinario = veterinarioRepository.findByNombreOrCorreo(nombreOrCorreo, nombreOrCorreo)
+				.orElseThrow(() -> new UsernameNotFoundException("veterinario no encontrado con este nombre o correo:"+ nombreOrCorreo));
+		
+		return new User(veterinario.getCorreo(), veterinario.getPassword(), mapearRoles(veterinario.getRoles()));
 	}
 	
 	private Collection<? extends GrantedAuthority> mapearRoles(Set<RolVo> roles){		
 		return roles.stream().map(rol -> new SimpleGrantedAuthority(rol.getNombre())).collect(Collectors.toList());
 	}
+	
 }

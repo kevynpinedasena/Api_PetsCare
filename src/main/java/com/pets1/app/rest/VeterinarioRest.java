@@ -44,7 +44,7 @@ public class VeterinarioRest {
 		return new ResponseEntity<> (veterinario, HttpStatus.CREATED);
 	}
 	
-	@PreAuthorize("hasRole('CLINICA')")
+	@PreAuthorize("hasRole('VETERINARIO')")
 	@PutMapping("/veterinarios/{documento}")
 	public ResponseEntity<VeterinarioDto> actualizarVeterinario(@PathVariable Long documento ,@RequestBody VeterinarioDto veterinarioDto){
 		VeterinarioDto veterinario = veterinarioService.actualizarVeterinario(documento, veterinarioDto);

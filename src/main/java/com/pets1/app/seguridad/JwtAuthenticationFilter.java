@@ -20,6 +20,7 @@ import com.pets1.app.domain.ClinicaVo;
 import com.pets1.app.domain.UsuarioVo;
 import com.pets1.app.repository.IClinicaRepository;
 import com.pets1.app.repository.IUsuarioRepository;
+import com.pets1.app.repository.IVeterinarioRepository;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
@@ -33,10 +34,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	private IClinicaRepository clinicaRepository;
 	
 	@Autowired
+	private IVeterinarioRepository veterinarioRepository;
+	
+	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
 	
 	@Autowired
 	private CustomClinicaDetailsService customClinicaDetailsService;
+	
+	@Autowired
+	private CustomVeterinarioDetailsService customVeterinarioDetailsService;
 	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -68,6 +75,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 				//establecemos la seguridad
 				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 			}
+			else if (tipoUsuario.equalsIgnoreCase("veterinario")){
+				//se carga el usuario asociado al token 
+				UserDetails userDetails = customVeterinarioDetailsService.loadUserByUsername(userName);
+				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				
+				//establecemos la seguridad
+				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+			}
 			
 		}
 		filterChain.doFilter(request, response);
@@ -86,6 +102,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		
 		boolean usu = usuarioRepository.findByCorreoUs(userName).isPresent();
 		boolean clinica = clinicaRepository.findByCorreoCv(userName).isPresent();
+		boolean veterinario = veterinarioRepository.findByCorreo(userName).isPresent();
 		
 		String tipoUsuario = null;
 		
@@ -95,6 +112,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		else if (clinica == true){
 			tipoUsuario = "clinica";
 		}
+		else if (veterinario == true) {
+			tipoUsuario = "veterinario";
+		}
+		
 		System.out.println("valido");
 		return tipoUsuario;
 	}

@@ -31,13 +31,13 @@ public class ClinicaServiceImpl implements IClinicaService{
 	private IClinicaRepository clinicaRepository;
 	
 	@Autowired
-	private ModelMapper modelMapper;
-	
-	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private IRolRepository rolRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Override
 	public clinicaDto crearClinica(clinicaDto clinicaDto) {

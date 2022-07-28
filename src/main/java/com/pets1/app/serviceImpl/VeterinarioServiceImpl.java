@@ -1,5 +1,6 @@
 package com.pets1.app.serviceImpl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,12 +13,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.ClinicaVo;
+import com.pets1.app.domain.RolVo;
 import com.pets1.app.domain.VeterinarioVo;
 import com.pets1.app.dto.answers.VeterinarioAnswerDto;
 import com.pets1.app.dto.entityData.VeterinarioDto;
 import com.pets1.app.exeptions.AppPetsCareExeption;
 import com.pets1.app.exeptions.ResourceNotFoudExeption;
 import com.pets1.app.repository.IClinicaRepository;
+import com.pets1.app.repository.IRolRepository;
 import com.pets1.app.repository.IVeterinarioRepository;
 import com.pets1.app.service.IVeterinarioService;
 
@@ -33,6 +36,9 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private IRolRepository rolRepository;
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -46,10 +52,16 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 		if (vete == true) {
 			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "el veterinario ya existe con este documento");
 		}
+		else if (veterinarioRepository.existsByCorreo(veterinarioDto.getCorreo())) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "Ya existe un veterinario con este correo" );
+		}
 		
 		VeterinarioVo veterinario = mapearEntidad(veterinarioDto);
 		veterinario.setClinica(clinica);
 		veterinario.setPassword(passwordEncoder.encode(veterinarioDto.getPassword()));
+		
+		RolVo rol = rolRepository.findByNombre("ROLE_VETERINARIO").get();
+		veterinario.setRoles(Collections.singleton(rol));
 		
 		VeterinarioVo nuevoVeterinario = veterinarioRepository.save(veterinario);
 		return mapearDto(nuevoVeterinario);
