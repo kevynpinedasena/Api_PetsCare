@@ -31,13 +31,13 @@ public class ClinicaServiceImpl implements IClinicaService{
 	private IClinicaRepository clinicaRepository;
 	
 	@Autowired
-	private ModelMapper modelMapper;
-	
-	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private IRolRepository rolRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Override
 	public clinicaDto crearClinica(clinicaDto clinicaDto) {
@@ -55,7 +55,7 @@ public class ClinicaServiceImpl implements IClinicaService{
 		clinicaDatos.setPasswordCv(passwordEncoder.encode(clinicaDto.getPassword()));
 		
 		RolVo rol = rolRepository.findByNombre("ROLE_CLINICA").get();
-		clinicaDatos.setRol(rol);
+		clinicaDatos.setRoles(Collections.singleton(rol));
 		
 		ClinicaVo nuevaClinica = clinicaRepository.save(clinicaDatos);
 		return mapearDto(nuevaClinica);
@@ -79,8 +79,11 @@ public class ClinicaServiceImpl implements IClinicaService{
 		
 		clinica.setNombre(clinicaDto.getNombre());
 		clinica.setDireccion(clinicaDto.getDireccion());
+		clinica.setTelefono(clinicaDto.getTelefono());
+		clinica.setCorreoCv(clinicaDto.getCorreoCv());
 		clinica.setHorario_atencion(clinicaDto.getHorario_atencion());
 		clinica.setDias_atencion(clinicaDto.getDias_atencion());
+		clinica.setPasswordCv(passwordEncoder.encode(clinicaDto.getPassword()));
 		clinica.setImagenclinica(clinicaDto.getImagenclinica());
 		
 		ClinicaVo clinicaActualizada = clinicaRepository.save(clinica);

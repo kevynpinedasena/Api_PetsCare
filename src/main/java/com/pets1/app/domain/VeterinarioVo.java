@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,7 +19,7 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "veterinario", uniqueConstraints = {@UniqueConstraint(columnNames = {"documento_vt"})})
+@Table(name = "veterinario", uniqueConstraints = {@UniqueConstraint(columnNames = {"correo_vt"})})
 public class VeterinarioVo {
 	
 	@Id
@@ -56,12 +58,17 @@ public class VeterinarioVo {
 	@OneToMany(mappedBy = "documentovt", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<AgendaVo> agendas= new HashSet<>();
 	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinTable(name = "veterinarios_roles", joinColumns = @JoinColumn(name = "veterinario_doc", referencedColumnName = "documento_vt"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
+	private Set<RolVo> roles = new HashSet<>();
+	
 	public VeterinarioVo () {
 		
 	}
 
 	public VeterinarioVo(Long documento, String nombre, String apellidos, String sexovt, String telefono, String correo,
-			String especialidad, String password, String imagenVete, ClinicaVo clinica, Set<AgendaVo> agendas) {
+			String especialidad, String password, String imagenVete, ClinicaVo clinica, Set<AgendaVo> agendas,
+			Set<RolVo> roles) {
 		super();
 		this.documento = documento;
 		this.nombre = nombre;
@@ -74,6 +81,7 @@ public class VeterinarioVo {
 		this.imagenVete = imagenVete;
 		this.clinica = clinica;
 		this.agendas = agendas;
+		this.roles = roles;
 	}
 
 	public Long getDocumento() {
@@ -162,6 +170,14 @@ public class VeterinarioVo {
 
 	public void setAgendas(Set<AgendaVo> agendas) {
 		this.agendas = agendas;
+	}
+
+	public Set<RolVo> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<RolVo> roles) {
+		this.roles = roles;
 	}
 	
 }

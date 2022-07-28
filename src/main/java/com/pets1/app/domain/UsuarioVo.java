@@ -50,7 +50,7 @@ public class UsuarioVo {
 //	@Column(name = "rol_usu", nullable = false)
 //	private Long rolUs;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_doc", referencedColumnName = "documento_usu"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
 	private Set<RolVo> roles = new HashSet<>();
 	

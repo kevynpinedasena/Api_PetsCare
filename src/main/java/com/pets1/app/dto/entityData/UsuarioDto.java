@@ -5,8 +5,6 @@ import javax.validation.constraints.NotEmpty;
 
 public class UsuarioDto {
 	
-	
-	
 	private Long documentoUs;
 	
 	@NotEmpty(message = "el nombre no puede estar vacio o nulo")

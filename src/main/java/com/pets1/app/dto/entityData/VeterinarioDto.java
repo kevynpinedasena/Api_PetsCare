@@ -7,7 +7,7 @@ public class VeterinarioDto {
 	
 	private Long documento ;
 	
-	@NotEmpty
+	@NotEmpty(message = "el nombre no puede estar vacio o nulo")
 	private String nombre ;
 	
 	@NotEmpty
@@ -19,14 +19,14 @@ public class VeterinarioDto {
 	@NotEmpty
 	private String telefono ;
 	
-	@NotEmpty
+	@NotEmpty(message = "el correo no puede estar vacio o nulo")
 	@Email
 	private String correo ;
 	
 	@NotEmpty
 	private String especialidad ;
 	
-	@NotEmpty
+	@NotEmpty(message = "la contraseña no puede estar vacia o nula")
 	private String password ;
 	
 	private String imagenVete;

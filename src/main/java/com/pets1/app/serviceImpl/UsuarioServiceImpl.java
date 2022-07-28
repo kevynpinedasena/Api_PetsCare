@@ -45,7 +45,6 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		boolean usuarios = usuarioRepository.findById(usuarioDto.getDocumentoUs()).isPresent();
 		
 		if(usuarios == true) {
-			System.out.println("");
 			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "el usuario ya existe con este documento");
 		}
 		
@@ -103,7 +102,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		usuario.setSexoUs(usuarioDto.getSexoUs());
 		usuario.setTelefonoUs(usuarioDto.getTelefonoUs());
 		usuario.setCorreoUs(usuarioDto.getCorreoUs());
-		usuario.setPasswordUs(usuarioDto.getPasswordUs());
+		usuario.setPasswordUs(passwordEncoder.encode(usuarioDto.getPasswordUs()));
 		usuario.setImagenUsu(usuarioDto.getImagenUsu());
 //		usuario.setRolUs(usuarioDto.getRolUs());
 		

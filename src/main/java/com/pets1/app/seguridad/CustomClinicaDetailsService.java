@@ -13,23 +13,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.pets1.app.domain.ClinicaVo;
 import com.pets1.app.domain.RolVo;
-import com.pets1.app.domain.UsuarioVo;
-import com.pets1.app.repository.IUsuarioRepository;
+import com.pets1.app.repository.IClinicaRepository;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService{
-
+public class CustomClinicaDetailsService implements UserDetailsService{
+	
 	@Autowired
-	private IUsuarioRepository usuarioRepository;
+	private IClinicaRepository clinicaRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String nombreUsOrCorreoUs) throws UsernameNotFoundException {
-		System.out.println("entra al cus usuario");
-		UsuarioVo usuario=usuarioRepository.findByNombreUsOrCorreoUs(nombreUsOrCorreoUs, nombreUsOrCorreoUs)
-				.orElseThrow(() -> new UsernameNotFoundException("usuario no encontrado con este nombre o correo:"+ nombreUsOrCorreoUs));
+	public UserDetails loadUserByUsername(String nombreOrCorreoCv) throws UsernameNotFoundException {
+		System.out.println("entra al cus clinica");
+		ClinicaVo clinica = clinicaRepository.findByNombreOrCorreoCv(nombreOrCorreoCv, nombreOrCorreoCv)
+				.orElseThrow(() -> new UsernameNotFoundException("Clinica no encontrada con este nombre o correo:"+ nombreOrCorreoCv));
 		
-		return new User(usuario.getCorreoUs(), usuario.getPasswordUs(), mapearRoles(usuario.getRoles()));
+		return new User(clinica.getCorreoCv(), clinica.getPasswordCv(), mapearRoles(clinica.getRoles()));
 	}
 	
 	private Collection<? extends GrantedAuthority> mapearRoles(Set<RolVo> roles){		

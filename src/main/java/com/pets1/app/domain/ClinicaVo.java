@@ -12,14 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "clinica_veterinaria")
+@Table(name = "clinica_veterinaria",uniqueConstraints = {@UniqueConstraint(columnNames = {"correo_cv"})})
 public class ClinicaVo {
 	
 	@Id
@@ -31,6 +30,9 @@ public class ClinicaVo {
 	
 	@Column(name = "direccion_cv", nullable = false)
 	private String direccion; 
+	
+	@Column(name = "telefono_cv", nullable = false)
+	private String telefono; 
 	
 	@Column(name = "correo_cv", nullable = false)
 	private String correoCv;
@@ -51,28 +53,29 @@ public class ClinicaVo {
 	@OneToMany(mappedBy = "clinica", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<VeterinarioVo> veterinarios = new HashSet<>();
 	
-	@OneToOne
-	@JoinColumn(name = "rol_clinica", referencedColumnName = "id")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private RolVo rol;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinTable(name = "clinica_roles", joinColumns = @JoinColumn(name = "clinica_nit", referencedColumnName = "nit_cv"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
+	private Set<RolVo> roles = new HashSet<>();
 	
 	public ClinicaVo () {
 		
 	}
 
-	public ClinicaVo(Long nit, String nombre, String direccion, String correoCv, String horario_atencion,
-			String dias_atencion, String passwordCv, String imagenclinica, Set<VeterinarioVo> veterinarios, RolVo rol) {
+	public ClinicaVo(Long nit, String nombre, String direccion, String telefono, String correoCv,
+			String horario_atencion, String dias_atencion, String passwordCv, String imagenclinica,
+			Set<VeterinarioVo> veterinarios, Set<RolVo> roles) {
 		super();
 		this.nit = nit;
 		this.nombre = nombre;
 		this.direccion = direccion;
+		this.telefono = telefono;
 		this.correoCv = correoCv;
 		this.horario_atencion = horario_atencion;
 		this.dias_atencion = dias_atencion;
 		this.passwordCv = passwordCv;
 		this.imagenclinica = imagenclinica;
 		this.veterinarios = veterinarios;
-		this.rol = rol;
+		this.roles = roles;
 	}
 
 	public Long getNit() {
@@ -97,6 +100,14 @@ public class ClinicaVo {
 
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
 	public String getCorreoCv() {
@@ -147,12 +158,12 @@ public class ClinicaVo {
 		this.veterinarios = veterinarios;
 	}
 
-	public RolVo getRol() {
-		return rol;
+	public Set<RolVo> getRoles() {
+		return roles;
 	}
 
-	public void setRol(RolVo rol) {
-		this.rol = rol;
+	public void setRoles(Set<RolVo> roles) {
+		this.roles = roles;
 	}
 	
 }
