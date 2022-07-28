@@ -13,9 +13,6 @@ public interface IVeterinarioRepository extends JpaRepository<VeterinarioVo, Lon
 	
 	public List<VeterinarioVo> findByclinicaNit(Long nitClinica);
 	
-	
-	
-	
 	public Optional<VeterinarioVo> findByCorreo(String correo);
 	
 	public Optional<VeterinarioVo> findByNombreOrCorreo(String nombre, String correo);
