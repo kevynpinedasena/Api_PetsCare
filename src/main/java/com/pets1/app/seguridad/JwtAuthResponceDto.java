@@ -5,8 +5,6 @@ public class JwtAuthResponceDto {
 	private String tokenDeAcceso;
 	private String tipoDeToken;
 	
-	
-	
 	public JwtAuthResponceDto(String tokenDeAcceso) {
 		super();
 		this.tokenDeAcceso = tokenDeAcceso;

@@ -44,7 +44,7 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 	private ModelMapper modelMapper;
 
 	@Override
-	public VeterinarioDto guardarVeterinarios(Long nitClinica, VeterinarioDto veterinarioDto) {
+	public void guardarVeterinarios(Long nitClinica, VeterinarioDto veterinarioDto) {
 		ClinicaVo clinica = clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourceNotFoudExeption("clinica", "nit", nitClinica));
 		
 		boolean vete = veterinarioRepository.findById(veterinarioDto.getDocumento()).isPresent();
@@ -63,8 +63,7 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 		RolVo rol = rolRepository.findByNombre("ROLE_VETERINARIO").get();
 		veterinario.setRoles(Collections.singleton(rol));
 		
-		VeterinarioVo nuevoVeterinario = veterinarioRepository.save(veterinario);
-		return mapearDto(nuevoVeterinario);
+		veterinarioRepository.save(veterinario);
 	}
 
 	@Override
@@ -118,5 +117,4 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 		VeterinarioVo veterinarioVo = modelMapper.map(veterinarioDto, VeterinarioVo.class);
 		return veterinarioVo;
 	}
-
 }

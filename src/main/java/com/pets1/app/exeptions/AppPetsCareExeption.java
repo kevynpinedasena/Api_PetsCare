@@ -37,5 +37,4 @@ public class AppPetsCareExeption extends RuntimeException{
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
 	}
-
 }

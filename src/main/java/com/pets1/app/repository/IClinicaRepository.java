@@ -21,5 +21,4 @@ public interface IClinicaRepository extends JpaRepository<ClinicaVo, Long>{
 	public Boolean existsByNombre(String nombre);
 	
 	public Boolean existsByCorreoCv(String correoCv);
-	
 }

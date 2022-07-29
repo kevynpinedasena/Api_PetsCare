@@ -12,10 +12,7 @@ import com.pets1.app.domain.VeterinarioVo;
 public interface IVeterinarioRepository extends JpaRepository<VeterinarioVo, Long>{
 	
 	public List<VeterinarioVo> findByclinicaNit(Long nitClinica);
-	
-	
-	
-	
+
 	public Optional<VeterinarioVo> findByCorreo(String correo);
 	
 	public Optional<VeterinarioVo> findByNombreOrCorreo(String nombre, String correo);

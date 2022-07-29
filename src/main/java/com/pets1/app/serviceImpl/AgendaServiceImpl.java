@@ -39,7 +39,7 @@ public class AgendaServiceImpl implements IAgendaService{
 	private ModelMapper modelMapper;
 	
 	@Override
-	public AgendaDto CrearAgenda(Long documentoUsuario, Long documentoVeterinario, AgendaDto agendaDto) {
+	public void CrearAgenda(Long documentoUsuario, Long documentoVeterinario, AgendaDto agendaDto) {
 		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourceNotFoudExeption("usuario", "documento", documentoUsuario));
 		VeterinarioVo veterinario = veterinarioRepository.findById(documentoVeterinario).orElseThrow(() -> new ResourceNotFoudExeption("Veterinario", "documento", documentoVeterinario));
 		
@@ -47,9 +47,7 @@ public class AgendaServiceImpl implements IAgendaService{
 		
 		datosCita.setDocumentous(usuario);
 		datosCita.setDocumentovt(veterinario);	
-		AgendaVo nuevaCita = agendaRepository.save(datosCita);
-		
-		return mapearDto(nuevaCita);
+		agendaRepository.save(datosCita);
 	}
 
 	@Override
@@ -114,5 +112,4 @@ public class AgendaServiceImpl implements IAgendaService{
 		AgendaVo agendaVo = modelMapper.map(agendaDto, AgendaVo.class);
 		return agendaVo;
 	}
-	
 }

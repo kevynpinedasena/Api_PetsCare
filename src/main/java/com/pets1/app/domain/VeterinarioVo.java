@@ -179,5 +179,4 @@ public class VeterinarioVo {
 	public void setRoles(Set<RolVo> roles) {
 		this.roles = roles;
 	}
-	
 }

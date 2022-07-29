@@ -42,21 +42,20 @@ public class ClinicaRest {
 	@PostMapping("/clinicas")
 	public ResponseEntity<String> guardarClinica(@Valid @RequestBody clinicaDto clinicaDto){	
 		clinicaService.crearClinica(clinicaDto);
-		return new ResponseEntity<>("clinica registrada con exito", HttpStatus.CREATED);
+		return new ResponseEntity<>("Clinica registrada con exito", HttpStatus.CREATED);
 	}
 	
 	@PreAuthorize("hasRole('CLINICA')")
 	@PutMapping("/clinicas/{nit}")
-	public ResponseEntity<clinicaDto> actualizarClinica(@PathVariable Long nit ,@Valid @RequestBody clinicaDto clinicaDto){
-		clinicaDto clinica = clinicaService.actualizarClinica(nit, clinicaDto);
-		return new ResponseEntity<>(clinica, HttpStatus.OK);
+	public ResponseEntity<String> actualizarClinica(@PathVariable Long nit ,@Valid @RequestBody clinicaDto clinicaDto){
+		clinicaService.actualizarClinica(nit, clinicaDto);
+		return new ResponseEntity<>("Clinica Actualizado con exito", HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/clinicas/{nit}")
 	public ResponseEntity<String> eliminarClinica(@PathVariable Long nit){
 		clinicaService.eliminarClinica(nit);
-		return new ResponseEntity<>("se elimino la clinica con exito", HttpStatus.OK);
+		return new ResponseEntity<>("Clinica eliminado con exito", HttpStatus.OK);
 	}
-	
 }

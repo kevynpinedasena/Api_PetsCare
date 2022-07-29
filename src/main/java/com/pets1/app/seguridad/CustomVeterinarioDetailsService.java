@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.RolVo;
 import com.pets1.app.domain.VeterinarioVo;
-import com.pets1.app.exeptions.AppPetsCareExeption;
 import com.pets1.app.repository.IVeterinarioRepository;
 
 @Service
@@ -27,10 +25,9 @@ public class CustomVeterinarioDetailsService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String nombreOrCorreo) throws UsernameNotFoundException {
-		System.out.println("entra al cus veterinario");
 		
 		VeterinarioVo veterinario = veterinarioRepository.findByNombreOrCorreo(nombreOrCorreo, nombreOrCorreo)
-				.orElseThrow(() -> new AppPetsCareExeption(HttpStatus.NOT_FOUND, "veterinario no encontrado con este nombre o correo:"+ nombreOrCorreo));
+				.orElseThrow(() -> new UsernameNotFoundException("Veterinario no Encontrado"));
 		
 		return new User(veterinario.getCorreo(), veterinario.getPassword(), mapearRoles(veterinario.getRoles()));
 	}

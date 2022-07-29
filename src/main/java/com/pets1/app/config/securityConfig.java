@@ -43,11 +43,6 @@ public class securityConfig  extends WebSecurityConfigurerAdapter{
 		return new JwtAuthenticationFilter();
 	}
 	
-//	@Bean
-//	public JwtAuthenticationClinicaFilter authenticationClinicaFilter() {
-//		return new JwtAuthenticationClinicaFilter();
-//	}
-	
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -82,5 +77,4 @@ public class securityConfig  extends WebSecurityConfigurerAdapter{
 	protected AuthenticationManager authenticationManager() throws Exception {
 		return super.authenticationManager();
 	}
-	
 }

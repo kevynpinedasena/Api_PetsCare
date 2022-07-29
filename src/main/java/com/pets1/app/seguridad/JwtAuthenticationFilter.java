@@ -1,7 +1,6 @@
 package com.pets1.app.seguridad;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -16,8 +15,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.pets1.app.domain.ClinicaVo;
-import com.pets1.app.domain.UsuarioVo;
 import com.pets1.app.repository.IClinicaRepository;
 import com.pets1.app.repository.IUsuarioRepository;
 import com.pets1.app.repository.IVeterinarioRepository;
@@ -115,9 +112,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		else if (veterinario == true) {
 			tipoUsuario = "veterinario";
 		}
+		else {
+			tipoUsuario = "usuarios no encotrados con estas credenciales";
+		}
 		
 		System.out.println("valido");
 		return tipoUsuario;
 	}
-	
 }

@@ -7,9 +7,7 @@ import com.pets1.app.dto.entityData.MascotaDto;
 
 public interface IMascotaService {
 
-	MascotaDto guardarMascota(Long documento, MascotaDto mascotaDto);
-	
-//	List<MascotaDto> obtenerMascotasDeUsuario(Long documentoUsuario);
+	void guardarMascota(Long documento, MascotaDto mascotaDto);
 	
 	List<MascotaAswerDto> obtenerMascotasDeUsuario(Long documentoUsuario);
 	

@@ -7,7 +7,7 @@ import com.pets1.app.dto.entityData.clinicaDto;
 
 public interface IClinicaService {
 
-	clinicaDto crearClinica(clinicaDto clinicaDto);
+	void crearClinica(clinicaDto clinicaDto);
 	
 	List<ClinicaAnswerDto> consultarListaDeClinicas();
 	

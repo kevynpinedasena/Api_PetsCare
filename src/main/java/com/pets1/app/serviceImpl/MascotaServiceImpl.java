@@ -34,14 +34,12 @@ public class MascotaServiceImpl implements IMascotaService{
 	private ModelMapper modelMapper;
 
 	@Override
-	public MascotaDto guardarMascota(Long documentoUsuario, MascotaDto mascotaDto) {
+	public void guardarMascota(Long documentoUsuario, MascotaDto mascotaDto) {
 		MascotaVo mascota = mapearEntidad(mascotaDto);
 		UsuarioVo usuario = usuarioRepository.findById(documentoUsuario).orElseThrow(() -> new ResourceNotFoudExeption("Usuario", "documento", documentoUsuario));
 		
 		mascota.setDueniomascota(usuario);
-		MascotaVo nuevaMascota = mascotaRepository.save(mascota);	
-		
-		return mapearDto(nuevaMascota);
+		mascotaRepository.save(mascota);	
 	}
 
 	@Override
@@ -97,7 +95,6 @@ public class MascotaServiceImpl implements IMascotaService{
 		}
 		
 		mascotaRepository.delete(mascota);
-		
 	}
 	
 	private MascotaDto mapearDto(MascotaVo mascota) {
@@ -114,6 +111,4 @@ public class MascotaServiceImpl implements IMascotaService{
 		MascotaVo mascota = modelMapper.map(mascotaDto, MascotaVo.class);
 		return mascota;
 	}
-	
-
 }

@@ -1,6 +1,5 @@
 package com.pets1.app.serviceImpl;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +39,7 @@ public class ClinicaServiceImpl implements IClinicaService{
 	private ModelMapper modelMapper;
 	
 	@Override
-	public clinicaDto crearClinica(clinicaDto clinicaDto) {
+	public void crearClinica(clinicaDto clinicaDto) {
 		boolean clinica = clinicaRepository.findById(clinicaDto.getNit()).isPresent();
 		
 		if(clinica == true) {
@@ -57,8 +56,7 @@ public class ClinicaServiceImpl implements IClinicaService{
 		RolVo rol = rolRepository.findByNombre("ROLE_CLINICA").get();
 		clinicaDatos.setRoles(Collections.singleton(rol));
 		
-		ClinicaVo nuevaClinica = clinicaRepository.save(clinicaDatos);
-		return mapearDto(nuevaClinica);
+		clinicaRepository.save(clinicaDatos);
 	}
 
 	@Override
@@ -111,5 +109,4 @@ public class ClinicaServiceImpl implements IClinicaService{
 		ClinicaVo clinica = modelMapper.map(clinicaDto, ClinicaVo.class);
 		return clinica;
 	}
-
 }

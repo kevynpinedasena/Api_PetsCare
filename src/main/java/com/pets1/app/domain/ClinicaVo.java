@@ -165,5 +165,4 @@ public class ClinicaVo {
 	public void setRoles(Set<RolVo> roles) {
 		this.roles = roles;
 	}
-	
 }

@@ -1,6 +1,5 @@
 package com.pets1.app.dto.answers;
 
-import com.pets1.app.dto.entityData.HistoriaClinicaDto;
 import com.pets1.app.dto.entityData.UsuarioDto;
 
 public class MascotaAswerDto {
@@ -23,7 +22,6 @@ public class MascotaAswerDto {
 	
 	private UsuarioDto dueniomascota;
 	
-	private HistoriaClinicaDto historiaMascota;
 
 	public Long getCodigo() {
 		return codigo;
@@ -96,13 +94,4 @@ public class MascotaAswerDto {
 	public void setDueniomascota(UsuarioDto dueniomascota) {
 		this.dueniomascota = dueniomascota;
 	}
-
-	public HistoriaClinicaDto getHistoriaMascota() {
-		return historiaMascota;
-	}
-
-	public void setHistoriaMascota(HistoriaClinicaDto historiaMascota) {
-		this.historiaMascota = historiaMascota;
-	}
-	
 }

@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.RolVo;
 import com.pets1.app.domain.UsuarioVo;
-import com.pets1.app.exeptions.AppPetsCareExeption;
 import com.pets1.app.repository.IUsuarioRepository;
 
 @Service
@@ -27,9 +25,9 @@ public class CustomUserDetailsService implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String nombreUsOrCorreoUs) throws UsernameNotFoundException {
-		System.out.println("entra al cus usuario");
+		
 		UsuarioVo usuario=usuarioRepository.findByNombreUsOrCorreoUs(nombreUsOrCorreoUs, nombreUsOrCorreoUs)
-				.orElseThrow(() -> new AppPetsCareExeption(HttpStatus.NOT_FOUND, "usuario no encontrado con este nombre o correo: "+ nombreUsOrCorreoUs));
+				.orElseThrow(() -> new UsernameNotFoundException("Usuario no Encontrado"));
 		
 		return new User(usuario.getCorreoUs(), usuario.getPasswordUs(), mapearRoles(usuario.getRoles()));
 	}

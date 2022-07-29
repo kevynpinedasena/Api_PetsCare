@@ -54,5 +54,4 @@ public class AgendaAnswerDto {
 	public void setDocumentovt(VeterinarioDto documentovt) {
 		this.documentovt = documentovt;
 	}
-	
 }

@@ -106,5 +106,4 @@ public class ClinicaAnswerDto {
 	public void setVeterinarios(Set<VeterinarioDto> veterinarios) {
 		this.veterinarios = veterinarios;
 	}
-	
 }

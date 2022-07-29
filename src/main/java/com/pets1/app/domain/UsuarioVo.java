@@ -46,9 +46,6 @@ public class UsuarioVo {
 	
 	@Column(name = "foto_usu", nullable = false)
 	private String imagenUsu;
-
-//	@Column(name = "rol_usu", nullable = false)
-//	private Long rolUs;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_doc", referencedColumnName = "documento_usu"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
@@ -170,5 +167,4 @@ public class UsuarioVo {
 	public void setAgendas(Set<AgendaVo> agendas) {
 		this.agendas = agendas;
 	}
-	
 }

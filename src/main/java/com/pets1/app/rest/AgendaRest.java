@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,23 +44,24 @@ public class AgendaRest {
 		return new ResponseEntity<>(agenda, HttpStatus.OK);
 	}
 	
-
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping("/usuario/{documentoUsuario}/veterinario/{documentoVeterinario}/agendas")
-	public ResponseEntity<AgendaDto> guardarAgenda(@PathVariable Long documentoUsuario, @PathVariable Long documentoVeterinario, @RequestBody AgendaDto agendaDto){			
-		AgendaDto agenda = agendaService.CrearAgenda(documentoUsuario, documentoVeterinario, agendaDto);	
-		return new ResponseEntity<> (agenda, HttpStatus.CREATED);
+	public ResponseEntity<String> guardarAgenda(@PathVariable Long documentoUsuario, @PathVariable Long documentoVeterinario, @RequestBody AgendaDto agendaDto){			
+		agendaService.CrearAgenda(documentoUsuario, documentoVeterinario, agendaDto);	
+		return new ResponseEntity<> ("Agenda creada con exito", HttpStatus.CREATED);
 	}
 
+	@PreAuthorize("hasRole('USER')")
 	@PutMapping("/agendas/{codigo}")
-	public ResponseEntity<AgendaDto> actualizarAgenda(@PathVariable Long codigo ,@RequestBody AgendaDto agendaDto){
-		AgendaDto agenda= agendaService.actualizarAgenda(codigo, agendaDto);		
-		return new ResponseEntity<>(agenda, HttpStatus.OK);
+	public ResponseEntity<String> actualizarAgenda(@PathVariable Long codigo ,@RequestBody AgendaDto agendaDto){
+		agendaService.actualizarAgenda(codigo, agendaDto);		
+		return new ResponseEntity<>("Agenda actualizada con exito", HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasRole('USER')")
 	@DeleteMapping("/agendas/{codigo}")
 	public ResponseEntity<String> eliminarAgenda(@PathVariable Long codigo){
 		agendaService.eliminarAgenda(codigo);
-		return new ResponseEntity<>("cita eliminada con exito", HttpStatus.OK);
+		return new ResponseEntity<>("Agenda eliminada con exito", HttpStatus.OK);
 	}
-	
 }

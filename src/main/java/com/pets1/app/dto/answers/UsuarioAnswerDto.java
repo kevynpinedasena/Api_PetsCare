@@ -106,6 +106,4 @@ public class UsuarioAnswerDto {
 	public void setAgendas(Set<AgendaUsuarioAnswerDto> agendas) {
 		this.agendas = agendas;
 	}
-
-	
 }

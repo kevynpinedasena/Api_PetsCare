@@ -39,21 +39,22 @@ public class MascotaRest {
 	
 	@PreAuthorize("hasRole('USER')")
 	@PostMapping("/usuario/{documento}/mascota")
-	public ResponseEntity<MascotaDto> guardarMascota(@PathVariable Long documento ,@RequestBody MascotaDto mascotaDto){			
-		return new ResponseEntity<>(mascotaService.guardarMascota(documento, mascotaDto), HttpStatus.CREATED);
+	public ResponseEntity<String> guardarMascota(@PathVariable Long documento ,@RequestBody MascotaDto mascotaDto){
+		mascotaService.guardarMascota(documento, mascotaDto);
+		return new ResponseEntity<>("Mascota registrada con exito", HttpStatus.CREATED);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
 	@PutMapping("/usuario/{documento}/mascota/{codigo}")
-	public ResponseEntity<MascotaDto> actualizarMascota(@PathVariable Long documento , @PathVariable Long codigo, @RequestBody MascotaDto mascotaDto){
-		MascotaDto mascotaActualizada=mascotaService.actualizarMascota(documento, codigo, mascotaDto);
-		return new ResponseEntity<>(mascotaActualizada , HttpStatus.OK);
+	public ResponseEntity<String> actualizarMascota(@PathVariable Long documento , @PathVariable Long codigo, @RequestBody MascotaDto mascotaDto){
+		mascotaService.actualizarMascota(documento, codigo, mascotaDto);
+		return new ResponseEntity<>("Mascota actualizada con exito" , HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
 	@DeleteMapping("/usuario/{documento}/mascota/{codigo}")
 	public ResponseEntity<String> eliminarMascota(@PathVariable Long documento, @PathVariable Long codigo){
 		mascotaService.eliminarMascota(documento, codigo);
-		return new ResponseEntity<>("mascota eliminada con exito", HttpStatus.OK);
+		return new ResponseEntity<>("Mascota eliminada con exito", HttpStatus.OK);
 	}
 }

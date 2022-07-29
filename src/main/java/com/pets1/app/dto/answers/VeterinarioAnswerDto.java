@@ -116,5 +116,4 @@ public class VeterinarioAnswerDto {
 	public void setAgendas(Set<AgendaVeterinarioAnswerDto> agendas) {
 		this.agendas = agendas;
 	}
-	
 }

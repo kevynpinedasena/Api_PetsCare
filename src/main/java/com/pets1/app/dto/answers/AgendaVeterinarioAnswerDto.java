@@ -43,5 +43,4 @@ private Long codigoA;
 	public void setDocumentous(UsuarioDto documentous) {
 		this.documentous = documentous;
 	}
-
 }
