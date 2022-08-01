@@ -1,17 +1,19 @@
 package com.pets1.app.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.pets1.app.domain.VeterinarioVo;
+import com.pets1.app.dto.answers.VeterinarioAnswerDto;
+import com.pets1.app.dto.entityData.VeterinarioDto;
 
 public interface IVeterinarioService {
 
-	VeterinarioVo guardar(VeterinarioVo veterinarioVo);
+	VeterinarioDto guardarVeterinarios(Long nitClinica, VeterinarioDto veterinarioDto);
 	
-	List<VeterinarioVo> listaVeterinarios();
+	List<VeterinarioAnswerDto> listaDeVeterinariosPorClinica(Long nitClinica);
 	
-	Optional<VeterinarioVo> buscarId(Long documento);
+	VeterinarioDto buscarVeterinarioId(Long documentoVeterinario);
 	
-	void eliminarVeterinario(Long documento);
+	VeterinarioDto actualizarVeterinario(Long documentoVeterinario, VeterinarioDto veterinarioDto);
+	
+	void eliminarVeterinario(Long documentoVeterinario);
 }

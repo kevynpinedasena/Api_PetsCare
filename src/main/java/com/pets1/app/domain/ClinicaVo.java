@@ -1,16 +1,24 @@
 package com.pets1.app.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "clinica_veterinaria")
+@Table(name = "clinica_veterinaria",uniqueConstraints = {@UniqueConstraint(columnNames = {"correo_cv"})})
 public class ClinicaVo {
 	
 	@Id
@@ -23,40 +31,51 @@ public class ClinicaVo {
 	@Column(name = "direccion_cv", nullable = false)
 	private String direccion; 
 	
+	@Column(name = "telefono_cv", nullable = false)
+	private String telefono; 
+	
+	@Column(name = "correo_cv", nullable = false)
+	private String correoCv;
+	
 	@Column(name = "horario_atencio_cv", nullable = false)
 	private String horario_atencion;
 	
 	@Column(name = "dias_atencion", nullable = false)
-	private String diasAtencion;
+	private String dias_atencion;
 	
-	@Column(name = "rol_cv", nullable = false)
-	private int rol;
+	@Column(name = "password_cv", nullable = false)
+	private String passwordCv;
 	
 	@Column(name = "foto_clinica", nullable = false)
-	private String imagenClinica;
+	private String imagenclinica;
 	
-	@ManyToOne
-	@JoinColumn(name = "documento_vt", referencedColumnName = "documento_vt")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private VeterinarioVo veterinarioCod;
+	@JsonBackReference
+	@OneToMany(mappedBy = "clinica", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<VeterinarioVo> veterinarios = new HashSet<>();
 	
-	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinTable(name = "clinica_roles", joinColumns = @JoinColumn(name = "clinica_nit", referencedColumnName = "nit_cv"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
+	private Set<RolVo> roles = new HashSet<>();
 	
 	public ClinicaVo () {
 		
 	}
 
-	public ClinicaVo(Long nit, String nombre, String direccion, String horario_atencion, String diasAtencion, int rol, String imagenClinica,
-			VeterinarioVo veterinarioCod) {
+	public ClinicaVo(Long nit, String nombre, String direccion, String telefono, String correoCv,
+			String horario_atencion, String dias_atencion, String passwordCv, String imagenclinica,
+			Set<VeterinarioVo> veterinarios, Set<RolVo> roles) {
 		super();
 		this.nit = nit;
 		this.nombre = nombre;
 		this.direccion = direccion;
+		this.telefono = telefono;
+		this.correoCv = correoCv;
 		this.horario_atencion = horario_atencion;
-		this.diasAtencion = diasAtencion;
-		this.rol = rol;
-		this.imagenClinica = imagenClinica;
-		this.veterinarioCod = veterinarioCod;
+		this.dias_atencion = dias_atencion;
+		this.passwordCv = passwordCv;
+		this.imagenclinica = imagenclinica;
+		this.veterinarios = veterinarios;
+		this.roles = roles;
 	}
 
 	public Long getNit() {
@@ -83,6 +102,22 @@ public class ClinicaVo {
 		this.direccion = direccion;
 	}
 
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getCorreoCv() {
+		return correoCv;
+	}
+
+	public void setCorreoCv(String correoCv) {
+		this.correoCv = correoCv;
+	}
+
 	public String getHorario_atencion() {
 		return horario_atencion;
 	}
@@ -91,36 +126,44 @@ public class ClinicaVo {
 		this.horario_atencion = horario_atencion;
 	}
 
-	public String getDiasAtencion() {
-		return diasAtencion;
+	public String getDias_atencion() {
+		return dias_atencion;
 	}
 
-	public void setDiasAtencion(String diasAtencion) {
-		this.diasAtencion = diasAtencion;
+	public void setDias_atencion(String dias_atencion) {
+		this.dias_atencion = dias_atencion;
 	}
 
-	public int getRol() {
-		return rol;
+	public String getPasswordCv() {
+		return passwordCv;
 	}
 
-	public void setRol(int rol) {
-		this.rol = rol;
+	public void setPasswordCv(String passwordCv) {
+		this.passwordCv = passwordCv;
 	}
 
-	public String getImagenClinica() {
-		return imagenClinica;
+	public String getImagenclinica() {
+		return imagenclinica;
 	}
 
-	public void setImagenClinica(String imagenClinica) {
-		this.imagenClinica = imagenClinica;
+	public void setImagenclinica(String imagenclinica) {
+		this.imagenclinica = imagenclinica;
 	}
 
-	public VeterinarioVo getVeterinarioCod() {
-		return veterinarioCod;
+	public Set<VeterinarioVo> getVeterinarios() {
+		return veterinarios;
 	}
 
-	public void setVeterinarioCod(VeterinarioVo veterinarioCod) {
-		this.veterinarioCod = veterinarioCod;
+	public void setVeterinarios(Set<VeterinarioVo> veterinarios) {
+		this.veterinarios = veterinarios;
 	}
 
+	public Set<RolVo> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<RolVo> roles) {
+		this.roles = roles;
+	}
+	
 }

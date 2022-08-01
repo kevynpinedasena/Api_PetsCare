@@ -1,17 +1,21 @@
 package com.pets1.app.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.pets1.app.domain.HistoriaClinicaVo;
+import com.pets1.app.dto.answers.HistoriaClinicaAnswerDto;
+import com.pets1.app.dto.entityData.HistoriaClinicaDto;
 
 public interface IHistoriaClinicaService {
 
-	HistoriaClinicaVo guardar(HistoriaClinicaVo historiaCli);
+	HistoriaClinicaDto guardarHistoria(Long codigoMascota, HistoriaClinicaDto historiaClinica);
 	
-	List<HistoriaClinicaVo> listaHistoriaCli();
+//	List<HistoriaClinicaDto> historiaClinicaDeMascota(Long codigoMascota)
+
+	List<HistoriaClinicaAnswerDto> historiaClinicaDeMascota(Long codigoMascota);
 	
-	Optional<HistoriaClinicaVo> buscarId(Long codigo);
+	HistoriaClinicaDto buscarHistoriaClnicaMascotaId(Long codigoMascota, Long codigoHistoria);
 	
-	void eliminarHistoriaCli(Long codigo);
+	HistoriaClinicaDto actualizarHistoriaClinica(Long codigoMascota, Long codigoHistoria, HistoriaClinicaDto historiaClinica);
+	
+	void eliminarHistoriaClinica(Long codigoMascota, Long codigoHistoria);
 }

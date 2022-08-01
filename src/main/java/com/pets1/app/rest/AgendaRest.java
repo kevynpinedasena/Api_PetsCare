@@ -1,15 +1,10 @@
 package com.pets1.app.rest;
 
-import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,74 +14,52 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pets1.app.domain.AgendaVo;
+import com.pets1.app.dto.answers.AgendaAnswerDto;
+import com.pets1.app.dto.answers.AgendaUsuarioAnswerDto;
+import com.pets1.app.dto.answers.AgendaVeterinarioAnswerDto;
+import com.pets1.app.dto.entityData.AgendaDto;
 import com.pets1.app.service.IAgendaService;
 
 @RestController
 @RequestMapping("/api")
 public class AgendaRest {
 	
-//	private static final String ENTITY_NAME="AgendaVo";
-	
 	@Autowired
 	private IAgendaService agendaService;
 	
-	@CrossOrigin(origins = {"http://localhost:8080","null"})
-	@GetMapping("/agendas")
-	public List<AgendaVo> listaAgenda(){
-		return agendaService.listaAgenda();
+	@GetMapping("/usuario/{documentoUsuario}/agendas")
+	public List<AgendaUsuarioAnswerDto> buscarAgendaDeUsuario(@PathVariable Long documentoUsuario){
+		return agendaService.listaAgendaUsuario(documentoUsuario);
 	}
 	
-	@CrossOrigin(origins = {"http://localhost:8080","null"})
+	@GetMapping("veterinario/{documentoVeterinario}/agendas")
+	public List<AgendaVeterinarioAnswerDto> buscarAgendaDeVeterinario(@PathVariable Long documentoVeterinario){
+		return agendaService.listaAgendaVeterinario(documentoVeterinario);
+	}
+	
 	@GetMapping("/agendas/{codigo}")
-	public ResponseEntity<Optional<AgendaVo>> buscarAgendaID(@PathVariable Long codigo){
-		Optional<AgendaVo> agendaId=agendaService.buscarId(codigo);
-		
-		return ResponseEntity.ok().body(agendaId);
+	public ResponseEntity<AgendaAnswerDto> buscarAgendaId(@PathVariable Long codigo){
+		AgendaAnswerDto agenda = agendaService.buscarAgendaId(codigo);
+		return new ResponseEntity<>(agenda, HttpStatus.OK);
 	}
 	
-	@CrossOrigin(origins = {"http://localhost:8080","null"})
-	@PostMapping("/agendas")
-	public ResponseEntity<?> guardarAgenda(@RequestBody AgendaVo agendaVo)throws URISyntaxException{	
-		Map<String,Object>response = new HashMap<>();
-		if(agendaVo.getCodigoA() != null) {
-			response.put("error", "ya existe esta agenda con este id");
-			return new ResponseEntity<Map<String, Object>> (response, HttpStatus.NOT_FOUND);
-		}
-		
-		AgendaVo MiAgenda = agendaService.guardar(agendaVo);
-		response.put("guardado con exito", MiAgenda);
-		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
+
+	@PostMapping("/usuario/{documentoUsuario}/veterinario/{documentoVeterinario}/agendas")
+	public ResponseEntity<AgendaDto> guardarAgenda(@PathVariable Long documentoUsuario, @PathVariable Long documentoVeterinario, @RequestBody AgendaDto agendaDto){			
+		AgendaDto agenda = agendaService.CrearAgenda(documentoUsuario, documentoVeterinario, agendaDto);	
+		return new ResponseEntity<> (agenda, HttpStatus.CREATED);
 	}
-	
-	@CrossOrigin(origins = {"http://localhost:8080","null"})
+
 	@PutMapping("/agendas/{codigo}")
-	public ResponseEntity<?> actualizarAgenda(@PathVariable Long codigo ,@RequestBody AgendaVo agendaVo)throws URISyntaxException{
-		Optional<AgendaVo> agenda= agendaService.buscarId(codigo);
-		Map<String,Object> response = new HashMap<>();
-		
-		if(agenda == null) {
-			response.put("error", "la agenda no existe en la bd");
-			return new ResponseEntity<Map<String, Object>> (response, HttpStatus.NOT_FOUND);
-		}
-		AgendaVo miAgendaVo=new AgendaVo();
-		miAgendaVo.setCodigoA(agendaVo.getCodigoA());
-		miAgendaVo.setFecha(agendaVo.getFecha());
-		miAgendaVo.setHora(agendaVo.getHora());
-		miAgendaVo.setAgendaUs(agendaVo.getAgendaUs());
-		miAgendaVo.setVeterinarioAg(agendaVo.getVeterinarioAg());
-		
-		miAgendaVo=agendaService.guardar(miAgendaVo);
-		response.put("actualizado con exito", miAgendaVo);
-		
-		return new ResponseEntity<Map<String, Object>> (response, HttpStatus.CREATED);
+	public ResponseEntity<AgendaDto> actualizarAgenda(@PathVariable Long codigo ,@RequestBody AgendaDto agendaDto){
+		AgendaDto agenda= agendaService.actualizarAgenda(codigo, agendaDto);		
+		return new ResponseEntity<>(agenda, HttpStatus.OK);
 	}
-	
-	@CrossOrigin(origins = {"http://localhost:8080","null"})
+
 	@DeleteMapping("/agendas/{codigo}")
-	public ResponseEntity<Void> eliminarAgenda(@PathVariable Long codigo){
+	public ResponseEntity<String> eliminarAgenda(@PathVariable Long codigo){
 		agendaService.eliminarAgenda(codigo);
-		return ResponseEntity.noContent().build();
+		return new ResponseEntity<>("cita eliminada con exito", HttpStatus.OK);
 	}
 	
 }
