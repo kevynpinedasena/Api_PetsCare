@@ -57,6 +57,13 @@ public class UsuarioRest {
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping("/usuarios/{documento}/estado/{estadoUs}")
+	public ResponseEntity<String> actualizarUsuarioEstado(@PathVariable Long documento ,@PathVariable int estadoUs){
+		usuarioService.deshabilitarEstadoUsuario(estadoUs, documento);
+		return new ResponseEntity<>("El estado del Usuario Actualizado con exito", HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/usuarios/{documento}")
 	public ResponseEntity<String> eliminarUsuario(@PathVariable Long documento){
 		usuarioService.eliminarUsuario(documento);

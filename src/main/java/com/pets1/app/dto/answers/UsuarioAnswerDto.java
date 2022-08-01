@@ -22,6 +22,8 @@ public class UsuarioAnswerDto {
 	private String passwordUs;
 	
 	private String imagenUsu;
+	
+	private int estadoUs;
 		
 	private Set<MascotaDto> mascotas= new HashSet<>();
 	
@@ -89,6 +91,14 @@ public class UsuarioAnswerDto {
 
 	public void setImagenUsu(String imagenUsu) {
 		this.imagenUsu = imagenUsu;
+	}
+
+	public int getEstadoUs() {
+		return estadoUs;
+	}
+
+	public void setEstadoUs(int estadoUs) {
+		this.estadoUs = estadoUs;
 	}
 
 	public Set<MascotaDto> getMascotas() {

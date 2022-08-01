@@ -38,6 +38,10 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	@Autowired
 	private IRolRepository rolRepository;
 	
+	private int ACTIVO = 1;
+	private int INACTIVO = 2;
+	
+	
 	@Override
 	public void guardarUsuario(UsuarioDto usuarioDto) {	
 		boolean usuarios = usuarioRepository.findById(usuarioDto.getDocumentoUs()).isPresent();
@@ -52,6 +56,10 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		
 		UsuarioVo usuario = mapearEntidad(usuarioDto);
 		usuario.setPasswordUs(passwordEncoder.encode(usuarioDto.getPasswordUs()));
+		
+		if (usuario.getEstadoUs() != ACTIVO && usuario.getEstadoUs() != INACTIVO) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "El estado no puede ser mayor a 2 y menor de 1");
+		}
 
 		RolVo roles = rolRepository.findByNombre("ROLE_USER").get();
 		usuario.setRoles(Collections.singleton(roles));
@@ -100,6 +108,19 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		usuarioRepository.delete(usuario);
 	}
 
+	@Override
+	public void deshabilitarEstadoUsuario(int estado, Long documento) {
+		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourceNotFoudExeption("usuario", "documento", documento));
+		
+		if(estado != ACTIVO && estado != INACTIVO) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "El estado no puede ser mayor a 2 y menor de 1");
+		}
+		
+		usuario.setEstadoUs(estado);
+		
+		usuarioRepository.save(usuario);
+	}
+
 	private UsuarioDto mapearDto(UsuarioVo usuario) {
 		UsuarioDto usuarioDTO = modelMapper.map(usuario, UsuarioDto.class);
 		return usuarioDTO;
@@ -114,4 +135,5 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		UsuarioVo usuario = modelMapper.map(usuarioDto, UsuarioVo.class);
 		return usuario;
 	}
+
 }

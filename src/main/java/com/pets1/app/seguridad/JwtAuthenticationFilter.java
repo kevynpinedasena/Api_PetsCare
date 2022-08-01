@@ -116,7 +116,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 			tipoUsuario = "usuarios no encotrados con estas credenciales";
 		}
 		
-		System.out.println("valido");
 		return tipoUsuario;
 	}
 }

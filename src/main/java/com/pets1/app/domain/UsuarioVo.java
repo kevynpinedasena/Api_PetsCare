@@ -47,6 +47,9 @@ public class UsuarioVo {
 	@Column(name = "foto_usu", nullable = false)
 	private String imagenUsu;
 	
+	@Column(name = "estado_usu", nullable = false)
+	private int estadoUs;
+	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_doc", referencedColumnName = "documento_usu"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
 	private Set<RolVo> roles = new HashSet<>();
@@ -59,9 +62,13 @@ public class UsuarioVo {
 	@OneToMany(mappedBy = "documentous", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<AgendaVo> agendas= new HashSet<>();
 	
+	public UsuarioVo() {
+		super();
+	}
+
 	public UsuarioVo(Long documentoUs, String nombreUs, String apellidoUs, String sexoUs, String telefonoUs,
-			String correoUs, String passwordUs, String imagenUsu, Set<RolVo> roles, Set<MascotaVo> mascotas,
-			Set<AgendaVo> agendas) {
+			String correoUs, String passwordUs, String imagenUsu, int estadoUs, Set<RolVo> roles,
+			Set<MascotaVo> mascotas, Set<AgendaVo> agendas) {
 		super();
 		this.documentoUs = documentoUs;
 		this.nombreUs = nombreUs;
@@ -71,13 +78,10 @@ public class UsuarioVo {
 		this.correoUs = correoUs;
 		this.passwordUs = passwordUs;
 		this.imagenUsu = imagenUsu;
+		this.estadoUs = estadoUs;
 		this.roles = roles;
 		this.mascotas = mascotas;
 		this.agendas = agendas;
-	}
-
-	public UsuarioVo() {
-		super();
 	}
 
 	public Long getDocumentoUs() {
@@ -142,6 +146,14 @@ public class UsuarioVo {
 
 	public void setImagenUsu(String imagenUsu) {
 		this.imagenUsu = imagenUsu;
+	}
+
+	public int getEstadoUs() {
+		return estadoUs;
+	}
+
+	public void setEstadoUs(int estadoUs) {
+		this.estadoUs = estadoUs;
 	}
 
 	public Set<RolVo> getRoles() {

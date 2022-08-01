@@ -18,5 +18,7 @@ public interface IUsuarioService {
 	UsuarioDto actualizarUsuario(UsuarioDto usuarioDto, Long documento);
 	
 	void eliminarUsuario(Long documento);
+	
+	void deshabilitarEstadoUsuario(int estado, Long documento);
 
 }
