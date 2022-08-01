@@ -42,6 +42,9 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	private int ACTIVO = 1;
+	private int INACTIVO = 2;
 
 	@Override
 	public void guardarVeterinarios(Long nitClinica, VeterinarioDto veterinarioDto) {
@@ -59,6 +62,10 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 		VeterinarioVo veterinario = mapearEntidad(veterinarioDto);
 		veterinario.setClinica(clinica);
 		veterinario.setPassword(passwordEncoder.encode(veterinarioDto.getPassword()));
+		
+		if (veterinario.getEstadoVt() != ACTIVO && veterinario.getEstadoVt() != INACTIVO) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "El estado no puede ser mayor a 2 y menor de 1");
+		}
 		
 		RolVo rol = rolRepository.findByNombre("ROLE_VETERINARIO").get();
 		veterinario.setRoles(Collections.singleton(rol));
@@ -101,6 +108,19 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 	public void eliminarVeterinario(Long documentoVeterinario) {
 		VeterinarioVo veterinario = veterinarioRepository.findById(documentoVeterinario).orElseThrow(() -> new ResourceNotFoudExeption("Veterinario", "documento", documentoVeterinario));
 		veterinarioRepository.delete(veterinario);
+	}
+	
+
+	@Override
+	public void deshabilitarEstadoVeterinario(int estadoVt, Long documento) {
+		VeterinarioVo veterinario = veterinarioRepository.findById(documento).orElseThrow(() -> new ResourceNotFoudExeption("veterinario", "documento", documento));
+		
+		if (estadoVt != ACTIVO && estadoVt != INACTIVO) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "El estado no puede ser mayor a 2 y menor de 1");
+		}
+		
+		veterinario.setEstadoVt(estadoVt);
+		veterinarioRepository.save(veterinario);
 	}
 	
 	private VeterinarioDto mapearDto(VeterinarioVo veterinarioVo) {

@@ -52,6 +52,13 @@ public class VeterinarioRest {
 	}
 	
 	@PreAuthorize("hasRole('CLINICA')")
+	@PutMapping("/veterinarios/{documento}/estado/{estadoVt}")
+	public ResponseEntity<String> actualizarVeterinarioEstado(@PathVariable Long documento ,@PathVariable int estadoVt){
+		veterinarioService.deshabilitarEstadoVeterinario(estadoVt, documento);
+		return new ResponseEntity<>("El estado del Veterinario Actualizado con exito", HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('CLINICA')")
 	@DeleteMapping("/veterinarios/{documento}")
 	public ResponseEntity<String> eliminarVeterinario(@PathVariable Long documento){
 		veterinarioService.eliminarVeterinario(documento);

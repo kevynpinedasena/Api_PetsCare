@@ -31,6 +31,7 @@ public class VeterinarioDto {
 	
 	private String imagenVete;
 	
+	private int estadoVt;
 
 	public Long getDocumento() {
 		return documento;
@@ -103,5 +104,12 @@ public class VeterinarioDto {
 	public void setImagenVete(String imagenVete) {
 		this.imagenVete = imagenVete;
 	}
-	
+
+	public int getEstadoVt() {
+		return estadoVt;
+	}
+
+	public void setEstadoVt(int estadoVt) {
+		this.estadoVt = estadoVt;
+	}
 }

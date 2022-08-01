@@ -16,4 +16,6 @@ public interface IVeterinarioService {
 	VeterinarioDto actualizarVeterinario(Long documentoVeterinario, VeterinarioDto veterinarioDto);
 	
 	void eliminarVeterinario(Long documentoVeterinario);
+	
+	void deshabilitarEstadoVeterinario(int estadoVt, Long documento);
 }
