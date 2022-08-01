@@ -117,7 +117,6 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		}
 		
 		usuario.setEstadoUs(estado);
-		
 		usuarioRepository.save(usuario);
 	}
 
