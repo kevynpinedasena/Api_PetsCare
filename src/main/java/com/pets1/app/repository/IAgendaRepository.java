@@ -13,5 +13,4 @@ public interface IAgendaRepository extends JpaRepository<AgendaVo, Long>{
 	public List<AgendaVo> findByDocumentousDocumentoUs(Long documentous);
 	
 	public List<AgendaVo> findByDocumentovtDocumento(Long documentovt);
-
 }

@@ -25,10 +25,9 @@ public class CustomVeterinarioDetailsService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String nombreOrCorreo) throws UsernameNotFoundException {
-		System.out.println("entra al cus veterinario");
 		
 		VeterinarioVo veterinario = veterinarioRepository.findByNombreOrCorreo(nombreOrCorreo, nombreOrCorreo)
-				.orElseThrow(() -> new UsernameNotFoundException("veterinario no encontrado con este nombre o correo:"+ nombreOrCorreo));
+				.orElseThrow(() -> new UsernameNotFoundException("Veterinario no Encontrado"));
 		
 		return new User(veterinario.getCorreo(), veterinario.getPassword(), mapearRoles(veterinario.getRoles()));
 	}

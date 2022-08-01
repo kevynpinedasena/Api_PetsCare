@@ -1,6 +1,5 @@
 package com.pets1.app.service;
 
-
 import java.util.List;
 
 import com.pets1.app.dto.answers.UsuarioAnswerDto;
@@ -8,9 +7,7 @@ import com.pets1.app.dto.entityData.UsuarioDto;
 
 public interface IUsuarioService {
 
-	UsuarioDto guardarUsuario(UsuarioDto usuarioDto);
-	
-//	List<UsuarioDto> obtenerTodosLosUsuarios();
+	void guardarUsuario(UsuarioDto usuarioDto);
 	
 	List<UsuarioAnswerDto> obtenerTodosLosUsuarios();
 	
@@ -21,5 +18,7 @@ public interface IUsuarioService {
 	UsuarioDto actualizarUsuario(UsuarioDto usuarioDto, Long documento);
 	
 	void eliminarUsuario(Long documento);
+	
+	void deshabilitarEstadoUsuario(int estado, Long documento);
 
 }

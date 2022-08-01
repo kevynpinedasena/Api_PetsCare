@@ -39,22 +39,29 @@ public class VeterinarioRest {
 	
 	@PreAuthorize("hasRole('CLINICA')")
 	@PostMapping("/veterinarios/{nitclinica}")
-	public ResponseEntity<VeterinarioDto> guardarveterinario(@PathVariable Long nitclinica, @RequestBody VeterinarioDto veterinarioDto){		
-		VeterinarioDto veterinario = veterinarioService.guardarVeterinarios(nitclinica, veterinarioDto);
-		return new ResponseEntity<> (veterinario, HttpStatus.CREATED);
+	public ResponseEntity<String> guardarveterinario(@PathVariable Long nitclinica, @RequestBody VeterinarioDto veterinarioDto){		
+		veterinarioService.guardarVeterinarios(nitclinica, veterinarioDto);
+		return new ResponseEntity<> ("Veterinario registrada con exito", HttpStatus.CREATED);
 	}
 	
 	@PreAuthorize("hasRole('VETERINARIO')")
 	@PutMapping("/veterinarios/{documento}")
-	public ResponseEntity<VeterinarioDto> actualizarVeterinario(@PathVariable Long documento ,@RequestBody VeterinarioDto veterinarioDto){
-		VeterinarioDto veterinario = veterinarioService.actualizarVeterinario(documento, veterinarioDto);
-		return new ResponseEntity<> (veterinario, HttpStatus.OK);
+	public ResponseEntity<String> actualizarVeterinario(@PathVariable Long documento ,@RequestBody VeterinarioDto veterinarioDto){
+		veterinarioService.actualizarVeterinario(documento, veterinarioDto);
+		return new ResponseEntity<> ("Veterinario Actualizado con exito", HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('CLINICA')")
+	@PutMapping("/veterinarios/{documento}/estado/{estadoVt}")
+	public ResponseEntity<String> actualizarVeterinarioEstado(@PathVariable Long documento ,@PathVariable int estadoVt){
+		veterinarioService.deshabilitarEstadoVeterinario(estadoVt, documento);
+		return new ResponseEntity<>("El estado del Veterinario Actualizado con exito", HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('CLINICA')")
 	@DeleteMapping("/veterinarios/{documento}")
 	public ResponseEntity<String> eliminarVeterinario(@PathVariable Long documento){
 		veterinarioService.eliminarVeterinario(documento);
-		return new ResponseEntity<>("eliminado con exito", HttpStatus.OK);
+		return new ResponseEntity<>("Veterinario eliminado con exito", HttpStatus.OK);
 	}
 }

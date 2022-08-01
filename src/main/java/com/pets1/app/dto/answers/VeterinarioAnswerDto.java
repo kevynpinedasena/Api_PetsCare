@@ -25,6 +25,8 @@ public class VeterinarioAnswerDto {
 	
 	private String imagenVete;
 	
+	private int estadoVt;
+	
 	private clinicaDto clinica;
 	
 	private Set<AgendaVeterinarioAnswerDto> agendas= new HashSet<>();
@@ -101,6 +103,14 @@ public class VeterinarioAnswerDto {
 		this.imagenVete = imagenVete;
 	}
 
+	public int getEstadoVt() {
+		return estadoVt;
+	}
+
+	public void setEstadoVt(int estadoVt) {
+		this.estadoVt = estadoVt;
+	}
+
 	public clinicaDto getClinica() {
 		return clinica;
 	}
@@ -116,5 +126,4 @@ public class VeterinarioAnswerDto {
 	public void setAgendas(Set<AgendaVeterinarioAnswerDto> agendas) {
 		this.agendas = agendas;
 	}
-	
 }

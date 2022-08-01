@@ -42,9 +42,12 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	private int ACTIVO = 1;
+	private int INACTIVO = 2;
 
 	@Override
-	public VeterinarioDto guardarVeterinarios(Long nitClinica, VeterinarioDto veterinarioDto) {
+	public void guardarVeterinarios(Long nitClinica, VeterinarioDto veterinarioDto) {
 		ClinicaVo clinica = clinicaRepository.findById(nitClinica).orElseThrow(() -> new ResourceNotFoudExeption("clinica", "nit", nitClinica));
 		
 		boolean vete = veterinarioRepository.findById(veterinarioDto.getDocumento()).isPresent();
@@ -60,11 +63,14 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 		veterinario.setClinica(clinica);
 		veterinario.setPassword(passwordEncoder.encode(veterinarioDto.getPassword()));
 		
+		if (veterinario.getEstadoVt() != ACTIVO && veterinario.getEstadoVt() != INACTIVO) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "El estado no puede ser mayor a 2 y menor de 1");
+		}
+		
 		RolVo rol = rolRepository.findByNombre("ROLE_VETERINARIO").get();
 		veterinario.setRoles(Collections.singleton(rol));
 		
-		VeterinarioVo nuevoVeterinario = veterinarioRepository.save(veterinario);
-		return mapearDto(nuevoVeterinario);
+		veterinarioRepository.save(veterinario);
 	}
 
 	@Override
@@ -104,6 +110,19 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 		veterinarioRepository.delete(veterinario);
 	}
 	
+
+	@Override
+	public void deshabilitarEstadoVeterinario(int estadoVt, Long documento) {
+		VeterinarioVo veterinario = veterinarioRepository.findById(documento).orElseThrow(() -> new ResourceNotFoudExeption("veterinario", "documento", documento));
+		
+		if (estadoVt != ACTIVO && estadoVt != INACTIVO) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "El estado no puede ser mayor a 2 y menor de 1");
+		}
+		
+		veterinario.setEstadoVt(estadoVt);
+		veterinarioRepository.save(veterinario);
+	}
+	
 	private VeterinarioDto mapearDto(VeterinarioVo veterinarioVo) {
 		VeterinarioDto veterinarioDto = modelMapper.map(veterinarioVo, VeterinarioDto.class);
 		return veterinarioDto;
@@ -118,5 +137,4 @@ public class VeterinarioServiceImpl implements IVeterinarioService{
 		VeterinarioVo veterinarioVo = modelMapper.map(veterinarioDto, VeterinarioVo.class);
 		return veterinarioVo;
 	}
-
 }

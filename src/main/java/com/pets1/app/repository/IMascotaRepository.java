@@ -11,5 +11,5 @@ import com.pets1.app.domain.MascotaVo;
 public interface IMascotaRepository extends JpaRepository<MascotaVo, Long>{
 	
 	public List<MascotaVo> findByDueniomascotaDocumentoUs(Long usuarioDocumento);
-	
+
 }

@@ -38,6 +38,4 @@ public class ErroreDetails {
 	public void setDetalles(String detalles) {
 		this.detalles = detalles;
 	}
-
-
 }

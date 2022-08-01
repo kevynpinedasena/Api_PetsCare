@@ -2,7 +2,6 @@ package com.pets1.app.serviceImpl;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -10,7 +9,6 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -40,38 +38,33 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	@Autowired
 	private IRolRepository rolRepository;
 	
+	private int ACTIVO = 1;
+	private int INACTIVO = 2;
+	
+	
 	@Override
-	public UsuarioDto guardarUsuario(UsuarioDto usuarioDto) {	
+	public void guardarUsuario(UsuarioDto usuarioDto) {	
 		boolean usuarios = usuarioRepository.findById(usuarioDto.getDocumentoUs()).isPresent();
 		
 		if(usuarios == true) {
 			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "el usuario ya existe con este documento");
 		}
-		
-//		else if(usuarioRepository.existsByNombreUs(usuarioDto.getNombreUs())) {
-//			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "El usuario ya existe");
-//		}
+
 		else if(usuarioRepository.existsByCorreoUs(usuarioDto.getCorreoUs())) {
 			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "Ya existe un usuario con este email" );
 		}
 		
-		UsuarioVo usuario = new UsuarioVo();
-		
-		usuario.setDocumentoUs(usuarioDto.getDocumentoUs());
-		usuario.setNombreUs(usuarioDto.getNombreUs());
-		usuario.setApellidoUs(usuarioDto.getApellidoUs());
-		usuario.setSexoUs(usuarioDto.getSexoUs());
-		usuario.setTelefonoUs(usuarioDto.getTelefonoUs());
-		usuario.setCorreoUs(usuarioDto.getCorreoUs());
+		UsuarioVo usuario = mapearEntidad(usuarioDto);
 		usuario.setPasswordUs(passwordEncoder.encode(usuarioDto.getPasswordUs()));
-		usuario.setImagenUsu(usuarioDto.getImagenUsu());
 		
+		if (usuario.getEstadoUs() != ACTIVO && usuario.getEstadoUs() != INACTIVO) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "El estado no puede ser mayor a 2 y menor de 1");
+		}
+
 		RolVo roles = rolRepository.findByNombre("ROLE_USER").get();
 		usuario.setRoles(Collections.singleton(roles));
 		
-		UsuarioVo nuevoUsuario = usuarioRepository.save(usuario);
-		UsuarioDto usuarioRespuesta = mapearDto(nuevoUsuario);
- 		return usuarioRespuesta;
+		usuarioRepository.save(usuario);
 	}
 
 	@Override
@@ -96,7 +89,6 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	public UsuarioDto actualizarUsuario(UsuarioDto usuarioDto, Long documento) {
 		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourceNotFoudExeption("usuario", "documento", documento));
 		
-//		usuario.setDocumentoUs(usuarioDto.getDocumentoUs());
 		usuario.setNombreUs(usuarioDto.getNombreUs());
 		usuario.setApellidoUs(usuarioDto.getApellidoUs());
 		usuario.setSexoUs(usuarioDto.getSexoUs());
@@ -104,7 +96,6 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		usuario.setCorreoUs(usuarioDto.getCorreoUs());
 		usuario.setPasswordUs(passwordEncoder.encode(usuarioDto.getPasswordUs()));
 		usuario.setImagenUsu(usuarioDto.getImagenUsu());
-//		usuario.setRolUs(usuarioDto.getRolUs());
 		
 		UsuarioVo usuarioActualizado = usuarioRepository.save(usuario);
 		
@@ -115,6 +106,18 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	public void eliminarUsuario(Long documento) {
 		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourceNotFoudExeption("usuario", "documento", documento));
 		usuarioRepository.delete(usuario);
+	}
+
+	@Override
+	public void deshabilitarEstadoUsuario(int estado, Long documento) {
+		UsuarioVo usuario = usuarioRepository.findById(documento).orElseThrow(() -> new ResourceNotFoudExeption("usuario", "documento", documento));
+		
+		if(estado != ACTIVO && estado != INACTIVO) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "El estado no puede ser mayor a 2 y menor de 1");
+		}
+		
+		usuario.setEstadoUs(estado);
+		usuarioRepository.save(usuario);
 	}
 
 	private UsuarioDto mapearDto(UsuarioVo usuario) {
@@ -131,5 +134,5 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		UsuarioVo usuario = modelMapper.map(usuarioDto, UsuarioVo.class);
 		return usuario;
 	}
-	
+
 }

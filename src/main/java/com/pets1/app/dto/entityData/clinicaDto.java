@@ -29,6 +29,11 @@ public class clinicaDto {
 	
 	private String imagenclinica;
 	
+	private int estadoCli;	
+
+	public clinicaDto() {
+		super();
+	}
 
 	public Long getNit() {
 		return nit;
@@ -100,6 +105,14 @@ public class clinicaDto {
 
 	public void setImagenclinica(String imagenclinica) {
 		this.imagenclinica = imagenclinica;
+	}
+
+	public int getEstadoCli() {
+		return estadoCli;
+	}
+
+	public void setEstadoCli(int estadoCli) {
+		this.estadoCli = estadoCli;
 	}
 		
 }

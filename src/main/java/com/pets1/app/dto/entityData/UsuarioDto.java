@@ -28,7 +28,8 @@ public class UsuarioDto {
 	
 	private String imagenUsu;
 	
-	//private Long rolUs;
+	private int estadoUs;
+	
 
 	public Long getDocumentoUs() {
 		return documentoUs;
@@ -94,12 +95,11 @@ public class UsuarioDto {
 		this.imagenUsu = imagenUsu;
 	}
 
-//	public Long getRolUs() {
-//		return rolUs;
-//	}
-//
-//	public void setRolUs(Long rolUs) {
-//		this.rolUs = rolUs;
-//	}
+	public int getEstadoUs() {
+		return estadoUs;
+	}
 
+	public void setEstadoUs(int estadoUs) {
+		this.estadoUs = estadoUs;
+	}
 }

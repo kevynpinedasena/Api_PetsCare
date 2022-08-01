@@ -50,6 +50,9 @@ public class VeterinarioVo {
 	@Column(name = "foto_veterinario", nullable = false)
 	private String imagenVete;
 	
+	@Column(name = "estado_vt", nullable = false)
+	private int estadoVt;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "clinica_nit", nullable = false)
 	private ClinicaVo clinica;
@@ -67,8 +70,8 @@ public class VeterinarioVo {
 	}
 
 	public VeterinarioVo(Long documento, String nombre, String apellidos, String sexovt, String telefono, String correo,
-			String especialidad, String password, String imagenVete, ClinicaVo clinica, Set<AgendaVo> agendas,
-			Set<RolVo> roles) {
+			String especialidad, String password, String imagenVete, int estadoVt, ClinicaVo clinica,
+			Set<AgendaVo> agendas, Set<RolVo> roles) {
 		super();
 		this.documento = documento;
 		this.nombre = nombre;
@@ -79,6 +82,7 @@ public class VeterinarioVo {
 		this.especialidad = especialidad;
 		this.password = password;
 		this.imagenVete = imagenVete;
+		this.estadoVt = estadoVt;
 		this.clinica = clinica;
 		this.agendas = agendas;
 		this.roles = roles;
@@ -156,6 +160,14 @@ public class VeterinarioVo {
 		this.imagenVete = imagenVete;
 	}
 
+	public int getEstadoVt() {
+		return estadoVt;
+	}
+
+	public void setEstadoVt(int estadoVt) {
+		this.estadoVt = estadoVt;
+	}
+
 	public ClinicaVo getClinica() {
 		return clinica;
 	}
@@ -179,5 +191,4 @@ public class VeterinarioVo {
 	public void setRoles(Set<RolVo> roles) {
 		this.roles = roles;
 	}
-	
 }

@@ -18,6 +18,12 @@ public class RolVo {
 	@Column(name = "nombre_rol")
 	private String nombre;
 
+	public RolVo(Long id, String nombre) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+	}
+	
 	public RolVo() {
 		super();
 	}
@@ -37,6 +43,4 @@ public class RolVo {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	
 }

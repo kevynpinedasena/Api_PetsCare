@@ -1,6 +1,5 @@
 package com.pets1.app.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,15 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "mascotas")
 public class MascotaVo {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "codigo_mc", nullable = false, unique = true)
@@ -47,17 +43,13 @@ public class MascotaVo {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn( name = "documento_usu", nullable = false)
 	private UsuarioVo dueniomascota;
-
-	@JsonBackReference
-	@OneToOne(mappedBy = "mascotaCod", cascade = CascadeType.ALL, orphanRemoval = true)
-	private HistoriaClinicaVo historiaMascota;
 	
 	public MascotaVo () {
 		
 	}
 
 	public MascotaVo(Long codigo, String nombre, String raza, String color, double peso, String discapacidad,
-			String tipoAnimal, String imagenMascota, UsuarioVo dueniomascota, HistoriaClinicaVo historiaMascota) {
+			String tipoAnimal, String imagenMascota, UsuarioVo dueniomascota) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -68,7 +60,6 @@ public class MascotaVo {
 		this.tipoAnimal = tipoAnimal;
 		this.imagenMascota = imagenMascota;
 		this.dueniomascota = dueniomascota;
-		this.historiaMascota = historiaMascota;
 	}
 
 	public Long getCodigo() {
@@ -141,14 +132,5 @@ public class MascotaVo {
 
 	public void setDueniomascota(UsuarioVo dueniomascota) {
 		this.dueniomascota = dueniomascota;
-	}
-
-	public HistoriaClinicaVo getHistoriaMascota() {
-		return historiaMascota;
-	}
-
-	public void setHistoriaMascota(HistoriaClinicaVo historiaMascota) {
-		this.historiaMascota = historiaMascota;
-	}
-	
+	}	
 }

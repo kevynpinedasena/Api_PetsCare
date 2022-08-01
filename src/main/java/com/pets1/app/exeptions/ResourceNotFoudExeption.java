@@ -42,5 +42,4 @@ public class ResourceNotFoudExeption extends RuntimeException{
 	public void setValorDelCampo(Long valorDelCampo) {
 		this.valorDelCampo = valorDelCampo;
 	}
-	
 }

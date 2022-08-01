@@ -9,7 +9,7 @@ import com.pets1.app.dto.entityData.AgendaDto;
 
 public interface IAgendaService {
 	
-	AgendaDto CrearAgenda(Long documentoUsuario, Long documentoVeterinario, AgendaDto agendaDto);
+	void CrearAgenda(Long documentoUsuario, Long documentoVeterinario, AgendaDto agendaDto);
 	
 	List<AgendaUsuarioAnswerDto> listaAgendaUsuario(Long documentoUsuario);
 	

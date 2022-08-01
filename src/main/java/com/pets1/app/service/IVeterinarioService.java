@@ -7,7 +7,7 @@ import com.pets1.app.dto.entityData.VeterinarioDto;
 
 public interface IVeterinarioService {
 
-	VeterinarioDto guardarVeterinarios(Long nitClinica, VeterinarioDto veterinarioDto);
+	void guardarVeterinarios(Long nitClinica, VeterinarioDto veterinarioDto);
 	
 	List<VeterinarioAnswerDto> listaDeVeterinariosPorClinica(Long nitClinica);
 	
@@ -16,4 +16,6 @@ public interface IVeterinarioService {
 	VeterinarioDto actualizarVeterinario(Long documentoVeterinario, VeterinarioDto veterinarioDto);
 	
 	void eliminarVeterinario(Long documentoVeterinario);
+	
+	void deshabilitarEstadoVeterinario(int estadoVt, Long documento);
 }

@@ -49,6 +49,9 @@ public class ClinicaVo {
 	@Column(name = "foto_clinica", nullable = false)
 	private String imagenclinica;
 	
+	@Column(name = "estado_cli", nullable = false)
+	private int estadoCli;
+	
 	@JsonBackReference
 	@OneToMany(mappedBy = "clinica", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<VeterinarioVo> veterinarios = new HashSet<>();
@@ -62,7 +65,7 @@ public class ClinicaVo {
 	}
 
 	public ClinicaVo(Long nit, String nombre, String direccion, String telefono, String correoCv,
-			String horario_atencion, String dias_atencion, String passwordCv, String imagenclinica,
+			String horario_atencion, String dias_atencion, String passwordCv, String imagenclinica, int estadoCli,
 			Set<VeterinarioVo> veterinarios, Set<RolVo> roles) {
 		super();
 		this.nit = nit;
@@ -74,6 +77,7 @@ public class ClinicaVo {
 		this.dias_atencion = dias_atencion;
 		this.passwordCv = passwordCv;
 		this.imagenclinica = imagenclinica;
+		this.estadoCli = estadoCli;
 		this.veterinarios = veterinarios;
 		this.roles = roles;
 	}
@@ -150,6 +154,14 @@ public class ClinicaVo {
 		this.imagenclinica = imagenclinica;
 	}
 
+	public int getEstadoCli() {
+		return estadoCli;
+	}
+
+	public void setEstadoCli(int estadoCli) {
+		this.estadoCli = estadoCli;
+	}
+
 	public Set<VeterinarioVo> getVeterinarios() {
 		return veterinarios;
 	}
@@ -165,5 +177,6 @@ public class ClinicaVo {
 	public void setRoles(Set<RolVo> roles) {
 		this.roles = roles;
 	}
-	
+
+
 }

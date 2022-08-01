@@ -46,14 +46,21 @@ public class UsuarioRest {
 	@PostMapping("/usuarios")	
 	public ResponseEntity<String> guardarUsuario(@Valid @RequestBody UsuarioDto usuarioDto){	
 		usuarioService.guardarUsuario(usuarioDto);
-		return new ResponseEntity<>("usuario registrado con exito", HttpStatus.CREATED);
+		return new ResponseEntity<>("Usuario registrado con exito", HttpStatus.CREATED);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
 	@PutMapping("/usuarios/{documento}")
-	public ResponseEntity<UsuarioDto> actualizarUsuario(@PathVariable Long documento ,@Valid @RequestBody UsuarioDto usuarioDto){
-		UsuarioDto respuestaActualizacion = usuarioService.actualizarUsuario(usuarioDto, documento);
-		return new ResponseEntity<>(respuestaActualizacion, HttpStatus.OK);
+	public ResponseEntity<String> actualizarUsuario(@PathVariable Long documento ,@Valid @RequestBody UsuarioDto usuarioDto){
+		usuarioService.actualizarUsuario(usuarioDto, documento);
+		return new ResponseEntity<>("Usuario Actualizado con exito", HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping("/usuarios/{documento}/estado/{estadoUs}")
+	public ResponseEntity<String> actualizarUsuarioEstado(@PathVariable Long documento ,@PathVariable int estadoUs){
+		usuarioService.deshabilitarEstadoUsuario(estadoUs, documento);
+		return new ResponseEntity<>("El estado del Usuario Actualizado con exito", HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
@@ -62,5 +69,4 @@ public class UsuarioRest {
 		usuarioService.eliminarUsuario(documento);
 		return new ResponseEntity<String>("Usuario eliminado con exito", HttpStatus.OK);
 	}
-	
 }

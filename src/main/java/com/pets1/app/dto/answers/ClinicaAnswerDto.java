@@ -25,6 +25,8 @@ public class ClinicaAnswerDto {
 	
 	private String imagenclinica;
 	
+	private int estdo_cli;
+	
 	private Set<VeterinarioDto> veterinarios = new HashSet<>();
 
 	public Long getNit() {
@@ -99,6 +101,14 @@ public class ClinicaAnswerDto {
 		this.imagenclinica = imagenclinica;
 	}
 
+	public int getEstdo_cli() {
+		return estdo_cli;
+	}
+
+	public void setEstdo_cli(int estdo_cli) {
+		this.estdo_cli = estdo_cli;
+	}
+
 	public Set<VeterinarioDto> getVeterinarios() {
 		return veterinarios;
 	}
@@ -106,5 +116,4 @@ public class ClinicaAnswerDto {
 	public void setVeterinarios(Set<VeterinarioDto> veterinarios) {
 		this.veterinarios = veterinarios;
 	}
-	
 }
