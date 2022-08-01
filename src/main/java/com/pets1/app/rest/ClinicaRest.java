@@ -53,6 +53,13 @@ public class ClinicaRest {
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping("/clinicas/{nit}/estado/{estado}")
+	public ResponseEntity<String> actualizarEstadoClinica(@PathVariable Long nit ,@PathVariable int estado){
+		clinicaService.actualizarEstado(estado, nit);
+		return new ResponseEntity<>("se actualizo el estado de la clinica con exito", HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/clinicas/{nit}")
 	public ResponseEntity<String> eliminarClinica(@PathVariable Long nit){
 		clinicaService.eliminarClinica(nit);

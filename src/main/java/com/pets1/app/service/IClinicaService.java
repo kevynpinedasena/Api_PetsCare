@@ -16,4 +16,6 @@ public interface IClinicaService {
 	clinicaDto actualizarClinica(Long nitClinica, clinicaDto clinicaDto);
 	
 	void eliminarClinica(Long nitClinica);
+	
+	void actualizarEstado(int estado, Long nit);
 }

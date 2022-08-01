@@ -50,6 +50,10 @@ public class ClinicaServiceImpl implements IClinicaService{
 			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "Ya existe un clinica con este email" );
 		}
 		
+		else if(clinicaDto.getEstadoCli() !=1 && clinicaDto.getEstadoCli() !=2) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "el estado no puede ser mayor a 2 ni menor a 1" );
+		}
+		
 		ClinicaVo clinicaDatos = mapearEntidad(clinicaDto);
 		clinicaDatos.setPasswordCv(passwordEncoder.encode(clinicaDto.getPassword()));
 		
@@ -95,6 +99,18 @@ public class ClinicaServiceImpl implements IClinicaService{
 		clinicaRepository.delete(clinica);
 	}
 	
+	@Override
+	public void actualizarEstado(int estado, Long nit) {
+		ClinicaVo clinica = clinicaRepository.findById(nit).orElseThrow(() -> new ResourceNotFoudExeption("clinica", "nit", nit));
+		
+		if(estado !=1 && estado !=2) {
+			throw new AppPetsCareExeption(HttpStatus.BAD_REQUEST, "el estado no puede ser mayor a 2 ni menor a 1" );
+		}
+		
+		clinica.setEstadoCli(estado);	
+		clinicaRepository.save(clinica);
+	}
+	
 	private clinicaDto mapearDto(ClinicaVo clinica) {
 		clinicaDto clinicaDTO = modelMapper.map(clinica, clinicaDto.class);
 		return clinicaDTO;
@@ -109,4 +125,6 @@ public class ClinicaServiceImpl implements IClinicaService{
 		ClinicaVo clinica = modelMapper.map(clinicaDto, ClinicaVo.class);
 		return clinica;
 	}
+
+
 }
