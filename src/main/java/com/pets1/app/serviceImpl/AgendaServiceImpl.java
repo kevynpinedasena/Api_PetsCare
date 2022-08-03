@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pets1.app.domain.AgendaVo;
+import com.pets1.app.domain.HistorialAgendaVo;
 import com.pets1.app.domain.UsuarioVo;
 import com.pets1.app.domain.VeterinarioVo;
 import com.pets1.app.dto.answers.AgendaAnswerDto;
@@ -18,6 +19,7 @@ import com.pets1.app.dto.answers.AgendaVeterinarioAnswerDto;
 import com.pets1.app.dto.entityData.AgendaDto;
 import com.pets1.app.exeptions.ResourceNotFoudExeption;
 import com.pets1.app.repository.IAgendaRepository;
+import com.pets1.app.repository.IHistorialAgendasRepository;
 import com.pets1.app.repository.IUsuarioRepository;
 import com.pets1.app.repository.IVeterinarioRepository;
 import com.pets1.app.service.IAgendaService;
@@ -34,6 +36,9 @@ public class AgendaServiceImpl implements IAgendaService{
 	
 	@Autowired
 	private IVeterinarioRepository veterinarioRepository;
+	
+	@Autowired
+	private IHistorialAgendasRepository historialAgendasRepository;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -84,6 +89,19 @@ public class AgendaServiceImpl implements IAgendaService{
 	@Override
 	public void eliminarAgenda(Long codigo) {
 		AgendaVo agenda = agendaRepository.findById(codigo).orElseThrow(() -> new ResourceNotFoudExeption("agenda", "codigo", codigo));
+		
+//		HistorialAgendaVo historialAgenda = new HistorialAgendaVo();
+		
+//		historialAgenda.setCodigoH(agenda.getCodigoA());
+//		historialAgenda.setFecha(agenda.getFecha());
+//		historialAgenda.setHora(agenda.getHora());
+//		historialAgenda.setDocumentoUsu(agenda.getDocumentous());
+//		historialAgenda.setDocumentoVete(agenda.getDocumentovt());
+		
+//		HistorialAgendaVo res = mapearAgendaVoAHistorial(agenda);
+//		
+//		historialAgendasRepository.save(res);
+		
 		agendaRepository.delete(agenda);
 	}
 	
@@ -111,5 +129,10 @@ public class AgendaServiceImpl implements IAgendaService{
 	private AgendaVo mapearEntidad(AgendaDto agendaDto) {
 		AgendaVo agendaVo = modelMapper.map(agendaDto, AgendaVo.class);
 		return agendaVo;
+	}
+	
+	private HistorialAgendaVo mapearAgendaVoAHistorial(AgendaVo agendaVo) {
+		HistorialAgendaVo historial = modelMapper.map(agendaVo, HistorialAgendaVo.class);
+		return historial;
 	}
 }

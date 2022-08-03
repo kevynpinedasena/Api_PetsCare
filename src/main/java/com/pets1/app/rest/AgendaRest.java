@@ -60,7 +60,9 @@ public class AgendaRest {
 		return new ResponseEntity<>("Agenda actualizada con exito", HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER')")
+//	@PreAuthorize("hasAnyRole('VETERINARIO', 'USER')")
+	
+	@PreAuthorize("hasRole('USER''VETERINARIO')")
 	@DeleteMapping("/agendas/{codigo}")
 	public ResponseEntity<String> eliminarAgenda(@PathVariable Long codigo){
 		agendaService.eliminarAgenda(codigo);
